@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">Smart Device Controller</string>
+    <string name="action_settings">Settings</string>
+    <string name="title_activity_devices_list">DevicesListActivity</string>
+</resources>

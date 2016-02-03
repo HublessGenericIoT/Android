@@ -20,8 +20,19 @@ android {
 }
 
 dependencies {
+    // default
     compile fileTree(dir: 'libs', include: ['*.jar'])
     testCompile 'junit:junit:4.12'
     compile 'com.android.support:appcompat-v7:23.1.1'
     compile 'com.android.support:design:23.1.1'
+    // retrofit
+    compile 'com.google.code.gson:gson:2.4'
+    compile 'com.squareup.retrofit:retrofit:2.0.0-beta2'
+    compile 'com.squareup.retrofit:converter-gson:2.0.0-beta2'
+    compile 'com.squareup.okhttp:okhttp:2.7.0'
+    // picasso
+    compile 'com.squareup.picasso:picasso:2.5.2'
+    // butterknife
+    compile 'com.jakewharton:butterknife:7.0.1'
+    compile project(':aws_iot')
 }

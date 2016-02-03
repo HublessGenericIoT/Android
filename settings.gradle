@@ -1,1 +1,1 @@
-include ':app', ':aws_iot'
+include ':aws_iot', ':app'

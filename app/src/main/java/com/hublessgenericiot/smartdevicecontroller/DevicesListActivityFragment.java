@@ -11,7 +11,17 @@ import android.view.ViewGroup;
  */
 public class DevicesListActivityFragment extends Fragment {
 
+
+
     public DevicesListActivityFragment() {
+    }
+
+    /**
+     * Returns a new instance of this fragment
+     */
+    public static DevicesListActivityFragment newInstance() {
+        DevicesListActivityFragment fragment = new DevicesListActivityFragment();
+        return fragment;
     }
 
     @Override

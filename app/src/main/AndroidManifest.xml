@@ -11,10 +11,6 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".DevicesListActivity"
-            android:label="@string/title_activity_devices_list"
-            android:theme="@style/AppTheme.NoActionBar" />
-        <activity
             android:name=".RoomsActivity"
             android:label="@string/title_activity_rooms"
             android:theme="@style/AppTheme.NoActionBar">

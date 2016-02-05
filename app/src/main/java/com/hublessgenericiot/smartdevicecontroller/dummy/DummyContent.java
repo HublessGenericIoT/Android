@@ -62,7 +62,7 @@ public class DummyContent {
     public static class DummyItem {
         public final String id;
         public final String name;
-        public final boolean state;
+        public boolean state;
 
         public DummyItem(String id, String content, boolean state) {
             this.id = id;

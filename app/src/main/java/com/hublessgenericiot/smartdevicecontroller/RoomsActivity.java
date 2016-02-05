@@ -1,5 +1,6 @@
 package com.hublessgenericiot.smartdevicecontroller;
 
+import android.content.Intent;
 import android.support.design.widget.TabLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -11,6 +12,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -19,7 +21,9 @@ import android.view.ViewGroup;
 
 import android.widget.TextView;
 
-public class RoomsActivity extends AppCompatActivity {
+import com.hublessgenericiot.smartdevicecontroller.dummy.DummyContent;
+
+public class RoomsActivity extends AppCompatActivity implements DeviceFragment.OnListFragmentInteractionListener {
 
     /**
      * The {@link android.support.v4.view.PagerAdapter} that will provide
@@ -124,5 +128,16 @@ public class RoomsActivity extends AppCompatActivity {
             }
             return null;
         }
+    }
+
+    @Override
+    public void onDeviceClick(DummyContent.DummyItem item) {
+
+    }
+
+    @Override
+    public void onDeviceLongClick(DummyContent.DummyItem item) {
+        Intent intent = new Intent(this, EditDeviceActivity.class);
+        startActivityForResult(intent, 0);
     }
 }

@@ -104,6 +104,7 @@ public class DeviceFragment extends Fragment {
      */
     public interface OnListFragmentInteractionListener {
         // TODO: Update argument type and name
-        void onListFragmentInteraction(DummyItem item);
+        void onDeviceClick(DummyItem item);
+        void onDeviceLongClick(DummyItem item);
     }
 }

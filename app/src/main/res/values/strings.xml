@@ -1,20 +1,9 @@
 <resources>
     <string name="app_name">Smart Device Controller</string>
     <string name="action_settings">Settings</string>
-    <string name="title_activity_devices_list">DevicesListActivity</string>
-    <string name="title_activity_rooms">RoomsActivity</string>
-    <string name="section_format">Hello World from section: %1$d</string>
-
-    <string name="large_paragraphs"><p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nihilne te delectat umquam -video, quicum loquar-, te igitur, Torquate, ipsum per se nihil delectat? Putabam equidem satis, inquit, me dixisse. Duo Reges: constructio interrete. Laelius clamores sofòw ille so lebat Edere compellans gumias ex ordine nostros. Is enim, qui occultus et tectus dicitur, tantum abest ut se indicet, perficiet etiam ut dolere alterius improbe facto videatur. Multoque hoc melius nos veriusque quam Stoici. Hoc positum in Phaedro a Platone probavit Epicurus sensitque in omni disputatione id fieri oportere. Non enim, si malum est dolor, carere eo malo satis est ad bene vivendum. Graecis hoc modicum est: Leonidas, Epaminondas, tres aliqui aut quattuor; Venit enim mihi Platonis in mentem, quem accepimus primum hic disputare solitum; Et quidem iure fortasse, sed tamen non gravissimum est testimonium multitudinis. Conferam avum tuum Drusum cum C. Quid enim necesse est, tamquam meretricem in matronarum coetum, sic voluptatem in virtutum concilium adducere? Qui si ea, quae dicit, ita sentiret, ut verba significant, quid inter eum et vel Pyrrhonem vel Aristonem interesset? </p>
-
-<p>Et hunc idem dico, inquieta sed ad virtutes et ad vitia nihil interesse. Huius ego nunc auctoritatem sequens idem faciam. Primum cur ista res digna odio est, nisi quod est turpis? Hoc loco tenere se Triarius non potuit. Quae tamen a te agetur non melior, quam illae sunt, quas interdum optines. Quid in isto egregio tuo officio et tanta fide-sic enim existimo-ad corpus refers? Universa enim illorum ratione cum tota vestra confligendum puto. Heri, inquam, ludis commissis ex urbe profectus veni ad vesperum. Ipse negat, ut ante dixi, luxuriosorum vitam reprehendendam, nisi plane fatui sint, id est nisi aut cupiant aut metuant. Etenim nec iustitia nec amicitia esse omnino poterunt, nisi ipsae per se expetuntur. Si quicquam extra virtutem habeatur in bonis. Sic enim maiores nostri labores non fugiendos tristissimo tamen verbo aerumnas etiam in deo nominaverunt. Qua ex cognitione facilior facta est investigatio rerum occultissimarum. </p>
-
-<p>Non ergo Epicurus ineruditus, sed ii indocti, qui, quae pueros non didicisse turpe est, ea putant usque ad senectutem esse discenda. Voluptatem cum summum bonum diceret, primum in eo ipso parum vidit, deinde hoc quoque alienum; Quid enim necesse est, tamquam meretricem in matronarum coetum, sic voluptatem in virtutum concilium adducere? Mihi autem nihil tam perspicuum videtur, quam has sententias eorum philosophorum re inter se magis quam verbis dissidere; Negat enim summo bono afferre incrementum diem. Quae quidem sapientes sequuntur duce natura tamquam videntes; Restincta enim sitis stabilitatem voluptatis habet, inquit, illa autem voluptas ipsius restinctionis in motu est. Multoque hoc melius nos veriusque quam Stoici. Modo etiam paulum ad dexteram de via declinavi, ut ad Pericli sepulcrum accederem. Hoc ille tuus non vult omnibusque ex rebus voluptatem quasi mercedem exigit. Aut unde est hoc contritum vetustate proverbium: quicum in tenebris? Septem autem illi non suo, sed populorum suffragio omnium nominati sunt. Universa enim illorum ratione cum tota vestra confligendum puto. </p>
-
-<p>Disserendi artem nullam habuit. Cur ipse Pythagoras et Aegyptum lustravit et Persarum magos adiit? Bonum negas esse divitias, praeposìtum esse dicis? Iam id ipsum absurdum, maximum malum neglegi. </p>
-
-<p>Partim cursu et peragratione laetantur, congregatione aliae coetum quodam modo civitatis imitantur; Nam et complectitur verbis, quod vult, et dicit plane, quod intellegam; Mihi enim satis est, ipsis non satis. Idque testamento cavebit is, qui nobis quasi oraculum ediderit nihil post mortem ad nos pertinere? Non autem hoc: igitur ne illud quidem. </p>
-
-</string>
-    <string name="title_activity_test">TestActivity</string>
+    <string name="title_activity_rooms">Smart Device Controller</string>
+    <string name="title_activity_edit_device">Edit Device</string>
+    <string name="room_label">Room</string>
+    <string name="name_label">Name</string>
+    <string name="save">Save changes</string>
 </resources>

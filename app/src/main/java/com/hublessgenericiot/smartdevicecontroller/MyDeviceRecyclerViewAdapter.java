@@ -4,6 +4,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.CompoundButton;
 import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.ToggleButton;
@@ -39,7 +40,7 @@ public class MyDeviceRecyclerViewAdapter extends RecyclerView.Adapter<MyDeviceRe
     public void onBindViewHolder(final ViewHolder holder, int position) {
         holder.mItem = mValues.get(position);
         holder.mNameView.setText(mValues.get(position).name);
-        holder.mStateView.setSelected(mValues.get(position).state);
+        holder.mStateView.setChecked(mValues.get(position).state);
 
         holder.mView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -74,7 +75,7 @@ public class MyDeviceRecyclerViewAdapter extends RecyclerView.Adapter<MyDeviceRe
     public class ViewHolder extends RecyclerView.ViewHolder {
         public final View mView;
         public final TextView mNameView;
-        public final TextView mStateView;
+        public final Switch mStateView;
         public DummyItem mItem;
 
         public ViewHolder(View view) {
@@ -82,6 +83,13 @@ public class MyDeviceRecyclerViewAdapter extends RecyclerView.Adapter<MyDeviceRe
             mView = view;
             mNameView = (TextView) view.findViewById(R.id.name);
             mStateView = (Switch) view.findViewById(R.id.state);
+
+            mStateView.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                @Override
+                public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                    mItem.state = isChecked;
+                }
+            });
         }
 
         @Override

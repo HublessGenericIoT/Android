@@ -1,0 +1,9 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context="com.hublessgenericiot.smartdevicecontroller.EditDeviceActivity">
+    <item android:id="@+id/save"
+        android:icon="@drawable/ic_check_white_24dp"
+        android:title="@string/save"
+        app:showAsAction="always"/>
+</menu>

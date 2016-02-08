@@ -27,6 +27,7 @@
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
+<<<<<<< HEAD
     <orderEntry type="library" exported="" name="org.eclipse.paho.android.service-1.0.2" level="project" />
     <orderEntry type="library" exported="" name="aws-java-sdk-iot-1.10.26" level="project" />
     <orderEntry type="library" exported="" name="org.eclipse.paho.client.mqttv3-1.0.2" level="project" />
@@ -40,5 +41,8 @@
     <orderEntry type="library" exported="" name="commons-codec-1.6" level="project" />
     <orderEntry type="library" exported="" name="jackson-annotations-2.5.0" level="project" />
     <orderEntry type="library" exported="" name="jackson-core-2.5.3" level="project" />
+=======
+    <orderEntry type="library" exported="" name="aws_iot.aws_iot" level="project" />
+>>>>>>> master
   </component>
 </module>

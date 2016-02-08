@@ -9,14 +9,14 @@ import android.view.ViewGroup;
 /**
  * A placeholder fragment containing a simple view.
  */
-public class DevicesListActivityFragment extends Fragment {
+public class EditDeviceActivityFragment extends Fragment {
 
-    public DevicesListActivityFragment() {
+    public EditDeviceActivityFragment() {
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_devices_list, container, false);
+        return inflater.inflate(R.layout.fragment_edit_device, container, false);
     }
 }

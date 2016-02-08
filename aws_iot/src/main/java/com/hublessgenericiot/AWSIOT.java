@@ -1,5 +1,7 @@
 package com.hublessgenericiot;
 
+import android.app.Activity;
+
 import com.amazonaws.services.iot.AWSIotClient;
 import com.amazonaws.services.iot.model.AttachThingPrincipalRequest;
 import com.amazonaws.services.iot.model.AttachThingPrincipalResult;
@@ -9,6 +11,7 @@ import com.amazonaws.services.iot.model.CreatePolicyRequest;
 import com.amazonaws.services.iot.model.CreatePolicyResult;
 import com.amazonaws.services.iot.model.CreateThingRequest;
 import com.amazonaws.services.iot.model.CreateThingResult;
+import com.amazonaws.services.iot.model.DescribeEndpointRequest;
 
 import org.eclipse.paho.android.service.MqttAndroidClient;
 
@@ -17,10 +20,15 @@ public class AWSIOT {
     AWSIotClient awsClient;
     //MqttAndroidClient mqttClient;
 
-    public AWSIOT ()
+    public AWSIOT (Activity currentActivity, String clientID)
     {
         awsClient = new AWSIotClient(); //except presumeably we need to give this more info
-        //mqttClient = new MqttAndroidClient();
+        //Server URI is supposed to specify port, too, so potential issue here
+        //Also constructors with acknowledge type, persistence
+        /*mqttClient = new MqttAndroidClient(currentActivity.getApplicationContext(),
+                awsClient.describeEndpoint(new DescribeEndpointRequest()).getEndpointAddress(),
+                clientID);*/
+
     }
 
     public void createNewDevice(String thingName)

@@ -9,6 +9,8 @@ import android.view.View;
 
 public class DevicesListActivity extends AppCompatActivity {
 
+    //AWSIOT awsiot;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

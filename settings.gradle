@@ -1,1 +1,2 @@
 include ':aws_iot', ':app'
+//include ':aws_iot:libs:aws-java-sdk-iot'

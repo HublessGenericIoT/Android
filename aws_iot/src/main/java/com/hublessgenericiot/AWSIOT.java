@@ -1,6 +1,6 @@
 package com.hublessgenericiot;
 
-import android.app.Activity;
+//import android.app.Activity;
 
 import com.amazonaws.services.iot.AWSIotClient;
 import com.amazonaws.services.iot.model.AttachThingPrincipalRequest;
@@ -13,14 +13,14 @@ import com.amazonaws.services.iot.model.CreateThingRequest;
 import com.amazonaws.services.iot.model.CreateThingResult;
 import com.amazonaws.services.iot.model.DescribeEndpointRequest;
 
-import org.eclipse.paho.android.service.MqttAndroidClient;
+//import org.eclipse.paho.android.service.MqttAndroidClient;
 
 public class AWSIOT {
 
     AWSIotClient awsClient;
     //MqttAndroidClient mqttClient;
 
-    public AWSIOT (Activity currentActivity, String clientID)
+    public AWSIOT ()//Activity currentActivity, String clientID)
     {
         awsClient = new AWSIotClient(); //except presumeably we need to give this more info
         //Server URI is supposed to specify port, too, so potential issue here

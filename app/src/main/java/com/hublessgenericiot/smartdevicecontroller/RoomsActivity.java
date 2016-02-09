@@ -21,6 +21,7 @@ import android.view.ViewGroup;
 
 import android.widget.TextView;
 
+import com.hublessgenericiot.AWSIOT;
 import com.hublessgenericiot.smartdevicecontroller.dummy.DummyContent;
 
 public class RoomsActivity extends AppCompatActivity implements DeviceFragment.OnListFragmentInteractionListener {
@@ -67,6 +68,7 @@ public class RoomsActivity extends AppCompatActivity implements DeviceFragment.O
             }
         });
 
+        AWSIOT awsiot = new AWSIOT();
     }
 
 

@@ -13,6 +13,7 @@ import android.view.ViewGroup;
 import com.hublessgenericiot.smartdevicecontroller.dummy.DummyContent;
 import com.hublessgenericiot.smartdevicecontroller.dummy.DummyContent.DummyItem;
 
+import java.util.LinkedList;
 import java.util.List;
 
 /**
@@ -24,10 +25,11 @@ import java.util.List;
 public class DeviceFragment extends Fragment {
 
     // TODO: Customize parameter argument names
-    private static final String ARG_COLUMN_COUNT = "column-count";
+    private static final String ROOM = "room";
     // TODO: Customize parameters
-    private int mColumnCount = 1;
     private OnListFragmentInteractionListener mListener;
+
+    private String mRoom;
 
     /**
      * Mandatory empty constructor for the fragment manager to instantiate the
@@ -38,10 +40,10 @@ public class DeviceFragment extends Fragment {
 
     // TODO: Customize parameter initialization
     @SuppressWarnings("unused")
-    public static DeviceFragment newInstance(int columnCount) {
+    public static DeviceFragment newInstance(String room) {
         DeviceFragment fragment = new DeviceFragment();
         Bundle args = new Bundle();
-        args.putInt(ARG_COLUMN_COUNT, columnCount);
+        args.putString(ROOM, room);
         fragment.setArguments(args);
         return fragment;
     }
@@ -51,7 +53,7 @@ public class DeviceFragment extends Fragment {
         super.onCreate(savedInstanceState);
 
         if (getArguments() != null) {
-            mColumnCount = getArguments().getInt(ARG_COLUMN_COUNT);
+            mRoom = getArguments().getString(ROOM);
         }
     }
 
@@ -64,12 +66,15 @@ public class DeviceFragment extends Fragment {
         if (view instanceof RecyclerView) {
             Context context = view.getContext();
             RecyclerView recyclerView = (RecyclerView) view;
-            if (mColumnCount <= 1) {
-                recyclerView.setLayoutManager(new LinearLayoutManager(context));
-            } else {
-                recyclerView.setLayoutManager(new GridLayoutManager(context, mColumnCount));
+            recyclerView.setLayoutManager(new LinearLayoutManager(context));
+
+            LinkedList<DummyItem> items = new LinkedList<>();
+            for(DummyItem d : DummyContent.ITEMS) {
+                if(d.room.equals(mRoom)) {
+                    items.add(d);
+                }
             }
-            recyclerView.setAdapter(new MyDeviceRecyclerViewAdapter(DummyContent.ITEMS, mListener));
+            recyclerView.setAdapter(new MyDeviceRecyclerViewAdapter(items, mListener));
         }
         return view;
     }

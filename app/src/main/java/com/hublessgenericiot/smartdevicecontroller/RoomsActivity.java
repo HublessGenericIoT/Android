@@ -23,6 +23,8 @@ import android.widget.TextView;
 
 import com.hublessgenericiot.smartdevicecontroller.dummy.DummyContent;
 
+import java.util.LinkedList;
+
 public class RoomsActivity extends AppCompatActivity implements DeviceFragment.OnListFragmentInteractionListener {
 
     /**
@@ -102,31 +104,30 @@ public class RoomsActivity extends AppCompatActivity implements DeviceFragment.O
             super(fm);
         }
 
+        private LinkedList<String> rooms = new LinkedList<>();
+
         @Override
         public Fragment getItem(int position) {
             // getItem is called to instantiate the fragment for the given page.
             // Return a PlaceholderFragment (defined as a static inner class below).
            // return PlaceholderFragment.newInstance(position + 1);
-            return DeviceFragment.newInstance(1);
+            return DeviceFragment.newInstance(rooms.get(position));
         }
 
         @Override
         public int getCount() {
             // Show 3 total pages.
-            return 3;
+            for(DummyContent.DummyItem d : DummyContent.ITEMS) {
+                if(!rooms.contains(d.room)) {
+                    rooms.add(d.room);
+                }
+            }
+            return rooms.size();
         }
 
         @Override
         public CharSequence getPageTitle(int position) {
-            switch (position) {
-                case 0:
-                    return "SECTION 1";
-                case 1:
-                    return "SECTION 2";
-                case 2:
-                    return "SECTION 3";
-            }
-            return null;
+            return rooms.get(position);
         }
     }
 

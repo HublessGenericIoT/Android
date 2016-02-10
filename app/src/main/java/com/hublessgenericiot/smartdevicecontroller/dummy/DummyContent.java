@@ -40,7 +40,7 @@ public class DummyContent {
     }
 
     private static DummyItem createDummyItem(int position) {
-        return new DummyItem(String.valueOf(position), "Device #" + position, getRandomBoolean());
+        return new DummyItem(String.valueOf(position), "Device #" + position, rnd.nextBoolean() ? "Living Room" : "Kitchen", getRandomBoolean());
     }
 
 //    private static String makeDetails(int position) {
@@ -62,11 +62,13 @@ public class DummyContent {
     public static class DummyItem {
         public final String id;
         public final String name;
+        public final String room;
         public boolean state;
 
-        public DummyItem(String id, String content, boolean state) {
+        public DummyItem(String id, String name, String room, boolean state) {
             this.id = id;
-            this.name = content;
+            this.name = name;
+            this.room = room;
             this.state = state;
         }
 

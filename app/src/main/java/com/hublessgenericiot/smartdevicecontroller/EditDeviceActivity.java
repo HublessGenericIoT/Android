@@ -1,34 +1,34 @@
 package com.hublessgenericiot.smartdevicecontroller;
 
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
-import android.widget.Switch;
-import android.widget.TextView;
 
-import butterknife.Bind;
-import butterknife.ButterKnife;
 
-public class EditDeviceActivity extends AppCompatActivity {
-    @Bind(R.id.name) TextView name;
-    @Bind(R.id.room) TextView room;
-    @Bind(R.id.notify) Switch notify;
+import com.hublessgenericiot.smartdevicecontroller.dummy.DummyContent;
+
+
+public class EditDeviceActivity extends AppCompatActivity implements ItemDataHolder {
+
+    public static final String DEVICE_ID = "device_id";
+    public static final int DEVICE_EDITED = 0;
+    private String id;
+    public DummyContent.DummyItem device;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        id = getIntent().getStringExtra(DEVICE_ID);
+        device = DummyContent.ITEM_MAP.get(id);
+
         setContentView(R.layout.activity_edit_device);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-
-        ButterKnife.bind(this);
     }
 
     @Override
@@ -48,4 +48,8 @@ public class EditDeviceActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
+    @Override
+    public String getDeviceId() {
+        return id;
+    }
 }

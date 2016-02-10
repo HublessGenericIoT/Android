@@ -41,18 +41,9 @@ public class DummyContent {
 
     private static DummyItem createDummyItem(int position) {
         String[] rooms = {"Living Room", "Kitchen", "Bedroom", "Den", "Kyle's Room"};
-        int rand = Math.abs(rnd.nextInt() % 3);
+        int rand = Math.abs(rnd.nextInt() % 5);
         return new DummyItem(String.valueOf(position), "Device #" + position, rooms[rand], getRandomBoolean());
     }
-
-//    private static String makeDetails(int position) {
-//        StringBuilder builder = new StringBuilder();
-//        builder.append("Details about Item: ").append(position);
-//        for (int i = 0; i < position; i++) {
-//            builder.append("\nMore details information here.");
-//        }
-//        return builder.toString();
-//    }
 
     private static boolean getRandomBoolean() {
         return rnd.nextBoolean();

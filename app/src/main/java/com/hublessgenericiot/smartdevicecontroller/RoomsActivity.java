@@ -122,6 +122,14 @@ public class RoomsActivity extends AppCompatActivity implements DeviceFragment.O
                     rooms.add(d.room);
                 }
             }
+
+            // if more than 3 tabs, make them scrollable
+            TabLayout tabLayout = (TabLayout) findViewById(R.id.tabs);
+            if(rooms.size() > 3) {
+                tabLayout.setTabMode(TabLayout.MODE_SCROLLABLE);
+            } else {
+                tabLayout.setTabMode(TabLayout.MODE_FIXED);
+            }
             return rooms.size();
         }
 

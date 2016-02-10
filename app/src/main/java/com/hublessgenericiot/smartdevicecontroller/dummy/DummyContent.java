@@ -40,7 +40,9 @@ public class DummyContent {
     }
 
     private static DummyItem createDummyItem(int position) {
-        return new DummyItem(String.valueOf(position), "Device #" + position, rnd.nextBoolean() ? "Living Room" : "Kitchen", getRandomBoolean());
+        String[] rooms = {"Living Room", "Kitchen", "Bedroom", "Den", "Kyle's Room"};
+        int rand = Math.abs(rnd.nextInt() % 3);
+        return new DummyItem(String.valueOf(position), "Device #" + position, rooms[rand], getRandomBoolean());
     }
 
 //    private static String makeDetails(int position) {

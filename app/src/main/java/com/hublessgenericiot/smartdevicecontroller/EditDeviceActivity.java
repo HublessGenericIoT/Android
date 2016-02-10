@@ -15,14 +15,12 @@ public class EditDeviceActivity extends AppCompatActivity implements ItemDataHol
     public static final String DEVICE_ID = "device_id";
     public static final int DEVICE_EDITED = 0;
     private String id;
-    public DummyContent.DummyItem device;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         id = getIntent().getStringExtra(DEVICE_ID);
-        device = DummyContent.ITEM_MAP.get(id);
 
         setContentView(R.layout.activity_edit_device);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);

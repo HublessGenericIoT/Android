@@ -2,53 +2,45 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:paddingBottom="@dimen/activity_vertical_margin"
-    android:paddingLeft="@dimen/activity_horizontal_margin"
-    android:paddingRight="@dimen/activity_horizontal_margin"
-    android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="com.hublessgenericiot.smartdevicecontroller.EditDeviceActivityFragment"
     tools:showIn="@layout/activity_edit_device">
 
-    <android.support.design.widget.TextInputLayout
-        android:id="@+id/nameTIL"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
+    <!--<include layout="@layout/subview_device_controls"-->
+        <!--android:id="@+id/device_controls"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:layout_width="match_parent" />-->
+
+    <!--<View-->
+        <!--android:id="@+id/device_controls_divider"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="1dp"-->
+        <!--android:layout_alignParentLeft="true"-->
+        <!--android:layout_alignParentStart="true"-->
+        <!--android:layout_below="@id/device_controls"-->
+        <!--android:background="@color/primary_dark" />-->
+
+    <include layout="@layout/subview_edit_device"
+        android:id="@+id/edit_device"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
-        app:counterEnabled="true"
-        app:counterMaxLength="25">
-        <EditText
-            android:id="@+id/name"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:hint="@string/name_label"/>
-    </android.support.design.widget.TextInputLayout>
-
-    <android.support.design.widget.TextInputLayout
-        android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_below="@id/nameTIL"
-        android:id="@+id/roomTIL">
-        <EditText
-            android:id="@+id/room"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:hint="@string/room_label"/>
-    </android.support.design.widget.TextInputLayout>
+        android:layout_width="match_parent" />
 
-    <Switch
-        style="@style/Switch"
+    <View
+        android:id="@+id/edit_device_divider"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="32dp"
-        android:padding="8dp"
-        android:text="Receive change notifications"
-        android:id="@+id/notify"
-        android:layout_below="@+id/roomTIL"
+        android:layout_height="1dp"
         android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true" />
+        android:layout_alignParentStart="true"
+        android:layout_below="@id/edit_device"
+        android:background="@color/primary" />
+
+    <include layout="@layout/subview_device_automation"
+        android:id="@+id/device_automation"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_below="@id/edit_device_divider"
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent" />
 
 </RelativeLayout>

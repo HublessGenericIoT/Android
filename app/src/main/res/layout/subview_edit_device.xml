@@ -42,19 +42,29 @@
             android:hint="@string/name_label"/>
     </android.support.design.widget.TextInputLayout>
 
-    <android.support.design.widget.TextInputLayout
-        android:layout_width="fill_parent"
+    <!--<android.support.design.widget.TextInputLayout-->
+        <!--android:layout_width="fill_parent"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:layout_alignParentLeft="true"-->
+        <!--android:layout_alignParentStart="true"-->
+        <!--android:layout_below="@id/nameTIL"-->
+        <!--android:id="@+id/roomTIL">-->
+        <!--<EditText-->
+            <!--android:id="@+id/room"-->
+            <!--android:layout_width="fill_parent"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:hint="@string/room_label"/>-->
+    <!--</android.support.design.widget.TextInputLayout>-->
+
+    <android.support.v7.widget.AppCompatSpinner
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
         android:layout_below="@id/nameTIL"
-        android:id="@+id/roomTIL">
-        <EditText
-            android:id="@+id/room"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:hint="@string/room_label"/>
-    </android.support.design.widget.TextInputLayout>
+        android:id="@+id/room">
+
+    </android.support.v7.widget.AppCompatSpinner>
 
     <Switch
         style="@style/Switch"
@@ -64,7 +74,7 @@
         android:padding="8dp"
         android:text="Receive change notifications"
         android:id="@+id/notify"
-        android:layout_below="@+id/roomTIL"
+        android:layout_below="@+id/room"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true" />
 

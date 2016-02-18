@@ -5,6 +5,7 @@
     <color name="primary_light">#CFD8DC</color>
     <color name="accent">#0C9D58</color>
     <color name="primary_text">#EEEEEE</color>
+    <color name="primary_text_light_disable_only">#EEEEEE</color>
     <color name="secondary_text">#BDBDBD</color>
     <color name="icons">#FFFFFF</color>
     <color name="divider">#B6B6B6</color>

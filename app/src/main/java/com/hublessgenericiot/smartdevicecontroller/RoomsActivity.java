@@ -19,9 +19,6 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
-import android.widget.TextView;
-import android.widget.Toast;
-
 import com.hublessgenericiot.smartdevicecontroller.dummy.DummyContent;
 
 import java.util.LinkedList;
@@ -71,8 +68,8 @@ public class RoomsActivity extends AppCompatActivity implements DeviceFragment.O
         });
 
         AWSIOT awsiot = new AWSIOT();
-        awsiot.createNewDevice("Thing1", this);
-        //Toast.makeText(getApplicationContext(), x, Toast.LENGTH_SHORT).show();
+        //awsiot.getNameReturnTest("Thing1", this);
+        awsiot.getDeviceList(this);
     }
 
 

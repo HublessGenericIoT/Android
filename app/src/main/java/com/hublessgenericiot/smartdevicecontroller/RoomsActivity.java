@@ -92,7 +92,7 @@ public class RoomsActivity extends AppCompatActivity implements DeviceFragment.O
             }
         });
 
-        initNewDeviceScan();
+        initWifiScan();
 
     }
 
@@ -188,7 +188,7 @@ public class RoomsActivity extends AppCompatActivity implements DeviceFragment.O
         startActivityForResult(intent, EditDeviceActivity.DEVICE_EDITED);
     }
 
-    private void initNewDeviceScan() {
+    private void initWifiScan() {
         requestPermissions(perms, MY_PERMISSIONS_REQUEST_WIFI);
     }
 
@@ -212,10 +212,6 @@ public class RoomsActivity extends AppCompatActivity implements DeviceFragment.O
                 if (grantResults.length > 0
                         && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
 
-                    // permission was granted, yay! Do the
-                    // contacts-related task you need to do.
-                    Log.d("TAG", "doing the thing");
-
                     scanWifi();
 
                 } else {
@@ -226,9 +222,6 @@ public class RoomsActivity extends AppCompatActivity implements DeviceFragment.O
                 }
                 return;
             }
-
-            // other 'case' lines to check for other
-            // permissions this app might request
         }
     }
 
@@ -240,48 +233,17 @@ public class RoomsActivity extends AppCompatActivity implements DeviceFragment.O
             wifi.setWifiEnabled(true);
         }
 
-        registerReceiver(new BroadcastReceiver() {
+        registerReceiver(new WifiBroadcastReceiver(this, wifi), new IntentFilter(WifiManager.SCAN_RESULTS_AVAILABLE_ACTION));
+    }
 
-            @Override
-            public void onReceive(Context c, Intent intent)  {
-
-                Log.d("scan", "done");
-
-                for(ScanResult s : wifi.getScanResults()) {
-                    if(s.SSID.startsWith("B132")) {
-                        boolean addDevice = true;
-                        for(String str : foundMACS){
-                            if(str.equals(s.BSSID)){
-                                addDevice = false;
-                            }
-                        }
-                        if(!addDevice) {
-                            continue;
-                        }
-                        foundMACS.add(s.BSSID);
-                       // Snackbar.make(findViewById(R.id.container), "New Device Found", Snackbar.LENGTH_LONG).show();
-                        DummyContent.ITEMS.add(0, new DummyContent.DummyItem("new", "ESP 8266", "", false, true));
-                        for(int i=0; i<mSectionsPagerAdapter.registeredFragments.size(); i++) {
-                            int key = mSectionsPagerAdapter.registeredFragments.keyAt(i);
-                            Fragment fragment = mSectionsPagerAdapter.registeredFragments.get(key);
-                            if(fragment instanceof DeviceFragment) {
-                                ((DeviceFragment) fragment).reRender();
-                            }
-                        }
-                       // ((DeviceFragment)getSupportFragmentManager().getFragments().get(0)).reRender();
-                        mSectionsPagerAdapter.notifyDataSetChanged();
-                    }
-                }
-
-                new Timer().schedule(new TimerTask() {
-                    @Override
-                    public void run() {
-                        prepareScheduledScan();
-                    }
-                }, 30000);
+    public void updateViewPager() {
+        for (int i = 0; i < mSectionsPagerAdapter.registeredFragments.size(); i++) {
+            int key = mSectionsPagerAdapter.registeredFragments.keyAt(i);
+            Fragment fragment = mSectionsPagerAdapter.registeredFragments.get(key);
+            if (fragment instanceof DeviceFragment) {
+                ((DeviceFragment) fragment).reRender();
             }
-        }, new IntentFilter(WifiManager.SCAN_RESULTS_AVAILABLE_ACTION));
-
-        wifi.startScan();
+        }
+        mSectionsPagerAdapter.notifyDataSetChanged();
     }
 }

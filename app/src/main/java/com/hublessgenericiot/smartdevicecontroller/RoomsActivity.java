@@ -20,6 +20,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.hublessgenericiot.smartdevicecontroller.dummy.DummyContent;
 
@@ -69,6 +70,9 @@ public class RoomsActivity extends AppCompatActivity implements DeviceFragment.O
             }
         });
 
+        AWSIOT awsiot = new AWSIOT();
+        awsiot.createNewDevice("Thing1", this);
+        //Toast.makeText(getApplicationContext(), x, Toast.LENGTH_SHORT).show();
     }
 
 

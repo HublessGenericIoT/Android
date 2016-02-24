@@ -17,6 +17,11 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
+
+    packagingOptions {
+        exclude 'META-INF/NOTICE' // will not include NOTICE file
+        exclude 'META-INF/LICENSE' // will not include LICENSE file
+    }
 }
 
 dependencies {
@@ -34,5 +39,5 @@ dependencies {
     compile 'com.squareup.picasso:picasso:2.5.2'
     // butterknife
     compile 'com.jakewharton:butterknife:7.0.1'
-    compile project(':aws_iot')
+    //compile project(':aws_iot')
 }

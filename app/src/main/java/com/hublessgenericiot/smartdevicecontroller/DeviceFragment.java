@@ -2,10 +2,13 @@ package com.hublessgenericiot.smartdevicecontroller;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.os.Looper;
+import android.support.annotation.UiThread;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -28,8 +31,12 @@ public class DeviceFragment extends Fragment {
     private static final String ROOM = "room";
     // TODO: Customize parameters
     private OnListFragmentInteractionListener mListener;
+    private RecyclerView recyclerView;
 
     private String mRoom;
+
+    LinkedList<DummyItem> items;
+    MyDeviceRecyclerViewAdapter adapter;
 
     /**
      * Mandatory empty constructor for the fragment manager to instantiate the
@@ -65,18 +72,29 @@ public class DeviceFragment extends Fragment {
         // Set the adapter
         if (view instanceof RecyclerView) {
             Context context = view.getContext();
-            RecyclerView recyclerView = (RecyclerView) view;
+            recyclerView = (RecyclerView) view;
             recyclerView.setLayoutManager(new LinearLayoutManager(context));
 
-            LinkedList<DummyItem> items = new LinkedList<>();
+            items = new LinkedList<>();
             for(DummyItem d : DummyContent.ITEMS) {
-                if(d.room.equals(mRoom)) {
+                if(d.room.equals(mRoom) || d.newDevice) {
                     items.add(d);
                 }
             }
-            recyclerView.setAdapter(new MyDeviceRecyclerViewAdapter(items, mListener));
+            adapter = new MyDeviceRecyclerViewAdapter(items, mListener);
+            recyclerView.setAdapter(adapter);
         }
         return view;
+    }
+
+    private void updateAdapter() {
+        items.clear();
+        for(DummyItem d : DummyContent.ITEMS) {
+            if(d.room.equals(mRoom) || d.newDevice) {
+                items.add(d);
+            }
+        }
+        adapter.notifyDataSetChanged();
     }
 
 
@@ -111,5 +129,11 @@ public class DeviceFragment extends Fragment {
         // TODO: Update argument type and name
         void onDeviceClick(DummyItem item);
         void onDeviceLongClick(DummyItem item);
+    }
+
+    public void reRender() {
+        Log.d("TAG", "HELLO!!!!");
+        Log.d("Main Thread?", "" + (Looper.myLooper() == Looper.getMainLooper()));
+        updateAdapter();
     }
 }

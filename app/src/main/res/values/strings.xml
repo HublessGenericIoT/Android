@@ -6,4 +6,5 @@
     <string name="room_label">Room</string>
     <string name="name_label">Name</string>
     <string name="save">Save changes</string>
+    <string name="new_device">NEW DEVICE</string>
 </resources>

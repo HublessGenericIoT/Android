@@ -23,6 +23,7 @@ import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.os.Bundle;
 import android.util.Log;
+import android.util.SparseArray;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -33,7 +34,9 @@ import android.widget.TextView;
 
 import com.hublessgenericiot.smartdevicecontroller.dummy.DummyContent;
 
+import java.util.ArrayList;
 import java.util.LinkedList;
+import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -55,6 +58,8 @@ public class RoomsActivity extends AppCompatActivity implements DeviceFragment.O
     private ViewPager mViewPager;
 
     WifiManager wifi;
+
+    LinkedList<String> foundMACS = new LinkedList<>();
 
     String[] perms = {"android.permission.ACCESS_WIFI_STATE", "android.permission.CHANGE_WIFI_STATE", "android.permission.ACCESS_COARSE_LOCATION"};
     private static final int MY_PERMISSIONS_REQUEST_WIFI = 200;
@@ -87,7 +92,7 @@ public class RoomsActivity extends AppCompatActivity implements DeviceFragment.O
             }
         });
 
-        scanForDevices();
+        initNewDeviceScan();
 
     }
 
@@ -124,6 +129,8 @@ public class RoomsActivity extends AppCompatActivity implements DeviceFragment.O
             super(fm);
         }
 
+        SparseArray<Fragment> registeredFragments = new SparseArray<>();
+
         private LinkedList<String> rooms = new LinkedList<>();
 
         @Override
@@ -154,6 +161,19 @@ public class RoomsActivity extends AppCompatActivity implements DeviceFragment.O
         public CharSequence getPageTitle(int position) {
             return rooms.get(position);
         }
+
+        @Override
+        public Object instantiateItem(ViewGroup container, int position) {
+            Fragment fragment = (Fragment) super.instantiateItem(container, position);
+            registeredFragments.put(position, fragment);
+            return fragment;
+        }
+
+        @Override
+        public void destroyItem(ViewGroup container, int position, Object object) {
+            registeredFragments.remove(position);
+            super.destroyItem(container, position, object);
+        }
     }
 
     @Override
@@ -168,42 +188,7 @@ public class RoomsActivity extends AppCompatActivity implements DeviceFragment.O
         startActivityForResult(intent, EditDeviceActivity.DEVICE_EDITED);
     }
 
-    private void scanForDevices() {
-
-//        // Here, thisActivity is the current activity
-//        if (ContextCompat.checkSelfPermission(this,
-//                Manifest.permission.ACCESS_WIFI_STATE)
-//                != PackageManager.PERMISSION_GRANTED) {
-//
-//            // Should we show an explanation?
-//            if (ActivityCompat.shouldShowRequestPermissionRationale(this,
-//                    Manifest.permission.ACCESS_WIFI_STATE)) {
-//
-//                // Show an expanation to the user *asynchronously* -- don't block
-//                // this thread waiting for the user's response! After the user
-//                // sees the explanation, try again to request the permission.
-//
-//                Log.d("TAG", "SHOW EXPLANATION!");
-//
-//            } else {
-//
-//                // No explanation needed, we can request the permission.
-//
-//                ActivityCompat.requestPermissions(this,
-//                        new String[]{Manifest.permission.READ_CONTACTS},
-//                        MY_PERMISSIONS_REQUEST_ACCESS_WIFI_STATE);
-//
-//                // MY_PERMISSIONS_REQUEST_READ_CONTACTS is an
-//                // app-defined int constant. The callback method gets the
-//                // result of the request.
-//
-//                Log.d("TAG", "Don't show explanation");
-//            }
-//        } else {
-//            Log.d("TAG", "granted");
-//            scanWifi();
-//        }
-
+    private void initNewDeviceScan() {
         requestPermissions(perms, MY_PERMISSIONS_REQUEST_WIFI);
     }
 
@@ -249,8 +234,6 @@ public class RoomsActivity extends AppCompatActivity implements DeviceFragment.O
 
     private void scanWifi() {
 
-        Log.d("dfg", "sc");
-
         wifi = (WifiManager) getSystemService(Context.WIFI_SERVICE);
 
         if (!wifi.isWifiEnabled()) {
@@ -258,22 +241,44 @@ public class RoomsActivity extends AppCompatActivity implements DeviceFragment.O
         }
 
         registerReceiver(new BroadcastReceiver() {
+
             @Override
             public void onReceive(Context c, Intent intent)  {
+
+                Log.d("scan", "done");
+
                 for(ScanResult s : wifi.getScanResults()) {
-                    Log.d("sc", s.SSID);
-                    if(s.SSID.startsWith("ESP_")) {
-                        Snackbar.make(findViewById(R.id.container), "New Device Found", Snackbar.LENGTH_LONG).show();
+                    if(s.SSID.startsWith("B132")) {
+                        boolean addDevice = true;
+                        for(String str : foundMACS){
+                            if(str.equals(s.BSSID)){
+                                addDevice = false;
+                            }
+                        }
+                        if(!addDevice) {
+                            continue;
+                        }
+                        foundMACS.add(s.BSSID);
+                       // Snackbar.make(findViewById(R.id.container), "New Device Found", Snackbar.LENGTH_LONG).show();
+                        DummyContent.ITEMS.add(0, new DummyContent.DummyItem("new", "ESP 8266", "", false, true));
+                        for(int i=0; i<mSectionsPagerAdapter.registeredFragments.size(); i++) {
+                            int key = mSectionsPagerAdapter.registeredFragments.keyAt(i);
+                            Fragment fragment = mSectionsPagerAdapter.registeredFragments.get(key);
+                            if(fragment instanceof DeviceFragment) {
+                                ((DeviceFragment) fragment).reRender();
+                            }
+                        }
+                       // ((DeviceFragment)getSupportFragmentManager().getFragments().get(0)).reRender();
+                        mSectionsPagerAdapter.notifyDataSetChanged();
                     }
                 }
-
 
                 new Timer().schedule(new TimerTask() {
                     @Override
                     public void run() {
                         prepareScheduledScan();
                     }
-                }, 3000);
+                }, 30000);
             }
         }, new IntentFilter(WifiManager.SCAN_RESULTS_AVAILABLE_ACTION));
 

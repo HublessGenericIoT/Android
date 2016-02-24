@@ -32,10 +32,9 @@ public class WifiBroadcastReceiver extends BroadcastReceiver {
 
     @Override
     public void onReceive(Context context, Intent intent) {
-        Log.d("scan", "done");
 
         for(ScanResult s : wifi.getScanResults()) {
-            if(s.SSID.startsWith("B132")) {
+            if(s.SSID.startsWith("ESP_")) {
                 boolean addDevice = true;
                 for(String str : foundMACS){
                     if(str.equals(s.BSSID)){
@@ -45,6 +44,7 @@ public class WifiBroadcastReceiver extends BroadcastReceiver {
                 if(!addDevice) {
                     continue;
                 }
+                Log.d("WifiBroadcastReceiver", "Found new device: " + s.SSID);
                 foundMACS.add(s.BSSID);
                 DummyContent.ITEMS.add(0, new DummyContent.DummyItem("new", "ESP 8266", "", false, true));
                 activity.updateViewPager();

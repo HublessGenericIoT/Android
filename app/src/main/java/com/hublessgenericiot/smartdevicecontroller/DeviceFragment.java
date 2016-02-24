@@ -132,8 +132,6 @@ public class DeviceFragment extends Fragment {
     }
 
     public void reRender() {
-        Log.d("TAG", "HELLO!!!!");
-        Log.d("Main Thread?", "" + (Looper.myLooper() == Looper.getMainLooper()));
         updateAdapter();
     }
 }

@@ -35,4 +35,5 @@ dependencies {
     // butterknife
     compile 'com.jakewharton:butterknife:7.0.1'
     compile project(':aws_iot')
+    compile 'com.google.android.gms:play-services-appindexing:8.1.0'
 }

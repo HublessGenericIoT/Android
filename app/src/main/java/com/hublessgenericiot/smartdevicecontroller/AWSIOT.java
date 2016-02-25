@@ -5,7 +5,6 @@ package com.hublessgenericiot.smartdevicecontroller;
 import android.app.Activity;
 import android.widget.Toast;
 
-import com.hublessgenericiot.smartdevicecontroller.models.Device;
 import com.hublessgenericiot.smartdevicecontroller.models.DeviceList;
 import com.hublessgenericiot.smartdevicecontroller.models.NameTest;
 
@@ -57,8 +56,13 @@ public class AWSIOT {
         call.enqueue(new Callback<DeviceList>() {
             @Override
             public void onResponse(Response<DeviceList> response, Retrofit rf) {
-                Toast.makeText(activity.getApplicationContext(), response.body().getDeviceAtIndex(0).getThingName(), Toast.LENGTH_LONG).show();
-                //Toast.makeText(activity.getApplicationContext(), response.body().toString(), Toast.LENGTH_LONG).show();
+                if (response.body() != null) {
+                    Toast.makeText(activity.getApplicationContext(), response.body().getThings().get(1).getThingName(), Toast.LENGTH_LONG).show();
+                }
+                else
+                {
+                    Toast.makeText(activity.getApplicationContext(), "null", Toast.LENGTH_LONG).show();
+                }
             }
 
             @Override

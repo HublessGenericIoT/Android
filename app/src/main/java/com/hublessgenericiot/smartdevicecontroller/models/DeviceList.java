@@ -1,28 +1,34 @@
 package com.hublessgenericiot.smartdevicecontroller.models;
 
-import com.google.gson.annotations.SerializedName;
-import com.google.gson.annotations.Expose;
-
 import java.util.ArrayList;
 import java.util.List;
+//import javax.annotation.Generated;
+import com.google.gson.annotations.Expose;
+import com.google.gson.annotations.SerializedName;
 
-/**
- * Created by Joe Koncel on 2/24/2016.
- */
+//@Generated("org.jsonschema2pojo")
 public class DeviceList {
-    //stupid
 
     @SerializedName("things")
     @Expose
-    private List<Device> things;
+    private List<Thing> things = new ArrayList<Thing>();
 
-    public DeviceList()
-    {
-        things = new ArrayList<Device>();
+    /**
+     *
+     * @return
+     * The things
+     */
+    public List<Thing> getThings() {
+        return things;
     }
 
-    public Device getDeviceAtIndex(int index)
-    {
-        return things.get(index);
+    /**
+     *
+     * @param things
+     * The things
+     */
+    public void setThings(List<Thing> things) {
+        this.things = things;
     }
+
 }

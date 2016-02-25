@@ -1,6 +1,5 @@
 package com.hublessgenericiot.smartdevicecontroller;
 
-import com.hublessgenericiot.smartdevicecontroller.models.Device;
 import com.hublessgenericiot.smartdevicecontroller.models.DeviceList;
 import com.hublessgenericiot.smartdevicecontroller.models.NameTest;
 import com.hublessgenericiot.smartdevicecontroller.models.ResponseObject;

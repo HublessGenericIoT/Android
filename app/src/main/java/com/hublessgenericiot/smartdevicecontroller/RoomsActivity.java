@@ -35,6 +35,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.android.gms.appindexing.Action;
 import com.google.android.gms.appindexing.AppIndex;
@@ -107,6 +108,9 @@ public class RoomsActivity extends AppCompatActivity implements DeviceFragment.O
         // ATTENTION: This was auto-generated to implement the App Indexing API.
         // See https://g.co/AppIndexing/AndroidStudio for more information.
         client = new GoogleApiClient.Builder(this).addApi(AppIndex.API).build();
+        AWSIOT awsiot = new AWSIOT();
+        awsiot.createNewDevice("Thing1", this);
+        //Toast.makeText(getApplicationContext(), x, Toast.LENGTH_SHORT).show();
     }
 
 

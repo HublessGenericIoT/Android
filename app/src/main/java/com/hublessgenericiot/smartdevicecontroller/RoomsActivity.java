@@ -39,6 +39,7 @@ public class RoomsActivity extends AppCompatActivity implements DeviceFragment.O
      * The {@link ViewPager} that will host the section contents.
      */
     private ViewPager mViewPager;
+    AWSIOT awsiot;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -67,11 +68,10 @@ public class RoomsActivity extends AppCompatActivity implements DeviceFragment.O
             }
         });
 
-        AWSIOT awsiot = new AWSIOT();
+        awsiot = new AWSIOT();
         //awsiot.getNameReturnTest("Thing1", this);
         //awsiot.getDeviceList(this);
         awsiot.connectTest(this);
-        awsiot.subscribeTest(this);
     }
 
 
@@ -87,6 +87,9 @@ public class RoomsActivity extends AppCompatActivity implements DeviceFragment.O
         // Handle action bar item clicks here. The action bar will
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
+
+        awsiot.subscribeTest("proxy/#", this);
+
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
@@ -141,11 +144,12 @@ public class RoomsActivity extends AppCompatActivity implements DeviceFragment.O
 
     @Override
     public void onDeviceClick(DummyContent.DummyItem item) {
-
+        awsiot.subscribeTest("topic/device", this);
     }
 
     @Override
     public void onDeviceLongClick(DummyContent.DummyItem item) {
+        awsiot.publishTest(this);
         Intent intent = new Intent(this, EditDeviceActivity.class);
         intent.putExtra(EditDeviceActivity.DEVICE_ID, item.id);
         startActivityForResult(intent, EditDeviceActivity.DEVICE_EDITED);

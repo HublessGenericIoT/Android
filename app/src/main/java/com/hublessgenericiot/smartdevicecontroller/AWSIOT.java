@@ -6,6 +6,7 @@ import org.eclipse.paho.client.mqttv3.IMqttToken;
 import org.eclipse.paho.client.mqttv3.MqttClient;
 import org.eclipse.paho.client.mqttv3.MqttConnectOptions;
 import org.eclipse.paho.client.mqttv3.MqttException;
+import org.eclipse.paho.client.mqttv3.MqttMessage;
 
 import android.app.Activity;
 import android.util.Log;
@@ -14,6 +15,7 @@ import android.widget.Toast;
 import com.hublessgenericiot.smartdevicecontroller.models.DeviceList;
 import com.hublessgenericiot.smartdevicecontroller.models.NameTest;
 
+import java.io.UnsupportedEncodingException;
 import java.util.List;
 
 import retrofit.Call;
@@ -44,6 +46,8 @@ public class AWSIOT {
         mqttClient = new MqttAndroidClient(activity.getApplicationContext(), "tcp://ubuntu-david.cloudapp.net:1883",
                         clientId);
 
+        mqttClient.setCallback(new SubscribeCallback(activity));
+
         MqttConnectOptions options = new MqttConnectOptions();
         options.setUserName("client");
         options.setPassword("BW8iO21i3Z89".toCharArray());
@@ -71,9 +75,8 @@ public class AWSIOT {
         }
     }
 
-    public void subscribeTest(final Activity activity)
+    public void subscribeTest(String topic, final Activity activity)
     {
-        String topic = "foo/bar";
         int qos = 1;
         try {
             IMqttToken subToken = mqttClient.subscribe(topic, qos);
@@ -93,6 +96,21 @@ public class AWSIOT {
                 }
             });
         } catch (MqttException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void publishTest(final Activity activity)
+    {
+        //Not sure if we actually need this, but here we are
+        String topic = "topic/device";
+        String payload = "turn off";
+        byte[] encodedPayload = new byte[0];
+        try {
+            encodedPayload = payload.getBytes("UTF-8");
+            MqttMessage message = new MqttMessage(encodedPayload);
+            mqttClient.publish(topic, message);
+        } catch (UnsupportedEncodingException | MqttException e) {
             e.printStackTrace();
         }
     }

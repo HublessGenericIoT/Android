@@ -32,4 +32,8 @@
         <item name="android:textColor">@color/primary_dark</item>
     </style>
 
+    <style name="Spinner">
+        <item name="android:textColor">@color/primary_text</item>
+    </style>
+
 </resources>

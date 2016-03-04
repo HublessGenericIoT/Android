@@ -42,7 +42,7 @@ public class DummyContent {
     private static DummyItem createDummyItem(int position) {
         String[] rooms = {"Living Room", "Kitchen", "Bedroom", "Den", "Kyle's Room"};
         int rand = Math.abs(rnd.nextInt() % 5);
-        return new DummyItem(String.valueOf(position), "Device #" + position, rooms[rand], getRandomBoolean());
+        return new DummyItem(String.valueOf(position), "Device #" + position, rooms[rand], getRandomBoolean(), false);
     }
 
     private static boolean getRandomBoolean() {
@@ -57,12 +57,14 @@ public class DummyContent {
         public final String name;
         public final String room;
         public boolean state;
+        public boolean newDevice;
 
-        public DummyItem(String id, String name, String room, boolean state) {
+        public DummyItem(String id, String name, String room, boolean state, boolean newDevice) {
             this.id = id;
             this.name = name;
             this.room = room;
             this.state = state;
+            this.newDevice = newDevice;
         }
 
         @Override

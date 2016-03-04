@@ -1,8 +1,14 @@
 package com.hublessgenericiot.smartdevicecontroller;
 
-//import org.eclipse.paho.android.service.MqttAndroidClient;
+import org.eclipse.paho.android.service.MqttAndroidClient;
+import org.eclipse.paho.client.mqttv3.IMqttActionListener;
+import org.eclipse.paho.client.mqttv3.IMqttToken;
+import org.eclipse.paho.client.mqttv3.MqttClient;
+import org.eclipse.paho.client.mqttv3.MqttConnectOptions;
+import org.eclipse.paho.client.mqttv3.MqttException;
 
 import android.app.Activity;
+import android.util.Log;
 import android.widget.Toast;
 
 import com.hublessgenericiot.smartdevicecontroller.models.DeviceList;
@@ -18,7 +24,7 @@ import retrofit.Retrofit;
 
 public class AWSIOT {
 
-    //MqttAndroidClient mqttClient;
+    MqttAndroidClient mqttClient;
     LambdaIoTAPI lambdaIoTAPI;
     Retrofit retrofit;
 
@@ -30,6 +36,65 @@ public class AWSIOT {
                 .build();
 
         lambdaIoTAPI = retrofit.create(LambdaIoTAPI.class);
+    }
+
+    public void connectTest(final Activity activity)
+    {
+        String clientId = MqttClient.generateClientId();
+        mqttClient = new MqttAndroidClient(activity.getApplicationContext(), "tcp://ubuntu-david.cloudapp.net:1883",
+                        clientId);
+
+        MqttConnectOptions options = new MqttConnectOptions();
+        options.setUserName("client");
+        options.setPassword("BW8iO21i3Z89".toCharArray());
+
+        try {
+            IMqttToken token = mqttClient.connect(options);
+            token.setActionCallback(new IMqttActionListener() {
+                @Override
+                public void onSuccess(IMqttToken asyncActionToken) {
+                    // We are connected
+                    Toast.makeText(activity.getApplicationContext(), "SUCCESS", Toast.LENGTH_LONG).show();
+                    Log.d("Connect", "onSuccess");
+                }
+
+                @Override
+                public void onFailure(IMqttToken asyncActionToken, Throwable exception) {
+                    // Something went wrong e.g. connection timeout or firewall problems
+                    Toast.makeText(activity.getApplicationContext(), exception.toString(), Toast.LENGTH_LONG).show();
+                    Log.d("Connect", "onFailure");
+
+                }
+            });
+        } catch (MqttException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void subscribeTest(final Activity activity)
+    {
+        String topic = "foo/bar";
+        int qos = 1;
+        try {
+            IMqttToken subToken = mqttClient.subscribe(topic, qos);
+            subToken.setActionCallback(new IMqttActionListener() {
+                @Override
+                public void onSuccess(IMqttToken asyncActionToken) {
+                    // The message was published
+                    Toast.makeText(activity.getApplicationContext(), "SUBSCRIBED", Toast.LENGTH_LONG).show();
+                }
+
+                @Override
+                public void onFailure(IMqttToken asyncActionToken,
+                                      Throwable exception) {
+                    // The subscription could not be performed, maybe the user was not
+                    // authorized to subscribe on the specified topic e.g. using wildcards
+                    Toast.makeText(activity.getApplicationContext(), exception.toString(), Toast.LENGTH_LONG).show();
+                }
+            });
+        } catch (MqttException e) {
+            e.printStackTrace();
+        }
     }
 
     public void getNameReturnTest(String thingName, final Activity activity)

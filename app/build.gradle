@@ -24,6 +24,12 @@ android {
     }
 }
 
+repositories {
+    maven {
+        url "https://repo.eclipse.org/content/repositories/paho-releases/"
+    }
+}
+
 dependencies {
     // default
     compile fileTree(dir: 'libs', include: ['*.jar'])
@@ -39,5 +45,8 @@ dependencies {
     compile 'com.squareup.picasso:picasso:2.5.2'
     // butterknife
     compile 'com.jakewharton:butterknife:7.0.1'
-    //compile project(':aws_iot')
+    //paho
+    compile('org.eclipse.paho:org.eclipse.paho.android.service:1.0.2') {
+        exclude module: 'support-v4'
+    }
 }

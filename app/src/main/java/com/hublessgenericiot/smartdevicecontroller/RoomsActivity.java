@@ -69,7 +69,9 @@ public class RoomsActivity extends AppCompatActivity implements DeviceFragment.O
 
         AWSIOT awsiot = new AWSIOT();
         //awsiot.getNameReturnTest("Thing1", this);
-        awsiot.getDeviceList(this);
+        //awsiot.getDeviceList(this);
+        awsiot.connectTest(this);
+        awsiot.subscribeTest(this);
     }
 
 

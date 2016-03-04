@@ -29,6 +29,7 @@ public class EditDeviceActivityFragment extends Fragment {
 
     @Bind(R.id.name) TextView name;
     @Bind(R.id.room) Spinner room;
+    @Bind(R.id.network) Spinner network;
     @Bind(R.id.notify) Switch notify;
 
     private String id;
@@ -62,13 +63,14 @@ public class EditDeviceActivityFragment extends Fragment {
         String[] a = rooms.toArray(new String[rooms.size()]);
 
         SpinnerAdapter roomsAdapter = new ArrayAdapter<String>(this.getActivity(),
-                android.R.layout.simple_spinner_dropdown_item,
+                R.layout.simple_spinner_item,
                 a);
 
         ButterKnife.bind(this, view);
         device = DummyContent.ITEM_MAP.get(id);
         name.setText(device.name);
         room.setAdapter(roomsAdapter);
+        network.setAdapter(roomsAdapter);
         notify.setChecked(device.state);
 
         return view;

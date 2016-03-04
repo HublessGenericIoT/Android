@@ -7,4 +7,5 @@
     <string name="name_label">Name</string>
     <string name="save">Save changes</string>
     <string name="new_device">NEW DEVICE</string>
+    <string name="receive_change_notifications">Receive change notifications</string>
 </resources>

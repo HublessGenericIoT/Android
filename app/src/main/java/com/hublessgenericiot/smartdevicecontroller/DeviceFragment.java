@@ -84,6 +84,7 @@ public class DeviceFragment extends Fragment {
                     items.add(d);
                 }
             }
+            // TODO: Sort alphabetically
             adapter = new MyDeviceRecyclerViewAdapter(items, mListener);
             recyclerView.setAdapter(adapter);
         }

@@ -7,10 +7,13 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.util.SparseArray;
+import android.view.View;
 import android.view.ViewGroup;
 
 import com.hublessgenericiot.smartdevicecontroller.dummy.DummyContent;
 
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.LinkedList;
 
 /**
@@ -27,7 +30,7 @@ public class RoomsPagerAdapter extends FragmentPagerAdapter {
 
     SparseArray<Fragment> registeredFragments = new SparseArray<>();
 
-    private LinkedList<String> rooms = new LinkedList<>();
+    private LinkedList<String> rooms = new LinkedList<>(Arrays.asList("All Devices"));
 
     @Override
     public Fragment getItem(int position) {
@@ -36,18 +39,24 @@ public class RoomsPagerAdapter extends FragmentPagerAdapter {
 
     @Override
     public int getCount() {
-        // Show 3 total pages.
+        LinkedList<String> tempRooms = new LinkedList<>();
         for(DummyContent.DummyItem d : DummyContent.ITEMS) {
-            if(!rooms.contains(d.room)) {
-                rooms.add(d.room);
+            if(d.room != null && !tempRooms.contains(d.room)) {
+                tempRooms.add(d.room);
             }
         }
+        Collections.sort(tempRooms);
+        rooms.clear();
+        rooms.add("All Devices");
+        rooms.addAll(tempRooms);
 
         // if more than 3 tabs, make them scrollable
         if(rooms.size() > 3) {
             tabLayout.setTabMode(TabLayout.MODE_SCROLLABLE);
-        } else {
+        } else if(rooms.size() > 1){
             tabLayout.setTabMode(TabLayout.MODE_FIXED);
+        } else {
+            tabLayout.setVisibility(View.GONE);
         }
         return rooms.size();
     }

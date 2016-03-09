@@ -77,7 +77,9 @@ public class DeviceFragment extends Fragment {
 
             items = new LinkedList<>();
             for(DummyItem d : DummyContent.ITEMS) {
-                if(d.room.equals(mRoom) || d.newDevice) {
+                if(mRoom.equals("All Devices") ||  d.newDevice) {
+                    items.add(d);
+                } else if(d.room != null && d.room.equals(mRoom)) {
                     items.add(d);
                 }
             }
@@ -90,7 +92,7 @@ public class DeviceFragment extends Fragment {
     private void updateAdapter() {
         items.clear();
         for(DummyItem d : DummyContent.ITEMS) {
-            if(d.room.equals(mRoom) || d.newDevice) {
+            if(mRoom.equals("All Devices") || (d.room != null && d.room.equals(mRoom)) || d.newDevice) {
                 items.add(d);
             }
         }

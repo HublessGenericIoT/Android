@@ -17,6 +17,7 @@ import android.widget.TextView;
 import com.hublessgenericiot.smartdevicecontroller.dummy.DummyContent;
 
 import java.lang.reflect.Array;
+import java.util.Collections;
 import java.util.LinkedList;
 
 import butterknife.Bind;
@@ -55,14 +56,17 @@ public class EditDeviceActivityFragment extends Fragment {
 
         LinkedList<String> rooms = new LinkedList<>();
         for(DummyContent.DummyItem d : DummyContent.ITEMS) {
-            if(!rooms.contains(d.room)) {
+            if(d.room != null && !rooms.contains(d.room)) {
                 rooms.add(d.room);
             }
         }
+        Collections.sort(rooms);
+        rooms.add("None");
+        rooms.add("Create New Room");
 
         String[] a = rooms.toArray(new String[rooms.size()]);
 
-        SpinnerAdapter roomsAdapter = new ArrayAdapter<String>(this.getActivity(),
+        ArrayAdapter roomsAdapter = new ArrayAdapter<String>(this.getActivity(),
                 R.layout.simple_spinner_item,
                 a);
 
@@ -70,6 +74,9 @@ public class EditDeviceActivityFragment extends Fragment {
         device = DummyContent.ITEM_MAP.get(id);
         name.setText(device.name);
         room.setAdapter(roomsAdapter);
+        if(device.room != null) {
+            room.setSelection(roomsAdapter.getPosition(device.room));
+        }
         network.setAdapter(roomsAdapter);
         notify.setChecked(device.state);
 

@@ -111,9 +111,6 @@ public class RoomsActivity extends AppCompatActivity implements DeviceFragment.O
         // See https://g.co/AppIndexing/AndroidStudio for more information.
         client = new GoogleApiClient.Builder(this).addApi(AppIndex.API).build();
         //Toast.makeText(getApplicationContext(), x, Toast.LENGTH_SHORT).show();
-
-
-        HublessSdkService.testApi(HublessSdkService.getInstance(this));
     }
 
 

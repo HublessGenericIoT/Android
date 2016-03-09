@@ -47,7 +47,7 @@ public class HublessSdkService {
 
             HttpLoggingInterceptor logging = new HttpLoggingInterceptor();
             logging.setLevel(HttpLoggingInterceptor.Level.BODY);
-            httpClient.addInterceptor(logging);
+            //httpClient.addInterceptor(logging);
 
             OkHttpClient client = httpClient.build();
 

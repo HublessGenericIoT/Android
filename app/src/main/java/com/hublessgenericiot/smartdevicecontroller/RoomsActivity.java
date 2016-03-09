@@ -88,8 +88,6 @@ public class RoomsActivity extends AppCompatActivity implements DeviceFragment.O
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
 
-        awsiot.subscribeTest("proxy/#", this);
-
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
@@ -144,12 +142,11 @@ public class RoomsActivity extends AppCompatActivity implements DeviceFragment.O
 
     @Override
     public void onDeviceClick(DummyContent.DummyItem item) {
-        awsiot.subscribeTest("topic/device", this);
+        awsiot.publishTest("proxy/topic/device/" + item.room, item.id, this);
     }
 
     @Override
     public void onDeviceLongClick(DummyContent.DummyItem item) {
-        awsiot.publishTest(this);
         Intent intent = new Intent(this, EditDeviceActivity.class);
         intent.putExtra(EditDeviceActivity.DEVICE_ID, item.id);
         startActivityForResult(intent, EditDeviceActivity.DEVICE_EDITED);

@@ -74,6 +74,7 @@ public class DeviceFragment extends Fragment {
                     items.add(d);
                 }
             }
+
             recyclerView.setAdapter(new MyDeviceRecyclerViewAdapter(items, mListener));
         }
         return view;

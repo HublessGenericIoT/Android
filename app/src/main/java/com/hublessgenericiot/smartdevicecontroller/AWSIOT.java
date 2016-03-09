@@ -58,8 +58,9 @@ public class AWSIOT {
                 @Override
                 public void onSuccess(IMqttToken asyncActionToken) {
                     // We are connected
-                    Toast.makeText(activity.getApplicationContext(), "SUCCESS", Toast.LENGTH_LONG).show();
+                    Toast.makeText(activity.getApplicationContext(), "CONNECTED", Toast.LENGTH_LONG).show();
                     Log.d("Connect", "onSuccess");
+                    subscribeTest("proxy/#", activity);
                 }
 
                 @Override
@@ -100,11 +101,8 @@ public class AWSIOT {
         }
     }
 
-    public void publishTest(final Activity activity)
+    public void publishTest(String topic, String payload, final Activity activity)
     {
-        //Not sure if we actually need this, but here we are
-        String topic = "topic/device";
-        String payload = "turn off";
         byte[] encodedPayload = new byte[0];
         try {
             encodedPayload = payload.getBytes("UTF-8");

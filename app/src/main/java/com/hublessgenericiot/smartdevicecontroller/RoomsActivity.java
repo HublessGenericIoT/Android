@@ -11,6 +11,7 @@ import android.net.wifi.ScanResult;
 import android.net.wifi.WifiManager;
 import android.os.Build;
 import android.os.Handler;
+import android.support.annotation.NonNull;
 import android.support.design.widget.TabLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -41,6 +42,7 @@ import com.google.android.gms.appindexing.Action;
 import com.google.android.gms.appindexing.AppIndex;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.hublessgenericiot.smartdevicecontroller.dummy.DummyContent;
+import com.hublessgenericiot.smartdevicecontroller.hublesssdk.HublessSdkService;
 
 import java.util.ArrayList;
 import java.util.LinkedList;
@@ -108,9 +110,10 @@ public class RoomsActivity extends AppCompatActivity implements DeviceFragment.O
         // ATTENTION: This was auto-generated to implement the App Indexing API.
         // See https://g.co/AppIndexing/AndroidStudio for more information.
         client = new GoogleApiClient.Builder(this).addApi(AppIndex.API).build();
-        AWSIOT awsiot = new AWSIOT();
-        awsiot.createNewDevice("Thing1", this);
         //Toast.makeText(getApplicationContext(), x, Toast.LENGTH_SHORT).show();
+
+
+        HublessSdkService.testApi(HublessSdkService.getInstance(this));
     }
 
 
@@ -179,7 +182,7 @@ public class RoomsActivity extends AppCompatActivity implements DeviceFragment.O
 
     @Override
     public void onRequestPermissionsResult(int requestCode,
-                                           String permissions[], int[] grantResults) {
+                                           @NonNull String permissions[], @NonNull int[] grantResults) {
         switch (requestCode) {
             case MY_PERMISSIONS_REQUEST_WIFI: {
                 // If request is cancelled, the result arrays are empty.
@@ -194,7 +197,6 @@ public class RoomsActivity extends AppCompatActivity implements DeviceFragment.O
                     // functionality that depends on this permission.
                     Log.d("TAG", "DENIED!");
                 }
-                return;
             }
         }
     }

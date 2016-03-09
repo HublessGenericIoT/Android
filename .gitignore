@@ -1,3 +1,4 @@
+/app/src/main/res/values/secret.xml
 # Created by https://www.gitignore.io/api/java,gradle,android,intellij
 
 ### Java ###
@@ -38,15 +39,11 @@ gradle-app.setting
 *.dex
 
 # Java class files
-*.class
 
 # Generated files
 bin/
 gen/
 
-# Gradle files
-.gradle/
-build/
 
 # Local configuration file (sdk path, etc)
 local.properties

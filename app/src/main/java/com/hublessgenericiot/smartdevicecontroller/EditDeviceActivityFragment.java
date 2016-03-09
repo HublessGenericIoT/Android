@@ -28,7 +28,7 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 
 /**
- * A placeholder fragment containing a simple view.
+ * Edit a device
  */
 public class EditDeviceActivityFragment extends Fragment {
 
@@ -67,12 +67,12 @@ public class EditDeviceActivityFragment extends Fragment {
             }
         }
         Collections.sort(rooms);
-        rooms.add("None");
-        rooms.add("Create New Room");
+        rooms.add(getString(R.string.room_none));
+        rooms.add(getString(R.string.room_new));
 
         String[] a = rooms.toArray(new String[rooms.size()]);
 
-        roomsAdapter = new ArrayAdapter<String>(this.getActivity(),
+        roomsAdapter = new ArrayAdapter<>(this.getActivity(),
                 R.layout.simple_spinner_item,
                 a);
 
@@ -113,7 +113,11 @@ public class EditDeviceActivityFragment extends Fragment {
         switch(item.getItemId()) {
             case R.id.save:
                 updateDevice();
-                getActivity().finish();
+                if(getActivity() instanceof EditDeviceActivity) {
+                    ((EditDeviceActivity) getActivity()).finishWithResult(true);
+                } else {
+                    getActivity().finish();
+                }
                 break;
         }
         return super.onOptionsItemSelected(item);
@@ -121,6 +125,11 @@ public class EditDeviceActivityFragment extends Fragment {
 
     private void updateDevice() {
         device.name = name.getText().toString();
-        device.room = roomsAdapter.getItem(room.getSelectedItemPosition()).toString();
+        String tempRoom = roomsAdapter.getItem(room.getSelectedItemPosition()).toString();
+        if(tempRoom.equals(getString(R.string.room_none))) {
+            device.room = null;
+        } else {
+            device.room = roomsAdapter.getItem(room.getSelectedItemPosition()).toString();
+        }
     }
 }

@@ -1,6 +1,7 @@
 package com.hublessgenericiot.smartdevicecontroller;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
@@ -53,5 +54,14 @@ public class EditDeviceActivity extends AppCompatActivity implements ItemDataHol
     @Override
     public String getDeviceId() {
         return id;
+    }
+
+    public void finishWithResult(boolean modified) {
+        Bundle conData = new Bundle();
+        conData.putBoolean("modified", modified);
+        Intent intent = new Intent();
+        intent.putExtras(conData);
+        setResult(RESULT_OK, intent);
+        finish();
     }
 }

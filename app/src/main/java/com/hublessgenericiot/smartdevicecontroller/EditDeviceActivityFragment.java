@@ -5,6 +5,9 @@ import android.database.DataSetObserver;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
@@ -13,6 +16,7 @@ import android.widget.Spinner;
 import android.widget.SpinnerAdapter;
 import android.widget.Switch;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.hublessgenericiot.smartdevicecontroller.dummy.DummyContent;
 
@@ -35,6 +39,8 @@ public class EditDeviceActivityFragment extends Fragment {
 
     private String id;
     private DummyContent.DummyItem device;
+
+    ArrayAdapter roomsAdapter;
 
     public EditDeviceActivityFragment() {
     }
@@ -66,7 +72,7 @@ public class EditDeviceActivityFragment extends Fragment {
 
         String[] a = rooms.toArray(new String[rooms.size()]);
 
-        ArrayAdapter roomsAdapter = new ArrayAdapter<String>(this.getActivity(),
+        roomsAdapter = new ArrayAdapter<String>(this.getActivity(),
                 R.layout.simple_spinner_item,
                 a);
 
@@ -84,8 +90,37 @@ public class EditDeviceActivityFragment extends Fragment {
     }
 
     @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setHasOptionsMenu(true);
+    }
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        // TODO Add your menu entries here
+        inflater.inflate(R.menu.fragment_edit_device, menu);
+        super.onCreateOptionsMenu(menu, inflater);
+    }
+
+    @Override
     public void onDestroyView() {
         super.onDestroyView();
         ButterKnife.unbind(this);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch(item.getItemId()) {
+            case R.id.save:
+                updateDevice();
+                getActivity().finish();
+                break;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+    private void updateDevice() {
+        device.name = name.getText().toString();
+        device.room = roomsAdapter.getItem(room.getSelectedItemPosition()).toString();
     }
 }

@@ -148,6 +148,23 @@ public class RoomsActivity extends AppCompatActivity implements DeviceFragment.O
         startActivityForResult(intent, EditDeviceActivity.DEVICE_EDITED);
     }
 
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        // Check which request we're responding to
+        if (requestCode == EditDeviceActivity.DEVICE_EDITED) {
+            // Make sure the request was successful
+            if (resultCode == RESULT_OK) {
+                Toast.makeText(this, "got result", Toast.LENGTH_LONG).show();
+                // The user picked a contact.
+                // The Intent's data Uri identifies which contact was selected.
+
+                // Do something with the contact here (bigger example below)
+            }
+            // TODO: this should check if a change was made
+            updateViewPager();
+        }
+    }
+
     private void initWifiScan() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             requestPermissions(perms, MY_PERMISSIONS_REQUEST_WIFI);

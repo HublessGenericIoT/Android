@@ -16,6 +16,7 @@ import android.view.ViewGroup;
 import com.hublessgenericiot.smartdevicecontroller.dummy.DummyContent;
 import com.hublessgenericiot.smartdevicecontroller.dummy.DummyContent.DummyItem;
 
+import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
 

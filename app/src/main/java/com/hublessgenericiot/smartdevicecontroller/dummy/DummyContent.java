@@ -41,7 +41,7 @@ public class DummyContent {
 
     private static DummyItem createDummyItem(int position) {
         String[] rooms = {"Living Room", "Kitchen", "Bedroom", "Den", "Kyle's Room"};
-        int rand = Math.abs(rnd.nextInt() % 5);
+        int rand = Math.abs(rnd.nextInt() % rooms.length);
         return new DummyItem(String.valueOf(position), "Device #" + position, rooms[rand], getRandomBoolean(), false);
     }
 

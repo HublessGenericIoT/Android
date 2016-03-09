@@ -151,6 +151,18 @@ public class RoomsActivity extends AppCompatActivity implements DeviceFragment.O
         startActivityForResult(intent, EditDeviceActivity.DEVICE_EDITED);
     }
 
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == EditDeviceActivity.DEVICE_EDITED) {
+            if (resultCode == RESULT_OK) {
+                boolean modified = data.getBooleanExtra("modified", false); // TODO: Don't use a string here
+                if (modified) {
+                    updateViewPager();
+                }
+            }
+        }
+    }
+
     private void initWifiScan() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             requestPermissions(perms, MY_PERMISSIONS_REQUEST_WIFI);

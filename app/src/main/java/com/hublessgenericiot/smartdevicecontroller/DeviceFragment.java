@@ -16,6 +16,7 @@ import android.view.ViewGroup;
 import com.hublessgenericiot.smartdevicecontroller.dummy.DummyContent;
 import com.hublessgenericiot.smartdevicecontroller.dummy.DummyContent.DummyItem;
 
+import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -83,6 +84,7 @@ public class DeviceFragment extends Fragment {
                     items.add(d);
                 }
             }
+            // TODO: Sort alphabetically
             adapter = new MyDeviceRecyclerViewAdapter(items, mListener);
             recyclerView.setAdapter(adapter);
         }

@@ -54,8 +54,8 @@ public class DummyContent {
      */
     public static class DummyItem {
         public final String id;
-        public final String name;
-        public final String room;
+        public String name;
+        public String room;
         public boolean state;
         public boolean newDevice;
 

@@ -30,7 +30,7 @@ public class RoomsPagerAdapter extends FragmentPagerAdapter {
 
     SparseArray<Fragment> registeredFragments = new SparseArray<>();
 
-    private LinkedList<String> rooms = new LinkedList<>(Arrays.asList("All Devices"));
+    private LinkedList<String> rooms = new LinkedList<>();
 
     @Override
     public Fragment getItem(int position) {
@@ -47,7 +47,7 @@ public class RoomsPagerAdapter extends FragmentPagerAdapter {
         }
         Collections.sort(tempRooms);
         rooms.clear();
-        rooms.add("All Devices");
+        rooms.add("All Devices"); // TODO: Find a way to include the string resource R.string.room_all
         rooms.addAll(tempRooms);
 
         // if more than 3 tabs, make them scrollable

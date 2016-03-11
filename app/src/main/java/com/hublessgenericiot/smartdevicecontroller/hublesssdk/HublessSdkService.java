@@ -72,9 +72,9 @@ public class HublessSdkService {
             @Override
             public void onResponse(Call<DeviceListResponse> call, retrofit2.Response<DeviceListResponse> response) {
                 Log.d("APITEST", "URL: "+ call.request().url());
-                Log.d("APITEST", response.body().getStatus());
-                Log.d("APITEST", "Size: " + response.body().getPayload().size());
-                Log.d("APITEST", response.body().getPayload().get(0).getDevice().getThingName());
+                //Log.d("APITEST", response.body().getStatus());
+                //Log.d("APITEST", "Size: " + response.body().getPayload().size());
+                //Log.d("APITEST", response.body().getPayload().get(0).getDevice().getThingName());
             }
 
             @Override

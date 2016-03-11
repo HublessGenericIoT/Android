@@ -41,7 +41,9 @@ import android.widget.Toast;
 import com.google.android.gms.appindexing.Action;
 import com.google.android.gms.appindexing.AppIndex;
 import com.google.android.gms.common.api.GoogleApiClient;
+
 import com.hublessgenericiot.smartdevicecontroller.dummy.DummyContent;
+import com.hublessgenericiot.smartdevicecontroller.hublesssdk.HublessMQTTService;
 import com.hublessgenericiot.smartdevicecontroller.hublesssdk.HublessSdkService;
 
 import java.util.ArrayList;
@@ -68,6 +70,7 @@ public class RoomsActivity extends AppCompatActivity implements DeviceFragment.O
     private ViewPager mViewPager;
 
     WifiManager wifi;
+    HublessMQTTService mqttService;
 
     String[] perms = {"android.permission.ACCESS_WIFI_STATE", "android.permission.CHANGE_WIFI_STATE", "android.permission.ACCESS_COARSE_LOCATION"};
     private static final int MY_PERMISSIONS_REQUEST_WIFI = 200;
@@ -114,6 +117,9 @@ public class RoomsActivity extends AppCompatActivity implements DeviceFragment.O
 
 
         HublessSdkService.testApi(HublessSdkService.getInstance(this));
+
+        mqttService = new HublessMQTTService();
+        mqttService.connect(this);
     }
 
 
@@ -129,6 +135,7 @@ public class RoomsActivity extends AppCompatActivity implements DeviceFragment.O
         // Handle action bar item clicks here. The action bar will
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
+
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
@@ -141,7 +148,7 @@ public class RoomsActivity extends AppCompatActivity implements DeviceFragment.O
 
     @Override
     public void onDeviceClick(DummyContent.DummyItem item) {
-
+        mqttService.publish("proxy/topic/device", item.id, this);
     }
 
     @Override

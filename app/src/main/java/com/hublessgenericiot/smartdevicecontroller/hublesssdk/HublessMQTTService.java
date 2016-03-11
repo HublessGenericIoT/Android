@@ -12,6 +12,8 @@ import android.app.Activity;
 import android.util.Log;
 import android.widget.Toast;
 
+import com.hublessgenericiot.smartdevicecontroller.R;
+
 import java.io.UnsupportedEncodingException;
 
 public class HublessMQTTService {
@@ -21,14 +23,15 @@ public class HublessMQTTService {
     public void connect(final Activity activity)
     {
         String clientId = MqttClient.generateClientId();
-        mqttClient = new MqttAndroidClient(activity.getApplicationContext(), "tcp://ubuntu-david.cloudapp.net:1883",
+        mqttClient = new MqttAndroidClient(activity.getApplicationContext(),
+                        activity.getApplicationContext().getString(R.string.proxyserver),
                         clientId);
 
         mqttClient.setCallback(new SubscribeCallback(activity));
 
         MqttConnectOptions options = new MqttConnectOptions();
-        options.setUserName("client");
-        options.setPassword("BW8iO21i3Z89".toCharArray());
+        options.setUserName(activity.getApplicationContext().getString(R.string.proxyuser));
+        options.setPassword(activity.getApplicationContext().getString(R.string.proxypass).toCharArray());
 
         try {
             IMqttToken token = mqttClient.connect(options);

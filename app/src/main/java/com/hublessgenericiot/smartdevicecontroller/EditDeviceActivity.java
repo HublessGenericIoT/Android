@@ -1,10 +1,14 @@
 package com.hublessgenericiot.smartdevicecontroller;
 
+import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
+import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Toast;
 
 
 import com.hublessgenericiot.smartdevicecontroller.dummy.DummyContent;
@@ -38,9 +42,10 @@ public class EditDeviceActivity extends AppCompatActivity implements ItemDataHol
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        if (item.getItemId() == android.R.id.home) {
-            onBackPressed();    //Call the back button's method
-            return true;
+        switch(item.getItemId()) {
+            case android.R.id.home:
+                onBackPressed();    //Call the back button's method
+                return true;
         }
 
         return super.onOptionsItemSelected(item);
@@ -49,5 +54,14 @@ public class EditDeviceActivity extends AppCompatActivity implements ItemDataHol
     @Override
     public String getDeviceId() {
         return id;
+    }
+
+    public void finishWithResult(boolean modified) {
+        Bundle conData = new Bundle();
+        conData.putBoolean("modified", modified);
+        Intent intent = new Intent();
+        intent.putExtras(conData);
+        setResult(RESULT_OK, intent);
+        finish();
     }
 }

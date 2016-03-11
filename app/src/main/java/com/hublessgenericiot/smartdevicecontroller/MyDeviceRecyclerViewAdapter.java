@@ -39,6 +39,11 @@ public class MyDeviceRecyclerViewAdapter extends RecyclerView.Adapter<MyDeviceRe
     @Override
     public void onBindViewHolder(final ViewHolder holder, int position) {
         holder.mItem = mValues.get(position);
+        if(mValues.get(position).newDevice) {
+            holder.mNewDeviceView.setVisibility(View.VISIBLE);
+        } else {
+            holder.mNewDeviceView.setVisibility(View.GONE);
+        }
         holder.mNameView.setText(mValues.get(position).name);
         holder.mStateView.setChecked(mValues.get(position).state);
 
@@ -74,6 +79,7 @@ public class MyDeviceRecyclerViewAdapter extends RecyclerView.Adapter<MyDeviceRe
 
     public class ViewHolder extends RecyclerView.ViewHolder {
         public final View mView;
+        public final TextView mNewDeviceView;
         public final TextView mNameView;
         public final Switch mStateView;
         public DummyItem mItem;
@@ -81,6 +87,7 @@ public class MyDeviceRecyclerViewAdapter extends RecyclerView.Adapter<MyDeviceRe
         public ViewHolder(View view) {
             super(view);
             mView = view;
+            mNewDeviceView = (TextView) view.findViewById(R.id.newDevice);
             mNameView = (TextView) view.findViewById(R.id.name);
             mStateView = (Switch) view.findViewById(R.id.state);
 

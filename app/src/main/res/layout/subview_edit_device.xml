@@ -26,6 +26,7 @@
         android:textStyle="bold"
         android:text="Settings" />
 
+    <!-- Name -->
     <android.support.design.widget.TextInputLayout
         android:id="@+id/nameTIL"
         android:layout_width="fill_parent"
@@ -42,29 +43,54 @@
             android:hint="@string/name_label"/>
     </android.support.design.widget.TextInputLayout>
 
-    <android.support.design.widget.TextInputLayout
-        android:layout_width="fill_parent"
+    <!-- Room -->
+    <TextView
+        style="@style/Label"
+        android:id="@+id/room_label"
+        android:layout_below="@id/nameTIL"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Room" />
+    <android.support.v7.widget.AppCompatSpinner
+        style="@style/Spinner"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
-        android:layout_below="@id/nameTIL"
-        android:id="@+id/roomTIL">
-        <EditText
-            android:id="@+id/room"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:hint="@string/room_label"/>
-    </android.support.design.widget.TextInputLayout>
+        android:layout_below="@id/room_label"
+        android:id="@+id/room">
 
+    </android.support.v7.widget.AppCompatSpinner>
+
+    <!-- Network -->
+    <TextView
+        style="@style/Label"
+        android:id="@+id/network_label"
+        android:layout_below="@id/room"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Network" />
+    <android.support.v7.widget.AppCompatSpinner
+        style="@style/Spinner"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_below="@id/network_label"
+        android:id="@+id/network">
+
+    </android.support.v7.widget.AppCompatSpinner>
+
+    <!-- Receive Change Notifications? -->
     <Switch
         style="@style/Switch"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="32dp"
         android:padding="8dp"
-        android:text="Receive change notifications"
+        android:text="@string/receive_change_notifications"
         android:id="@+id/notify"
-        android:layout_below="@+id/roomTIL"
+        android:layout_below="@+id/network"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true" />
 

@@ -16,6 +16,7 @@ import android.view.ViewGroup;
 import com.hublessgenericiot.smartdevicecontroller.dummy.DummyContent;
 import com.hublessgenericiot.smartdevicecontroller.dummy.DummyContent.DummyItem;
 
+import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -77,10 +78,14 @@ public class DeviceFragment extends Fragment {
 
             items = new LinkedList<>();
             for(DummyItem d : DummyContent.ITEMS) {
-                if(d.room.equals(mRoom) || d.newDevice) {
+                if(mRoom.equals("All Devices") ||  d.newDevice) {
+                    items.add(d);
+                } else if(d.room != null && d.room.equals(mRoom)) {
                     items.add(d);
                 }
             }
+
+            // TODO: Sort alphabetically
             adapter = new MyDeviceRecyclerViewAdapter(items, mListener);
             recyclerView.setAdapter(adapter);
         }
@@ -90,7 +95,7 @@ public class DeviceFragment extends Fragment {
     private void updateAdapter() {
         items.clear();
         for(DummyItem d : DummyContent.ITEMS) {
-            if(d.room.equals(mRoom) || d.newDevice) {
+            if(mRoom.equals("All Devices") || (d.room != null && d.room.equals(mRoom)) || d.newDevice) {
                 items.add(d);
             }
         }

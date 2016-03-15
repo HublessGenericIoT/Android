@@ -1,11 +1,11 @@
-package com.hublessgenericiot.smartdevicecontroller.hublesssdk;
+package com.hublessgenericiot.smartdevicecontroller.hublesssdk.devicesapi;
 
-import com.hublessgenericiot.smartdevicecontroller.hublesssdk.apiresponses.DeviceCreatedResponse;
-import com.hublessgenericiot.smartdevicecontroller.hublesssdk.apiresponses.DeviceListResponse;
-import com.hublessgenericiot.smartdevicecontroller.hublesssdk.apiresponses.DeviceResponse;
-import com.hublessgenericiot.smartdevicecontroller.hublesssdk.apiresponses.DeviceUpdatedResponse;
-import com.hublessgenericiot.smartdevicecontroller.hublesssdk.models.Device;
-import com.hublessgenericiot.smartdevicecontroller.hublesssdk.models.DeviceCreator;
+import com.hublessgenericiot.smartdevicecontroller.hublesssdk.devicesapi.apiresponses.DeviceCreatedResponse;
+import com.hublessgenericiot.smartdevicecontroller.hublesssdk.devicesapi.apiresponses.DeviceListResponse;
+import com.hublessgenericiot.smartdevicecontroller.hublesssdk.devicesapi.apiresponses.DeviceResponse;
+import com.hublessgenericiot.smartdevicecontroller.hublesssdk.devicesapi.apiresponses.DeviceUpdatedResponse;
+import com.hublessgenericiot.smartdevicecontroller.hublesssdk.devicesapi.models.Device;
+import com.hublessgenericiot.smartdevicecontroller.hublesssdk.devicesapi.models.DeviceCreator;
 
 import retrofit2.Call;
 import retrofit2.http.Body;

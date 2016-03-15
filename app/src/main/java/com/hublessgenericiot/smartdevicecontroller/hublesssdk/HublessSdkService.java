@@ -9,6 +9,7 @@ import com.hublessgenericiot.smartdevicecontroller.hublesssdk.apiresponses.Devic
 import com.hublessgenericiot.smartdevicecontroller.hublesssdk.apiresponses.DeviceListResponse;
 import com.hublessgenericiot.smartdevicecontroller.hublesssdk.apiresponses.DeviceResponse;
 import com.hublessgenericiot.smartdevicecontroller.hublesssdk.apiresponses.DeviceUpdatedResponse;
+import com.hublessgenericiot.smartdevicecontroller.hublesssdk.apiresponses.HublessApiResponse;
 import com.hublessgenericiot.smartdevicecontroller.hublesssdk.models.DeviceCreator;
 import com.hublessgenericiot.smartdevicecontroller.hublesssdk.models.DeviceType;
 import com.hublessgenericiot.smartdevicecontroller.hublesssdk.models.IotAttributesMap;
@@ -71,6 +72,13 @@ public class HublessSdkService {
      * @param instance an initialized instance of the Service.
      */
     public static void testApi(final IHublessSdkService instance) {
+
+        instance.getAllDevices().enqueue(new HublessCallback<DeviceListResponse>() {
+            @Override
+            public void doOnResponse(Call<DeviceListResponse> call, retrofit2.Response<DeviceListResponse> response) {
+                Log.d("API", "This is an example of how to use the HublessCallback.");
+            }
+        });
 
 
         instance.createDevice(new DeviceCreator("MyDevice", "LivingRoom", DeviceType.LIGHT)).enqueue(new Callback<DeviceCreatedResponse>() {

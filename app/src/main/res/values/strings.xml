@@ -8,4 +8,7 @@
     <string name="save">Save changes</string>
     <string name="new_device">NEW DEVICE</string>
     <string name="receive_change_notifications">Receive change notifications</string>
+    <string name="room_none">None</string>
+    <string name="room_new">Create New Room</string>
+    <string name="room_all">All Devices</string>
 </resources>

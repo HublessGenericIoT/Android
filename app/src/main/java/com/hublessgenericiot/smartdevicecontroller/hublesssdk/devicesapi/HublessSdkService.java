@@ -1,18 +1,17 @@
-package com.hublessgenericiot.smartdevicecontroller.hublesssdk;
+package com.hublessgenericiot.smartdevicecontroller.hublesssdk.devicesapi;
 
 import android.content.Context;
 import android.support.annotation.Nullable;
 import android.util.Log;
 
 import com.hublessgenericiot.smartdevicecontroller.R;
-import com.hublessgenericiot.smartdevicecontroller.hublesssdk.apiresponses.DeviceCreatedResponse;
-import com.hublessgenericiot.smartdevicecontroller.hublesssdk.apiresponses.DeviceListResponse;
-import com.hublessgenericiot.smartdevicecontroller.hublesssdk.apiresponses.DeviceResponse;
-import com.hublessgenericiot.smartdevicecontroller.hublesssdk.apiresponses.DeviceUpdatedResponse;
-import com.hublessgenericiot.smartdevicecontroller.hublesssdk.apiresponses.HublessApiResponse;
-import com.hublessgenericiot.smartdevicecontroller.hublesssdk.models.DeviceCreator;
-import com.hublessgenericiot.smartdevicecontroller.hublesssdk.models.DeviceType;
-import com.hublessgenericiot.smartdevicecontroller.hublesssdk.models.IotAttributesMap;
+import com.hublessgenericiot.smartdevicecontroller.hublesssdk.devicesapi.apiresponses.DeviceCreatedResponse;
+import com.hublessgenericiot.smartdevicecontroller.hublesssdk.devicesapi.apiresponses.DeviceListResponse;
+import com.hublessgenericiot.smartdevicecontroller.hublesssdk.devicesapi.apiresponses.DeviceResponse;
+import com.hublessgenericiot.smartdevicecontroller.hublesssdk.devicesapi.apiresponses.DeviceUpdatedResponse;
+import com.hublessgenericiot.smartdevicecontroller.hublesssdk.devicesapi.models.DeviceCreator;
+import com.hublessgenericiot.smartdevicecontroller.hublesssdk.devicesapi.models.DeviceType;
+import com.hublessgenericiot.smartdevicecontroller.hublesssdk.devicesapi.models.IotAttributesMap;
 
 import java.io.IOException;
 
@@ -99,9 +98,9 @@ public class HublessSdkService {
             @Override
             public void onResponse(Call<DeviceListResponse> call, retrofit2.Response<DeviceListResponse> response) {
                 Log.d("APITEST", "URL: "+ call.request().url());
-                Log.d("APITEST", response.body().getStatus());
-                Log.d("APITEST", "Size: " + response.body().getPayload().size());
-                Log.d("APITEST", response.body().getPayload().get(0).getDevice().getThingName());
+                //Log.d("APITEST", response.body().getStatus());
+                //Log.d("APITEST", "Size: " + response.body().getPayload().size());
+                //Log.d("APITEST", response.body().getPayload().get(0).getDevice().getThingName());
             }
 
             @Override

@@ -1,4 +1,4 @@
-package com.hublessgenericiot.smartdevicecontroller.hublesssdk.models;
+package com.hublessgenericiot.smartdevicecontroller.hublesssdk.devicesapi.models;
 
 /**
  * Authentication data for a MQTT Endpoint.

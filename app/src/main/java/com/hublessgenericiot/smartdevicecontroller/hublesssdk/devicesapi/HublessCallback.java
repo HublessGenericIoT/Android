@@ -1,9 +1,9 @@
-package com.hublessgenericiot.smartdevicecontroller.hublesssdk;
+package com.hublessgenericiot.smartdevicecontroller.hublesssdk.devicesapi;
 
 import android.util.Log;
 
-import com.hublessgenericiot.smartdevicecontroller.hublesssdk.apiresponses.HublessApiResponse;
-import com.hublessgenericiot.smartdevicecontroller.hublesssdk.exceptions.APIFailedException;
+import com.hublessgenericiot.smartdevicecontroller.hublesssdk.devicesapi.apiresponses.HublessApiResponse;
+import com.hublessgenericiot.smartdevicecontroller.hublesssdk.devicesapi.exceptions.APIFailedException;
 
 import retrofit2.Call;
 import retrofit2.Callback;

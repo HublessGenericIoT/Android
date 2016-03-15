@@ -1,54 +1,34 @@
 package com.hublessgenericiot.smartdevicecontroller;
 
-import android.Manifest;
-import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.pm.PackageManager;
-import android.net.Uri;
-import android.net.wifi.ScanResult;
 import android.net.wifi.WifiManager;
 import android.os.Build;
-import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.design.widget.TabLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
-import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentStatePagerAdapter;
-import android.support.v4.content.ContextCompat;
 import android.support.v4.view.PagerAdapter;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.os.Bundle;
 import android.util.Log;
-import android.util.SparseArray;
-import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewGroup;
 
-import android.widget.TextView;
-import android.widget.Toast;
-
-import com.google.android.gms.appindexing.Action;
 import com.google.android.gms.appindexing.AppIndex;
 import com.google.android.gms.common.api.GoogleApiClient;
-import com.hublessgenericiot.smartdevicecontroller.dummy.DummyContent;
-import com.hublessgenericiot.smartdevicecontroller.hublesssdk.HublessSdkService;
 
-import java.util.ArrayList;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Timer;
-import java.util.TimerTask;
+import com.hublessgenericiot.smartdevicecontroller.dummy.DummyContent;
+import com.hublessgenericiot.smartdevicecontroller.hublesssdk.HublessMQTTService;
 
 public class RoomsActivity extends AppCompatActivity implements DeviceFragment.OnListFragmentInteractionListener {
 
@@ -68,6 +48,7 @@ public class RoomsActivity extends AppCompatActivity implements DeviceFragment.O
     private ViewPager mViewPager;
 
     WifiManager wifi;
+    HublessMQTTService mqttService;
 
     String[] perms = {"android.permission.ACCESS_WIFI_STATE", "android.permission.CHANGE_WIFI_STATE", "android.permission.ACCESS_COARSE_LOCATION"};
     private static final int MY_PERMISSIONS_REQUEST_WIFI = 200;
@@ -113,6 +94,9 @@ public class RoomsActivity extends AppCompatActivity implements DeviceFragment.O
         //Toast.makeText(getApplicationContext(), x, Toast.LENGTH_SHORT).show();
 
         //HublessSdkService.testApi(HublessSdkService.getInstance(this));
+
+        mqttService = new HublessMQTTService();
+        mqttService.connect(this);
     }
 
 
@@ -128,6 +112,7 @@ public class RoomsActivity extends AppCompatActivity implements DeviceFragment.O
         // Handle action bar item clicks here. The action bar will
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
+
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
@@ -140,7 +125,7 @@ public class RoomsActivity extends AppCompatActivity implements DeviceFragment.O
 
     @Override
     public void onDeviceClick(DummyContent.DummyItem item) {
-
+        mqttService.publish("proxy/topic/device", item.id, this);
     }
 
     @Override
@@ -148,6 +133,18 @@ public class RoomsActivity extends AppCompatActivity implements DeviceFragment.O
         Intent intent = new Intent(this, EditDeviceActivity.class);
         intent.putExtra(EditDeviceActivity.DEVICE_ID, item.id);
         startActivityForResult(intent, EditDeviceActivity.DEVICE_EDITED);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == EditDeviceActivity.DEVICE_EDITED) {
+            if (resultCode == RESULT_OK) {
+                boolean modified = data.getBooleanExtra("modified", false); // TODO: Don't use a string here
+                if (modified) {
+                    updateViewPager();
+                }
+            }
+        }
     }
 
     private void initWifiScan() {

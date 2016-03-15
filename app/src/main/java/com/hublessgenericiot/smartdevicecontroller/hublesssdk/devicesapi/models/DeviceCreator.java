@@ -1,4 +1,4 @@
-package com.hublessgenericiot.smartdevicecontroller.hublesssdk.models;
+package com.hublessgenericiot.smartdevicecontroller.hublesssdk.devicesapi.models;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;

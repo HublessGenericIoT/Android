@@ -1,4 +1,4 @@
-package com.hublessgenericiot.smartdevicecontroller.hublesssdk.apiresponses;
+package com.hublessgenericiot.smartdevicecontroller.hublesssdk.devicesapi.apiresponses;
 
 /**
  * Response for the PUT request.

@@ -1,6 +1,4 @@
-package com.hublessgenericiot.smartdevicecontroller.hublesssdk.models;
-
-import org.json.JSONObject;
+package com.hublessgenericiot.smartdevicecontroller.hublesssdk.devicesapi.models;
 
 import java.util.Map;
 

@@ -1,13 +1,16 @@
 package com.hublessgenericiot.smartdevicecontroller.hublesssdk;
 
+import com.hublessgenericiot.smartdevicecontroller.hublesssdk.apiresponses.DeviceCreatedResponse;
 import com.hublessgenericiot.smartdevicecontroller.hublesssdk.apiresponses.DeviceListResponse;
 import com.hublessgenericiot.smartdevicecontroller.hublesssdk.apiresponses.DeviceResponse;
 import com.hublessgenericiot.smartdevicecontroller.hublesssdk.apiresponses.DeviceUpdatedResponse;
 import com.hublessgenericiot.smartdevicecontroller.hublesssdk.models.Device;
+import com.hublessgenericiot.smartdevicecontroller.hublesssdk.models.DeviceCreator;
 
 import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.GET;
+import retrofit2.http.POST;
 import retrofit2.http.PUT;
 import retrofit2.http.Path;
 
@@ -50,4 +53,13 @@ public interface IHublessSdkService {
      */
     @PUT("devices/{name}")
     Call<DeviceUpdatedResponse> putDeviceWithAttributes(@Path("name") String name, @Body Device device);
+
+    /**
+     * An endpoint to create the device on AWS. Give a populated DeviceCreator
+     * object to give the device a name and assign a room.
+     * @param deviceCreator A populated deviceCreator object.
+     * @return A DeviceCreatedResponse with a "CreatedDeviceData" payload.
+     */
+    @POST("devices")
+    Call<DeviceCreatedResponse> createDevice(@Body DeviceCreator deviceCreator);
 }

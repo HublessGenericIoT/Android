@@ -3,6 +3,7 @@ package com.hublessgenericiot.smartdevicecontroller;
 import android.content.Context;
 import android.os.Bundle;
 import android.os.Looper;
+import android.support.annotation.NonNull;
 import android.support.annotation.UiThread;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.GridLayoutManager;
@@ -12,13 +13,25 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.hublessgenericiot.smartdevicecontroller.dummy.DummyContent;
 import com.hublessgenericiot.smartdevicecontroller.dummy.DummyContent.DummyItem;
+import com.hublessgenericiot.smartdevicecontroller.hublesssdk.HublessSdkService;
+import com.hublessgenericiot.smartdevicecontroller.hublesssdk.IHublessSdkService;
+import com.hublessgenericiot.smartdevicecontroller.hublesssdk.apiresponses.DeviceListResponse;
+import com.hublessgenericiot.smartdevicecontroller.hublesssdk.models.ShadowedDevice;
 
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Collections;
+import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.ListIterator;
+
+import retrofit2.Call;
+import retrofit2.Callback;
 
 /**
  * A fragment representing a list of Items.
@@ -37,6 +50,7 @@ public class DeviceFragment extends Fragment {
     private String mRoom;
 
     LinkedList<DummyItem> items;
+    List<ShadowedDevice> devices;
     MyDeviceRecyclerViewAdapter adapter;
 
     /**
@@ -76,18 +90,47 @@ public class DeviceFragment extends Fragment {
             recyclerView = (RecyclerView) view;
             recyclerView.setLayoutManager(new LinearLayoutManager(context));
 
-            items = new LinkedList<>();
-            for(DummyItem d : DummyContent.ITEMS) {
-                if(mRoom.equals("All Devices") ||  d.newDevice) {
-                    items.add(d);
-                } else if(d.room != null && d.room.equals(mRoom)) {
-                    items.add(d);
-                }
-            }
+            IHublessSdkService instance = HublessSdkService.getInstance(getActivity());
+            instance.getAllDevices().enqueue(new Callback<DeviceListResponse>() {
+                @Override
+                public void onResponse(Call<DeviceListResponse> call, retrofit2.Response<DeviceListResponse> response) {
+                    Log.d("DeviceFragment", "URL: " + call.request().url());
+                    Toast.makeText(getActivity().getApplicationContext(),
+                            response.body().getPayload().get(0).getDevice().getThingName(), Toast.LENGTH_LONG).show();
 
-            // TODO: Sort alphabetically
-            adapter = new MyDeviceRecyclerViewAdapter(items, mListener);
-            recyclerView.setAdapter(adapter);
+                    devices = new ArrayList<ShadowedDevice>();
+                    for (ShadowedDevice d : response.body().getPayload()) {
+                        if (mRoom.equals("All Devices")) {
+                            devices.add(d);
+                        } else if (!(d.getDevice().getThingName().equals(mRoom))) {  //TODO add room to attributes
+                            devices.add(d);
+                        }
+                    }
+
+                    // TODO: Sort alphabetically
+                    adapter = new MyDeviceRecyclerViewAdapter(devices, mListener);
+                    recyclerView.setAdapter(adapter);
+                }
+
+                @Override
+                public void onFailure(Call<DeviceListResponse> call, Throwable t) {
+                    Log.e("APITEST", "Error! " + t.getLocalizedMessage());
+
+                    items = new LinkedList<>();
+                    for(DummyItem d : DummyContent.ITEMS) {
+                        if(mRoom.equals("All Devices") ||  d.newDevice) {
+                            items.add(d);
+                        } else if(d.room != null && d.room.equals(mRoom)) {
+                            items.add(d);
+                        }
+                    }
+
+                    // TODO: Sort alphabetically
+                    adapter = new MyDeviceRecyclerViewAdapter(items, mListener);
+                    recyclerView.setAdapter(adapter);
+                }
+            });
+
         }
         return view;
     }

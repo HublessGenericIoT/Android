@@ -5,6 +5,7 @@ import android.app.Fragment;
 import android.util.Log;
 import android.widget.Toast;
 
+import com.hublessgenericiot.smartdevicecontroller.RoomsActivity;
 import com.hublessgenericiot.smartdevicecontroller.dummy.DummyContent;
 
 import org.eclipse.paho.client.mqttv3.IMqttDeliveryToken;
@@ -19,9 +20,9 @@ import java.util.List;
 public class SubscribeCallback implements MqttCallback
 {
 
-    Activity activity;
+    RoomsActivity activity;
 
-    public SubscribeCallback(Activity a)
+    public SubscribeCallback(RoomsActivity a)
     {
         activity = a;
     }
@@ -37,13 +38,15 @@ public class SubscribeCallback implements MqttCallback
     {
         Log.d("Message Arrived", message.toString());
         Toast.makeText(activity.getApplicationContext(), "Message: " + message.toString(), Toast.LENGTH_LONG).show();
-        /*for(DummyContent.DummyItem d : DummyContent.ITEMS)
+        for(DummyContent.DummyItem d : DummyContent.ITEMS)
         {
             if(!(message.toString().equals(d.id)))
             {
                 d.state = !(d.state);
             }
-        }*/
+        }
+
+        activity.updateViewPager();
     }
 
     @Override

@@ -116,7 +116,7 @@ public class RoomsActivity extends AppCompatActivity implements DeviceFragment.O
         //Toast.makeText(getApplicationContext(), x, Toast.LENGTH_SHORT).show();
 
 
-        HublessSdkService.testApi(HublessSdkService.getInstance(this));
+       // HublessSdkService.testApi(HublessSdkService.getInstance(this));
 
         mqttService = new HublessMQTTService();
         mqttService.connect(this);
@@ -163,8 +163,9 @@ public class RoomsActivity extends AppCompatActivity implements DeviceFragment.O
         if (requestCode == EditDeviceActivity.DEVICE_EDITED) {
             if (resultCode == RESULT_OK) {
                 boolean modified = data.getBooleanExtra("modified", false); // TODO: Don't use a string here
+                boolean newRoom = data.getBooleanExtra("newRoom", false); // TODO: Don't use a string here
                 if (modified) {
-                    updateViewPager();
+                    updateViewPager(newRoom);
                 }
             }
         }
@@ -219,7 +220,13 @@ public class RoomsActivity extends AppCompatActivity implements DeviceFragment.O
         registerReceiver(new WifiBroadcastReceiver(this, wifi), new IntentFilter(WifiManager.SCAN_RESULTS_AVAILABLE_ACTION));
     }
 
-    public void updateViewPager() {
+    public void updateViewPager(boolean newRoom) {
+        if(newRoom) {
+            finish();
+            startActivity(getIntent());
+        }
+        // TODO: Handle a room being removed!
+        // TODO: Maybe do the "newRoom" check more intelligently somehow
         for (int i = 0; i < mRoomsPagerAdapter.registeredFragments.size(); i++) {
             int key = mRoomsPagerAdapter.registeredFragments.keyAt(i);
             Fragment fragment = mRoomsPagerAdapter.registeredFragments.get(key);

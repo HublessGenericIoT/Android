@@ -158,6 +158,7 @@ public class EditDeviceActivityFragment extends Fragment {
         if(name == null) {
 
         } else {
+            // TODO: This code is copied and pasted from above = BAD!
             Toast.makeText(getActivity(), name, Toast.LENGTH_SHORT).show();
             LinkedList<String> rooms = new LinkedList<>();
             for (DummyContent.DummyItem d : DummyContent.ITEMS) {

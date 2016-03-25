@@ -20,6 +20,7 @@ import com.hublessgenericiot.smartdevicecontroller.dummy.DummyContent.DummyItem;
 import com.hublessgenericiot.smartdevicecontroller.hublesssdk.HublessSdkService;
 import com.hublessgenericiot.smartdevicecontroller.hublesssdk.IHublessSdkService;
 import com.hublessgenericiot.smartdevicecontroller.hublesssdk.apiresponses.DeviceListResponse;
+import com.hublessgenericiot.smartdevicecontroller.hublesssdk.models.Shadow;
 import com.hublessgenericiot.smartdevicecontroller.hublesssdk.models.ShadowedDevice;
 
 import java.util.ArrayList;
@@ -116,7 +117,7 @@ public class DeviceFragment extends Fragment {
                 public void onFailure(Call<DeviceListResponse> call, Throwable t) {
                     Log.e("APITEST", "Error! " + t.getLocalizedMessage());
 
-                    items = new LinkedList<>();
+                    /*items = new LinkedList<>();
                     for(DummyItem d : DummyContent.ITEMS) {
                         if(mRoom.equals("All Devices") ||  d.newDevice) {
                             items.add(d);
@@ -127,7 +128,7 @@ public class DeviceFragment extends Fragment {
 
                     // TODO: Sort alphabetically
                     adapter = new MyDeviceRecyclerViewAdapter(items, mListener);
-                    recyclerView.setAdapter(adapter);
+                    recyclerView.setAdapter(adapter);*/
                 }
             });
 
@@ -175,8 +176,8 @@ public class DeviceFragment extends Fragment {
      */
     public interface OnListFragmentInteractionListener {
         // TODO: Update argument type and name
-        void onDeviceClick(DummyItem item);
-        void onDeviceLongClick(DummyItem item);
+        void onDeviceClick(ShadowedDevice item);
+        void onDeviceLongClick(ShadowedDevice item);
     }
 
     public void reRender() {

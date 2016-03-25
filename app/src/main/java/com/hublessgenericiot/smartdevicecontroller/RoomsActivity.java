@@ -45,6 +45,7 @@ import com.google.android.gms.common.api.GoogleApiClient;
 import com.hublessgenericiot.smartdevicecontroller.dummy.DummyContent;
 import com.hublessgenericiot.smartdevicecontroller.hublesssdk.HublessMQTTService;
 import com.hublessgenericiot.smartdevicecontroller.hublesssdk.HublessSdkService;
+import com.hublessgenericiot.smartdevicecontroller.hublesssdk.models.ShadowedDevice;
 
 import java.util.ArrayList;
 import java.util.LinkedList;
@@ -147,14 +148,14 @@ public class RoomsActivity extends AppCompatActivity implements DeviceFragment.O
     }
 
     @Override
-    public void onDeviceClick(DummyContent.DummyItem item) {
-        mqttService.publish("proxy/topic/device", item.id, this);
+    public void onDeviceClick(ShadowedDevice item) {
+        mqttService.publish("proxy/topic/device", item.getDevice().getDefaultClientId(), this);
     }
 
     @Override
-    public void onDeviceLongClick(DummyContent.DummyItem item) {
+    public void onDeviceLongClick(ShadowedDevice item) {
         Intent intent = new Intent(this, EditDeviceActivity.class);
-        intent.putExtra(EditDeviceActivity.DEVICE_ID, item.id);
+        intent.putExtra(EditDeviceActivity.DEVICE_ID, Integer.parseInt(item.getDevice().getDefaultClientId()));
         startActivityForResult(intent, EditDeviceActivity.DEVICE_EDITED);
     }
 

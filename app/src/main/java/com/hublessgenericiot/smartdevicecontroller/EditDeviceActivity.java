@@ -1,9 +1,11 @@
 package com.hublessgenericiot.smartdevicecontroller;
 
 import android.app.Activity;
+import android.app.DialogFragment;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
+import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
@@ -14,7 +16,7 @@ import android.widget.Toast;
 import com.hublessgenericiot.smartdevicecontroller.dummy.DummyContent;
 
 
-public class EditDeviceActivity extends AppCompatActivity implements ItemDataHolder {
+public class EditDeviceActivity extends AppCompatActivity implements ItemDataHolder, NewRoomDialogFragment.NewRoomDialogListener {
 
     public static final String DEVICE_ID = "device_id";
     public static final int DEVICE_EDITED = 0;
@@ -56,12 +58,28 @@ public class EditDeviceActivity extends AppCompatActivity implements ItemDataHol
         return id;
     }
 
-    public void finishWithResult(boolean modified) {
+    public void finishWithResult(boolean modified, boolean newRoom) {
         Bundle conData = new Bundle();
         conData.putBoolean("modified", modified);
+        conData.putBoolean("newRoom", newRoom);
         Intent intent = new Intent();
         intent.putExtras(conData);
         setResult(RESULT_OK, intent);
         finish();
+    }
+
+    public void showNewRoomDialog() {
+        DialogFragment dialog = new NewRoomDialogFragment();
+        dialog.show(getFragmentManager(), "NewRoomDialogFragment");
+    }
+
+
+    @Override
+    public void onDialogResult(String roomName) {
+        for(Fragment fragment : getSupportFragmentManager().getFragments()) {
+            if(fragment instanceof EditDeviceActivityFragment) {
+                ((EditDeviceActivityFragment)fragment).returnNewRoom(roomName);
+            }
+        }
     }
 }

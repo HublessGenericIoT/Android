@@ -1,15 +1,20 @@
 package com.hublessgenericiot.smartdevicecontroller;
 
+import android.app.DialogFragment;
+import android.app.FragmentManager;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.database.DataSetObserver;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
+import android.support.v7.app.AlertDialog;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListAdapter;
 import android.widget.Spinner;
@@ -41,6 +46,7 @@ public class EditDeviceActivityFragment extends Fragment {
     private DummyContent.DummyItem device;
 
     ArrayAdapter roomsAdapter;
+    private boolean newRoom = false;
 
     public EditDeviceActivityFragment() {
     }
@@ -61,8 +67,8 @@ public class EditDeviceActivityFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_edit_device, container, false);
 
         LinkedList<String> rooms = new LinkedList<>();
-        for(DummyContent.DummyItem d : DummyContent.ITEMS) {
-            if(d.room != null && !rooms.contains(d.room)) {
+        for (DummyContent.DummyItem d : DummyContent.ITEMS) {
+            if (d.room != null && !rooms.contains(d.room)) {
                 rooms.add(d.room);
             }
         }
@@ -80,9 +86,24 @@ public class EditDeviceActivityFragment extends Fragment {
         device = DummyContent.ITEM_MAP.get(id);
         name.setText(device.name);
         room.setAdapter(roomsAdapter);
-        if(device.room != null) {
+        if (device.room != null) {
             room.setSelection(roomsAdapter.getPosition(device.room));
         }
+        room.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                if (roomsAdapter.getItem(position).toString().equals(getString(R.string.room_new))) {
+                    if(getActivity() instanceof EditDeviceActivity) {
+                        ((EditDeviceActivity) getActivity()).showNewRoomDialog();
+                    }
+                }
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
         network.setAdapter(roomsAdapter);
         notify.setChecked(device.state);
 
@@ -114,7 +135,7 @@ public class EditDeviceActivityFragment extends Fragment {
             case R.id.save:
                 updateDevice();
                 if(getActivity() instanceof EditDeviceActivity) {
-                    ((EditDeviceActivity) getActivity()).finishWithResult(true);
+                    ((EditDeviceActivity) getActivity()).finishWithResult(true, newRoom);
                 } else {
                     getActivity().finish();
                 }
@@ -130,6 +151,33 @@ public class EditDeviceActivityFragment extends Fragment {
             device.room = null;
         } else {
             device.room = roomsAdapter.getItem(room.getSelectedItemPosition()).toString();
+        }
+    }
+
+    public void returnNewRoom(String name) {
+        if(name == null) {
+
+        } else {
+            // TODO: This code is copied and pasted from above = BAD!
+            Toast.makeText(getActivity(), name, Toast.LENGTH_SHORT).show();
+            LinkedList<String> rooms = new LinkedList<>();
+            for (DummyContent.DummyItem d : DummyContent.ITEMS) {
+                if (d.room != null && !rooms.contains(d.room)) {
+                    rooms.add(d.room);
+                }
+            }
+            rooms.add(name);
+            Collections.sort(rooms);
+            rooms.add(getString(R.string.room_none));
+            rooms.add(getString(R.string.room_new));
+
+            String[] a = rooms.toArray(new String[rooms.size()]);
+            roomsAdapter = new ArrayAdapter<>(this.getActivity(),
+                    R.layout.simple_spinner_item,
+                    a);
+            room.setAdapter(roomsAdapter);
+            room.setSelection(roomsAdapter.getPosition(name));
+            newRoom = true; // TODO: If the selected room changes, set to false
         }
     }
 }

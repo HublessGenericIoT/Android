@@ -1,6 +1,6 @@
-package com.hublessgenericiot.smartdevicecontroller.hublesssdk.models;
+package com.hublessgenericiot.smartdevicecontroller.hublesssdk.devicesapi.models;
 
-import com.hublessgenericiot.smartdevicecontroller.hublesssdk.exceptions.TooManyAttributesException;
+import com.hublessgenericiot.smartdevicecontroller.hublesssdk.devicesapi.exceptions.TooManyAttributesException;
 
 import java.util.HashMap;
 

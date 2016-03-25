@@ -1,56 +1,34 @@
 package com.hublessgenericiot.smartdevicecontroller;
 
-import android.Manifest;
-import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.pm.PackageManager;
-import android.net.Uri;
-import android.net.wifi.ScanResult;
 import android.net.wifi.WifiManager;
 import android.os.Build;
-import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.design.widget.TabLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
-import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentStatePagerAdapter;
-import android.support.v4.content.ContextCompat;
 import android.support.v4.view.PagerAdapter;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.os.Bundle;
 import android.util.Log;
-import android.util.SparseArray;
-import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewGroup;
 
-import android.widget.TextView;
-import android.widget.Toast;
-
-import com.google.android.gms.appindexing.Action;
 import com.google.android.gms.appindexing.AppIndex;
 import com.google.android.gms.common.api.GoogleApiClient;
 
 import com.hublessgenericiot.smartdevicecontroller.dummy.DummyContent;
 import com.hublessgenericiot.smartdevicecontroller.hublesssdk.HublessMQTTService;
-import com.hublessgenericiot.smartdevicecontroller.hublesssdk.HublessSdkService;
-
-import java.util.ArrayList;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Timer;
-import java.util.TimerTask;
 
 public class RoomsActivity extends AppCompatActivity implements DeviceFragment.OnListFragmentInteractionListener {
 
@@ -115,7 +93,7 @@ public class RoomsActivity extends AppCompatActivity implements DeviceFragment.O
         client = new GoogleApiClient.Builder(this).addApi(AppIndex.API).build();
         //Toast.makeText(getApplicationContext(), x, Toast.LENGTH_SHORT).show();
 
-
+        //only for debugging, testing, and example purposes. No need to actually use this.
        // HublessSdkService.testApi(HublessSdkService.getInstance(this));
 
         mqttService = new HublessMQTTService();

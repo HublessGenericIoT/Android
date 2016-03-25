@@ -1,14 +1,17 @@
-package com.hublessgenericiot.smartdevicecontroller.hublesssdk;
+package com.hublessgenericiot.smartdevicecontroller.hublesssdk.devicesapi;
 
 import android.content.Context;
 import android.support.annotation.Nullable;
 import android.util.Log;
 
 import com.hublessgenericiot.smartdevicecontroller.R;
-import com.hublessgenericiot.smartdevicecontroller.hublesssdk.apiresponses.DeviceListResponse;
-import com.hublessgenericiot.smartdevicecontroller.hublesssdk.apiresponses.DeviceResponse;
-import com.hublessgenericiot.smartdevicecontroller.hublesssdk.apiresponses.DeviceUpdatedResponse;
-import com.hublessgenericiot.smartdevicecontroller.hublesssdk.models.IotAttributesMap;
+import com.hublessgenericiot.smartdevicecontroller.hublesssdk.devicesapi.apiresponses.DeviceCreatedResponse;
+import com.hublessgenericiot.smartdevicecontroller.hublesssdk.devicesapi.apiresponses.DeviceListResponse;
+import com.hublessgenericiot.smartdevicecontroller.hublesssdk.devicesapi.apiresponses.DeviceResponse;
+import com.hublessgenericiot.smartdevicecontroller.hublesssdk.devicesapi.apiresponses.DeviceUpdatedResponse;
+import com.hublessgenericiot.smartdevicecontroller.hublesssdk.devicesapi.models.DeviceCreator;
+import com.hublessgenericiot.smartdevicecontroller.hublesssdk.devicesapi.models.DeviceType;
+import com.hublessgenericiot.smartdevicecontroller.hublesssdk.devicesapi.models.IotAttributesMap;
 
 import java.io.IOException;
 
@@ -26,7 +29,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
  * A singleton and factory for the Retrofit instance for the API.
  */
 public class HublessSdkService {
-    public static IHublessSdkService INSTANCE;
+    private static IHublessSdkService INSTANCE;
 
     /**
      * Returns the instance of the HublessSdk that was created by Retrofit.
@@ -68,6 +71,22 @@ public class HublessSdkService {
      * @param instance an initialized instance of the Service.
      */
     public static void testApi(final IHublessSdkService instance) {
+
+
+        instance.createDevice(new DeviceCreator("MyDevice", "LivingRoom", DeviceType.LIGHT)).enqueue(new Callback<DeviceCreatedResponse>() {
+            @Override
+            public void onResponse(Call<DeviceCreatedResponse> call, retrofit2.Response<DeviceCreatedResponse> response) {
+                Log.d("APITEST", "URL: "+ call.request().url());
+                Log.d("APITEST", response.body().getStatus());
+                Log.d("APITEST", "Created ID: " + response.body().getPayload().getThingName());
+            }
+
+            @Override
+            public void onFailure(Call<DeviceCreatedResponse> call, Throwable t) {
+
+            }
+        });
+
         instance.getAllDevices().enqueue(new Callback<DeviceListResponse>() {
             @Override
             public void onResponse(Call<DeviceListResponse> call, retrofit2.Response<DeviceListResponse> response) {

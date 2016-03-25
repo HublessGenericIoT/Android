@@ -72,6 +72,13 @@ public class HublessSdkService {
      */
     public static void testApi(final IHublessSdkService instance) {
 
+        instance.getAllDevices().enqueue(new HublessCallback<DeviceListResponse>() {
+            @Override
+            public void doOnResponse(Call<DeviceListResponse> call, retrofit2.Response<DeviceListResponse> response) {
+                Log.d("API", "This is an example of how to use the HublessCallback.");
+            }
+        });
+
 
         instance.createDevice(new DeviceCreator("MyDevice", "LivingRoom", DeviceType.LIGHT)).enqueue(new Callback<DeviceCreatedResponse>() {
             @Override

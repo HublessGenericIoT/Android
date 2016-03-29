@@ -19,6 +19,7 @@
 
     <Button
         style="@style/Button"
+        android:id="@+id/automation_button"
         android:text="ADD AUTOMATION"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

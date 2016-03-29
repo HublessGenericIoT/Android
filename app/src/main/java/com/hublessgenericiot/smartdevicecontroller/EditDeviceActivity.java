@@ -1,13 +1,18 @@
 package com.hublessgenericiot.smartdevicecontroller;
 
 import android.app.Activity;
+import android.app.Dialog;
 import android.app.DialogFragment;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Debug;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
@@ -33,6 +38,17 @@ public class EditDeviceActivity extends AppCompatActivity implements ItemDataHol
         setSupportActionBar(toolbar);
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
+        // Create new fragment and transaction
+        Fragment newFragment = new EditDeviceActivityFragment();
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+
+// Replace whatever is in the fragment_container view with this fragment,
+// and add the transaction to the back stack
+        transaction.replace(R.id.fragment, newFragment);
+
+// Commit the transaction
+        transaction.commit();
     }
 
     @Override
@@ -71,6 +87,27 @@ public class EditDeviceActivity extends AppCompatActivity implements ItemDataHol
     public void showNewRoomDialog() {
         DialogFragment dialog = new NewRoomDialogFragment();
         dialog.show(getFragmentManager(), "NewRoomDialogFragment");
+    }
+
+    public void showAutomationDialog() {
+
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        AutomationDialogFragment newFragment = new AutomationDialogFragment();
+
+//        if (true) {
+//            // The device is using a large layout, so show the fragment as a dialog
+//            newFragment.show(fragmentManager, "dialog");
+//        } else {
+            // The device is smaller, so show the fragment fullscreen
+            FragmentTransaction transaction = fragmentManager.beginTransaction();
+            // For a little polish, specify a transition animation
+            transaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
+            // To make it fullscreen, use the 'content' root view as the container
+            // for the fragment, which is always the root view for the activity
+            transaction.add(R.id.fragment, newFragment)
+                    .addToBackStack(null).commit();
+           //transaction.add(newFragment, "hi");
+//        }
     }
 
 

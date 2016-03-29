@@ -155,7 +155,7 @@ public class RoomsActivity extends AppCompatActivity implements DeviceFragment.O
     @Override
     public void onDeviceLongClick(ShadowedDevice item) {
         Intent intent = new Intent(this, EditDeviceActivity.class);
-        intent.putExtra(EditDeviceActivity.DEVICE_ID, Integer.parseInt(item.getDevice().getDefaultClientId()));
+        intent.putExtra(EditDeviceActivity.DEVICE_ID, item.getDevice().getDefaultClientId());
         startActivityForResult(intent, EditDeviceActivity.DEVICE_EDITED);
     }
 

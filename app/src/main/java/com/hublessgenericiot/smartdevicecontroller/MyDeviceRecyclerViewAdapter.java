@@ -18,7 +18,6 @@ import java.util.List;
 /**
  * {@link RecyclerView.Adapter} that can display a {@link DummyItem} and makes a call to the
  * specified {@link OnListFragmentInteractionListener}.
- * TODO: Replace the implementation with code for your data type.
  */
 public class MyDeviceRecyclerViewAdapter extends RecyclerView.Adapter<MyDeviceRecyclerViewAdapter.ViewHolder> {
 
@@ -41,7 +40,7 @@ public class MyDeviceRecyclerViewAdapter extends RecyclerView.Adapter<MyDeviceRe
     @Override
     public void onBindViewHolder(final ViewHolder holder, int position) {
         holder.mItem = mValues.get(position);
-        if(mValues.get(position).getDevice() != null) {
+        if(mValues.get(position).getDevice() == null) { //TODO have a field for this or get rid of it
             holder.mNewDeviceView.setVisibility(View.VISIBLE);
         } else {
             holder.mNewDeviceView.setVisibility(View.GONE);

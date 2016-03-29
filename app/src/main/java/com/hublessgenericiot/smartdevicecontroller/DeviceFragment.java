@@ -96,15 +96,16 @@ public class DeviceFragment extends Fragment {
                 @Override
                 public void onResponse(Call<DeviceListResponse> call, retrofit2.Response<DeviceListResponse> response) {
                     Log.d("DeviceFragment", "URL: " + call.request().url());
-                    Toast.makeText(getActivity().getApplicationContext(),
-                            response.body().getPayload().get(0).getDevice().getThingName(), Toast.LENGTH_LONG).show();
+                    Log.d("XXXXX: ", response.body().toString());
+                    //Toast.makeText(getActivity().getApplicationContext(),
+                    //        response.body().getPayload().get(0).getDevice().getThingName(), Toast.LENGTH_LONG).show();
 
                     devices = new ArrayList<ShadowedDevice>();
                     for (ShadowedDevice d : response.body().getPayload()) {
                         if (mRoom.equals("All Devices")) {
                             devices.add(d);
-                        } else if (!(d.getDevice().getThingName().equals(mRoom))) {  //TODO add room to attributes
-                            devices.add(d);
+                        /*} else if (!(d.getDevice().getThingName().equals(mRoom))) {  //TODO add room to attributes
+                            devices.add(d);*/
                         }
                     }
 
@@ -116,19 +117,7 @@ public class DeviceFragment extends Fragment {
                 @Override
                 public void onFailure(Call<DeviceListResponse> call, Throwable t) {
                     Log.e("APITEST", "Error! " + t.getLocalizedMessage());
-
-                    /*items = new LinkedList<>();
-                    for(DummyItem d : DummyContent.ITEMS) {
-                        if(mRoom.equals("All Devices") ||  d.newDevice) {
-                            items.add(d);
-                        } else if(d.room != null && d.room.equals(mRoom)) {
-                            items.add(d);
-                        }
-                    }
-
-                    // TODO: Sort alphabetically
-                    adapter = new MyDeviceRecyclerViewAdapter(items, mListener);
-                    recyclerView.setAdapter(adapter);*/
+                    //TODO give some kind of error message?
                 }
             });
 

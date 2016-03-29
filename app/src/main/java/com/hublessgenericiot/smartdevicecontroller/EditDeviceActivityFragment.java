@@ -1,9 +1,11 @@
 package com.hublessgenericiot.smartdevicecontroller;
 
+import android.app.Activity;
 import android.content.Context;
 import android.database.DataSetObserver;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -18,14 +20,20 @@ import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.hublessgenericiot.smartdevicecontroller.dummy.DummyContent;
+import com.hublessgenericiot.smartdevicecontroller.hublesssdk.HublessSdkService;
+import com.hublessgenericiot.smartdevicecontroller.hublesssdk.IHublessSdkService;
+import com.hublessgenericiot.smartdevicecontroller.hublesssdk.apiresponses.DeviceListResponse;
+import com.hublessgenericiot.smartdevicecontroller.hublesssdk.models.ShadowedDevice;
 
 import java.lang.reflect.Array;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.LinkedList;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import retrofit2.Call;
+import retrofit2.Callback;
 
 /**
  * Edit a device
@@ -38,7 +46,7 @@ public class EditDeviceActivityFragment extends Fragment {
     @Bind(R.id.notify) Switch notify;
 
     private String id;
-    private DummyContent.DummyItem device;
+    private ShadowedDevice device;
 
     ArrayAdapter roomsAdapter;
 
@@ -57,34 +65,51 @@ public class EditDeviceActivityFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        final Activity activity = getActivity();
 
-        View view = inflater.inflate(R.layout.fragment_edit_device, container, false);
+        final View view = inflater.inflate(R.layout.fragment_edit_device, container, false);
 
-        LinkedList<String> rooms = new LinkedList<>();
-        for(DummyContent.DummyItem d : DummyContent.ITEMS) {
-            if(d.room != null && !rooms.contains(d.room)) {
-                rooms.add(d.room);
+        IHublessSdkService instance = HublessSdkService.getInstance(getActivity());
+        instance.getAllDevices().enqueue(new Callback<DeviceListResponse>() {
+            @Override
+            public void onResponse(Call<DeviceListResponse> call, retrofit2.Response<DeviceListResponse> response) {
+                Log.d("DeviceFragment", "URL: " + call.request().url());
+                LinkedList<String> rooms = new LinkedList<>();
+                for(ShadowedDevice d : response.body().getPayload()) {  //TODO save the device list in a global somewhere?
+                    /*if(d.room != null && !rooms.contains(d.room)) {   //TODO add room attribute
+                        rooms.add(d.room);
+                    }*/
+                    if(d.getDevice().getDefaultClientId().equals(id)){
+                        device = d;
+                        break;
+                    }
+                }
+                Collections.sort(rooms);
+                rooms.add(getString(R.string.room_none));
+                rooms.add(getString(R.string.room_new));
+
+                String[] a = rooms.toArray(new String[rooms.size()]);
+
+                roomsAdapter = new ArrayAdapter<>(activity,
+                        R.layout.simple_spinner_item,
+                        a);
+
+                ButterKnife.bind(this, view);
+                //device = DummyContent.ITEM_MAP.get(id);
+                name.setText(device.getDevice().getThingName());
+                room.setAdapter(roomsAdapter);
+                /*if(device.room != null) {     //TODO add room attribute
+                    room.setSelection(roomsAdapter.getPosition(device.room));
+                }*/
+                network.setAdapter(roomsAdapter);
+                notify.setChecked(true); //TODO add device.state);
             }
-        }
-        Collections.sort(rooms);
-        rooms.add(getString(R.string.room_none));
-        rooms.add(getString(R.string.room_new));
 
-        String[] a = rooms.toArray(new String[rooms.size()]);
-
-        roomsAdapter = new ArrayAdapter<>(this.getActivity(),
-                R.layout.simple_spinner_item,
-                a);
-
-        ButterKnife.bind(this, view);
-        device = DummyContent.ITEM_MAP.get(id);
-        name.setText(device.name);
-        room.setAdapter(roomsAdapter);
-        if(device.room != null) {
-            room.setSelection(roomsAdapter.getPosition(device.room));
-        }
-        network.setAdapter(roomsAdapter);
-        notify.setChecked(device.state);
+            @Override
+            public void onFailure(Call<DeviceListResponse> call, Throwable t) {
+                Log.e("APITEST", "Error! " + t.getLocalizedMessage());
+            }
+        });
 
         return view;
     }
@@ -124,12 +149,13 @@ public class EditDeviceActivityFragment extends Fragment {
     }
 
     private void updateDevice() {
-        device.name = name.getText().toString();
+        //TODO actually make this happen
+        /*device.name = name.getText().toString();
         String tempRoom = roomsAdapter.getItem(room.getSelectedItemPosition()).toString();
         if(tempRoom.equals(getString(R.string.room_none))) {
             device.room = null;
         } else {
             device.room = roomsAdapter.getItem(room.getSelectedItemPosition()).toString();
-        }
+        }*/
     }
 }

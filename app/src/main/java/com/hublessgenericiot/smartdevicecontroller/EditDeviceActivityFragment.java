@@ -16,6 +16,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.ListAdapter;
 import android.widget.Spinner;
 import android.widget.SpinnerAdapter;
@@ -41,6 +42,7 @@ public class EditDeviceActivityFragment extends Fragment {
     @Bind(R.id.room) Spinner room;
     @Bind(R.id.network) Spinner network;
     @Bind(R.id.notify) Switch notify;
+    @Bind(R.id.automation_button) Button automationButton;
 
     private String id;
     private DummyContent.DummyItem device;
@@ -106,6 +108,15 @@ public class EditDeviceActivityFragment extends Fragment {
         });
         network.setAdapter(roomsAdapter);
         notify.setChecked(device.state);
+
+        automationButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(getActivity() instanceof EditDeviceActivity) {
+                    ((EditDeviceActivity) getActivity()).showAutomationDialog();
+                }
+            }
+        });
 
         return view;
     }

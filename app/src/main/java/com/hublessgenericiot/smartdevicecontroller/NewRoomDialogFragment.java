@@ -20,7 +20,7 @@ public class NewRoomDialogFragment extends DialogFragment {
     public interface NewRoomDialogListener {
 //        public void onDialogPositiveClick(NewRoomDialogFragment dialog);
 //        public void onDialogNegativeClick(NewRoomDialogFragment dialog);
-        public void onDialogResult(String roomName);
+        public void onNewRoomDialogResult(String roomName);
     }
 
     // Use this instance of the interface to deliver action events
@@ -37,12 +37,12 @@ public class NewRoomDialogFragment extends DialogFragment {
                 .setView(R.layout.fragment_new_room_dialog)
                 .setPositiveButton("Create", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
-                        mListener.onDialogResult(((EditText)alertDialog.findViewById(R.id.new_room_name)).getText().toString());
+                        mListener.onNewRoomDialogResult(((EditText)alertDialog.findViewById(R.id.new_room_name)).getText().toString());
                     }
                 })
                 .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
-                        mListener.onDialogResult(null);
+                        mListener.onNewRoomDialogResult(null);
                        // mListener.onDialogNegativeClick(NewRoomDialogFragment.this);
                     }
                 });

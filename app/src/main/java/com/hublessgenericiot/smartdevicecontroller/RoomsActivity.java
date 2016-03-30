@@ -95,7 +95,7 @@ public class RoomsActivity extends AppCompatActivity implements DeviceFragment.O
         //Toast.makeText(getApplicationContext(), x, Toast.LENGTH_SHORT).show();
 
         //only for debugging, testing, and example purposes. No need to actually use this.
-        HublessSdkService.testApi(HublessSdkService.getInstance(this));
+//        HublessSdkService.testApi(HublessSdkService.getInstance(this));
 
         mqttService = new HublessMQTTService();
         mqttService.connect(this);

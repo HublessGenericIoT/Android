@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.app.Dialog;
 import android.app.DialogFragment;
 import android.content.Intent;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.os.Debug;
 import android.support.design.widget.Snackbar;
@@ -21,7 +22,7 @@ import android.widget.Toast;
 import com.hublessgenericiot.smartdevicecontroller.dummy.DummyContent;
 
 
-public class EditDeviceActivity extends AppCompatActivity implements ItemDataHolder, NewRoomDialogFragment.NewRoomDialogListener {
+public class EditDeviceActivity extends AppCompatActivity implements ItemDataHolder, NewRoomDialogFragment.NewRoomDialogListener, AutomationDialogFragment.AutomationDialogListener {
 
     public static final String DEVICE_ID = "device_id";
     public static final int DEVICE_EDITED = 0;
@@ -107,16 +108,32 @@ public class EditDeviceActivity extends AppCompatActivity implements ItemDataHol
             transaction.add(R.id.fragment, newFragment)
                     .addToBackStack(null).commit();
            //transaction.add(newFragment, "hi");
+            this.getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_close_white_24dp);
+            this.getSupportActionBar().setTitle("Add Automation");
 //        }
     }
 
+    @Override
+    public void onAutomationDialogResult() {
+        Toast.makeText(this, "Automation dialog result", Toast.LENGTH_SHORT).show();
+//        for(Fragment fragment : getSupportFragmentManager().getFragments()) {
+//            if(fragment instanceof EditDeviceActivityFragment) {
+//                ((EditDeviceActivityFragment)fragment).returnNewRoom(roomName);
+//            }
+//        }
+    }
 
     @Override
-    public void onDialogResult(String roomName) {
+    public void onNewRoomDialogResult(String roomName) {
         for(Fragment fragment : getSupportFragmentManager().getFragments()) {
             if(fragment instanceof EditDeviceActivityFragment) {
                 ((EditDeviceActivityFragment)fragment).returnNewRoom(roomName);
             }
         }
+    }
+
+    public void revertMenu() {
+        this.getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_arrow_back_white_24dp);
+        this.getSupportActionBar().setTitle("Edit Device");
     }
 }

@@ -11,9 +11,13 @@ import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
 import android.support.v7.view.ContextThemeWrapper;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
+import android.widget.Toast;
 import android.widget.Toolbar;
 
 /**
@@ -21,24 +25,36 @@ import android.widget.Toolbar;
  */
 public class AutomationDialogFragment extends DialogFragment {
 
+    public interface AutomationDialogListener {
+        public void onAutomationDialogResult();
+    }
+
+    // Use this instance of the interface to deliver action events
+    AutomationDialogListener mListener;
+
     /** The system calls this to get the DialogFragment's layout, regardless
      of whether it's being displayed as a dialog or an embedded fragment. */
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-        // create ContextThemeWrapper from the original Activity Context with the custom theme
-        final Context contextThemeWrapper = new ContextThemeWrapper(getActivity(), android.R.style.Theme_Material_DialogWhenLarge);
-
-        // clone the inflater using the ContextThemeWrapper
-        LayoutInflater localInflater = inflater.cloneInContext(contextThemeWrapper);
-
-        getActivity().setTitle("FML");
-        ActionBar bar = getActivity().getActionBar();
-        bar.setBackgroundDrawable(new ColorDrawable(Color.parseColor("#0000ff")));
-
         // Inflate the layout to use as dialog or embedded fragment
-        return localInflater.inflate(R.layout.fragment_automation_dialog, container, false);
+        return inflater.inflate(R.layout.fragment_automation_dialog, container, false);
+    }
+
+    // Override the Fragment.onAttach() method to instantiate the NoticeDialogListener
+    @Override
+    public void onAttach(Activity activity) {
+        super.onAttach(activity);
+        // Verify that the host activity implements the callback interface
+        try {
+            // Instantiate the NoticeDialogListener so we can send events to the host
+            mListener = (AutomationDialogListener) activity;
+        } catch (ClassCastException e) {
+            // The activity doesn't implement the interface, throw exception
+            throw new ClassCastException(activity.toString()
+                    + " must implement NewRoomDialogListener");
+        }
     }
 
     /** The system calls this only when creating the layout in a dialog. */
@@ -51,5 +67,37 @@ public class AutomationDialogFragment extends DialogFragment {
         Dialog dialog = super.onCreateDialog(savedInstanceState);
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         return dialog;
+    }
+
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setHasOptionsMenu(true);
+    }
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        // TODO Add your menu entries here
+        menu.clear();
+        inflater.inflate(R.menu.fragment_automation_dialog, menu);
+        super.onCreateOptionsMenu(menu, inflater);
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        if(getActivity() instanceof EditDeviceActivity) {
+            ((EditDeviceActivity) getActivity()).revertMenu();
+        }
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch(item.getItemId()) {
+            case R.id.save:
+                Toast.makeText(getActivity(), "sdhfjkshfjsdfkh!", Toast.LENGTH_LONG).show();
+                break;
+        }
+        return super.onOptionsItemSelected(item);
     }
 }

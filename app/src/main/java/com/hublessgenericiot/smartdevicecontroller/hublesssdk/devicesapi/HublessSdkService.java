@@ -11,7 +11,6 @@ import com.hublessgenericiot.smartdevicecontroller.hublesssdk.devicesapi.apiresp
 import com.hublessgenericiot.smartdevicecontroller.hublesssdk.devicesapi.apiresponses.DeviceUpdatedResponse;
 import com.hublessgenericiot.smartdevicecontroller.hublesssdk.devicesapi.models.DeviceCreator;
 import com.hublessgenericiot.smartdevicecontroller.hublesssdk.devicesapi.models.DeviceType;
-import com.hublessgenericiot.smartdevicecontroller.hublesssdk.devicesapi.models.IotAttributesMap;
 
 import java.io.IOException;
 
@@ -80,69 +79,45 @@ public class HublessSdkService {
         });
 
 
-        instance.createDevice(new DeviceCreator("MyDevice", "LivingRoom", DeviceType.LIGHT)).enqueue(new Callback<DeviceCreatedResponse>() {
+        instance.createDevice(new DeviceCreator("MyDevice", "LivingRoom", DeviceType.LIGHT)).enqueue(new HublessCallback<DeviceCreatedResponse>() {
             @Override
-            public void onResponse(Call<DeviceCreatedResponse> call, retrofit2.Response<DeviceCreatedResponse> response) {
+            public void doOnResponse(Call<DeviceCreatedResponse> call, retrofit2.Response<DeviceCreatedResponse> response) {
                 Log.d("APITEST", "URL: "+ call.request().url());
                 Log.d("APITEST", response.body().getStatus());
-                Log.d("APITEST", "Created ID: " + response.body().getPayload().getThingName());
-            }
-
-            @Override
-            public void onFailure(Call<DeviceCreatedResponse> call, Throwable t) {
-
+                Log.d("APITEST", "Created ID: " + response.body().getPayload().getId());
             }
         });
 
-        instance.getAllDevices().enqueue(new Callback<DeviceListResponse>() {
+        instance.getAllDevices().enqueue(new HublessCallback<DeviceListResponse>() {
             @Override
-            public void onResponse(Call<DeviceListResponse> call, retrofit2.Response<DeviceListResponse> response) {
-                Log.d("APITEST", "URL: "+ call.request().url());
+            public void doOnResponse(Call<DeviceListResponse> call, retrofit2.Response<DeviceListResponse> response) {
+                Log.d("APITEST", "URL: " + call.request().url());
                 //Log.d("APITEST", response.body().getStatus());
                 //Log.d("APITEST", "Size: " + response.body().getPayload().size());
                 //Log.d("APITEST", response.body().getPayload().get(0).getDevice().getThingName());
             }
-
-            @Override
-            public void onFailure(Call<DeviceListResponse> call, Throwable t) {
-                Log.e("APITEST", "Error! " + t.getLocalizedMessage());
-            }
         });
 
-        instance.getDeviceWithName("myLightBulb").enqueue(new Callback<DeviceResponse>() {
+        instance.getDevice("2c51f514-0aba-444b-81d9-eec49b8a6370").enqueue(new HublessCallback<DeviceResponse>() {
             @Override
-            public void onResponse(Call<DeviceResponse> call, retrofit2.Response<DeviceResponse> response) {
-                Log.d("APITEST", "URL: "+ call.request().url());
+            public void doOnResponse(Call<DeviceResponse> call, retrofit2.Response<DeviceResponse> response) {
+                Log.d("APITEST", "URL: " + call.request().url());
                 Log.d("APITEST", response.body().getStatus());
-                Log.d("APITEST", "Device Name: " + response.body().getPayload().getDevice().getThingName());
+                Log.d("APITEST", "Device Name: " + response.body().getPayload().getName());
 
-                IotAttributesMap attributes = response.body().getPayload().getDevice().getAttributes();
-                attributes.clear();
-                attributes.put("welcome", "tothejungle");
+                DeviceCreator dc = new DeviceCreator(response.body().getPayload());
+                dc.setRoom("BensBedroom");
 
-                instance.putDeviceWithAttributes("myLightBulb", response.body().getPayload().getDevice()).enqueue(new Callback<DeviceUpdatedResponse>() {
+                instance.updateDevice("2c51f514-0aba-444b-81d9-eec49b8a6370", dc).enqueue(new HublessCallback<DeviceUpdatedResponse>() {
                     @Override
-                    public void onResponse(Call<DeviceUpdatedResponse> call, retrofit2.Response<DeviceUpdatedResponse> response) {
+                    public void doOnResponse(Call<DeviceUpdatedResponse> call, retrofit2.Response<DeviceUpdatedResponse> response) {
                         Log.d("APITEST", "URL: "+ call.request().url());
                         Log.d("APITEST", "Status: " + response.message());
                         Log.d("APITEST", response.body().getStatus());
                     }
-
-                    @Override
-                    public void onFailure(Call<DeviceUpdatedResponse> call, Throwable t) {
-                        Log.e("APITEST", "Error! " + t.getLocalizedMessage());
-                    }
                 });
-
-            }
-
-            @Override
-            public void onFailure(Call<DeviceResponse> call, Throwable t) {
-                Log.e("APITEST", "Error! " + t.getLocalizedMessage());
             }
         });
-
-
     }
 
     /**

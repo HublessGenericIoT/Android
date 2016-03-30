@@ -39,7 +39,7 @@ public interface IHublessSdkService {
      * @return The ShadowedDevice in the form of a HublessApiResponse.
      */
     @GET("devices/{id}")
-    Call<DeviceResponse> getDeviceWithName(@Path("id") String id);
+    Call<DeviceResponse> getDevice(@Path("id") String id);
 
     /**
      * A way to update a device's attributes. Note: DEVICE NAMES CANNOT CHANGE
@@ -48,7 +48,7 @@ public interface IHublessSdkService {
      * @return The status of the update.
      */
     @PUT("devices/{id}")
-    Call<DeviceUpdatedResponse> putDeviceWithAttributes(@Path("id") String id, @Body Device device);
+    Call<DeviceUpdatedResponse> updateDevice(@Path("id") String id, @Body DeviceCreator device);
 
     /**
      * An endpoint to create the device on AWS. Give a populated DeviceCreator

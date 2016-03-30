@@ -15,6 +15,14 @@ public class DeviceCreator extends Device {
         this.type = type;
     }
 
+    public DeviceCreator(Device from) {
+        this.setName(from.getName());
+        this.setRoom(from.getRoom());
+        this.setUser(from.getUser()); //defaulted to "user" user. ie, not a test user.
+        this.type = from.getType();
+        this.id = from.getId();
+    }
+
     public String getName() {
         return name;
     }
@@ -33,6 +41,9 @@ public class DeviceCreator extends Device {
     }
 
     private void confirmCompliance(String in) {
+        if(in == null || in.isEmpty()) {
+            return;
+        }
         Pattern p = Pattern.compile("[a-zA-Z0-9_.,@/:#-]+");
         Matcher m = p.matcher(in);
         boolean b = m.matches();

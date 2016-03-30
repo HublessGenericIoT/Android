@@ -44,11 +44,11 @@ public class EditDeviceActivity extends AppCompatActivity implements ItemDataHol
         Fragment newFragment = new EditDeviceActivityFragment();
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
 
-// Replace whatever is in the fragment_container view with this fragment,
-// and add the transaction to the back stack
+        // Replace whatever is in the fragment_container view with this fragment,
+        // and add the transaction to the back stack
         transaction.replace(R.id.fragment, newFragment);
 
-// Commit the transaction
+        // Commit the transaction
         transaction.commit();
     }
 
@@ -95,32 +95,18 @@ public class EditDeviceActivity extends AppCompatActivity implements ItemDataHol
         FragmentManager fragmentManager = getSupportFragmentManager();
         AutomationDialogFragment newFragment = new AutomationDialogFragment();
 
-//        if (true) {
-//            // The device is using a large layout, so show the fragment as a dialog
-//            newFragment.show(fragmentManager, "dialog");
-//        } else {
-            // The device is smaller, so show the fragment fullscreen
-            FragmentTransaction transaction = fragmentManager.beginTransaction();
-            // For a little polish, specify a transition animation
-            transaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
-            // To make it fullscreen, use the 'content' root view as the container
-            // for the fragment, which is always the root view for the activity
-            transaction.add(R.id.fragment, newFragment)
-                    .addToBackStack(null).commit();
-           //transaction.add(newFragment, "hi");
-            this.getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_close_white_24dp);
-            this.getSupportActionBar().setTitle("Add Automation");
-//        }
+        FragmentTransaction transaction = fragmentManager.beginTransaction();
+        transaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
+        transaction.add(R.id.fragment, newFragment)
+                .addToBackStack(null).commit();
+
+        this.getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_close_white_24dp);
+        this.getSupportActionBar().setTitle("Add Automation");
     }
 
     @Override
     public void onAutomationDialogResult() {
         Toast.makeText(this, "Automation dialog result", Toast.LENGTH_SHORT).show();
-//        for(Fragment fragment : getSupportFragmentManager().getFragments()) {
-//            if(fragment instanceof EditDeviceActivityFragment) {
-//                ((EditDeviceActivityFragment)fragment).returnNewRoom(roomName);
-//            }
-//        }
     }
 
     @Override

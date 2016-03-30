@@ -95,7 +95,7 @@ public class AutomationDialogFragment extends DialogFragment {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch(item.getItemId()) {
             case R.id.save:
-                Toast.makeText(getActivity(), "sdhfjkshfjsdfkh!", Toast.LENGTH_LONG).show();
+                Toast.makeText(getActivity(), "Automation added.", Toast.LENGTH_SHORT).show();
                 break;
         }
         return super.onOptionsItemSelected(item);

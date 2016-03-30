@@ -6,14 +6,12 @@ import java.util.regex.Pattern;
 /**
  * Object to send the data to create a new device on AWS.
  */
-public class DeviceCreator {
-    private String name;
-    private String room;
-    private DeviceType type;
+public class DeviceCreator extends Device {
 
     public DeviceCreator(String name, String room, DeviceType type) {
         this.setName(name);
         this.setRoom(room);
+        this.setUser("1"); //defaulted to "user" user. ie, not a test user.
         this.type = type;
     }
 
@@ -48,5 +46,9 @@ public class DeviceCreator {
 
     public void setType(DeviceType type) {
         this.type = type;
+    }
+
+    public void setUser(String user) {
+        this.user = user;
     }
 }

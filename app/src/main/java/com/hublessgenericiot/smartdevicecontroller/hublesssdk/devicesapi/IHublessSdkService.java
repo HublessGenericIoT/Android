@@ -35,24 +35,20 @@ public interface IHublessSdkService {
     /**
      * Used to get a specific device and its shadow by its name.
      *
-     * Future plans:
-     *  - Right now, the name of the device is its human readable name. Eventually this will
-     *      be changed to an ID with the owner of the device stored in the metadata.
-     *
-     * @param name The name of the device.
+     * @param id The id of the device.
      * @return The ShadowedDevice in the form of a HublessApiResponse.
      */
-    @GET("devices/{name}")
-    Call<DeviceResponse> getDeviceWithName(@Path("name") String name);
+    @GET("devices/{id}")
+    Call<DeviceResponse> getDeviceWithName(@Path("id") String id);
 
     /**
      * A way to update a device's attributes. Note: DEVICE NAMES CANNOT CHANGE
-     * @param name The name of the device in the API.
+     * @param id The id of the device in the API.
      * @param device The new device object with attributes to be written.
      * @return The status of the update.
      */
-    @PUT("devices/{name}")
-    Call<DeviceUpdatedResponse> putDeviceWithAttributes(@Path("name") String name, @Body Device device);
+    @PUT("devices/{id}")
+    Call<DeviceUpdatedResponse> putDeviceWithAttributes(@Path("id") String id, @Body Device device);
 
     /**
      * An endpoint to create the device on AWS. Give a populated DeviceCreator

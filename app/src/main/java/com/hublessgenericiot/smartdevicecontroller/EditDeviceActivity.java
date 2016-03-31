@@ -1,25 +1,16 @@
 package com.hublessgenericiot.smartdevicecontroller;
 
-import android.app.Activity;
-import android.app.Dialog;
 import android.app.DialogFragment;
 import android.content.Intent;
-import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
-import android.os.Debug;
-import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
-
-
-import com.hublessgenericiot.smartdevicecontroller.dummy.DummyContent;
 
 
 public class EditDeviceActivity extends AppCompatActivity implements ItemDataHolder, NewRoomDialogFragment.NewRoomDialogListener, AutomationDialogFragment.AutomationDialogListener {

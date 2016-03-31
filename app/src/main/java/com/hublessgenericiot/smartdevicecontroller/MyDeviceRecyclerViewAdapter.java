@@ -7,10 +7,9 @@ import android.view.ViewGroup;
 import android.widget.CompoundButton;
 import android.widget.Switch;
 import android.widget.TextView;
-import android.widget.ToggleButton;
 
 import com.hublessgenericiot.smartdevicecontroller.DeviceFragment.OnListFragmentInteractionListener;
-import com.hublessgenericiot.smartdevicecontroller.dummy.DummyContent.DummyItem;
+import com.hublessgenericiot.smartdevicecontroller.dummy.SavedDeviceList.DummyItem;
 import com.hublessgenericiot.smartdevicecontroller.hublesssdk.devicesapi.models.Device;
 
 import java.util.List;

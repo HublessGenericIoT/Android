@@ -1,5 +1,7 @@
 package com.hublessgenericiot.smartdevicecontroller.dummy;
 
+import com.hublessgenericiot.smartdevicecontroller.hublesssdk.devicesapi.models.Device;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -12,17 +14,17 @@ import java.util.Random;
  * <p/>
  * TODO: Replace all uses of this class before publishing your app.
  */
-public class DummyContent {
+public class SavedDeviceList {
 
     /**
      * An array of sample (dummy) items.
      */
-    public static final List<DummyItem> ITEMS = new ArrayList<DummyItem>();
+    public static final List<Device> ITEMS = new ArrayList<Device>();
 
     /**
      * A map of sample (dummy) items, by ID.
      */
-    public static final Map<String, DummyItem> ITEM_MAP = new HashMap<String, DummyItem>();
+    /*public static final Map<String, Device> ITEM_MAP = new HashMap<String, Device>();
 
     private static final int COUNT = 25;
     private static Random rnd = new Random();
@@ -47,12 +49,12 @@ public class DummyContent {
 
     private static boolean getRandomBoolean() {
         return rnd.nextBoolean();
-    }
+    }*/
 
     /**
      * A dummy item representing a piece of content.
      */
-    public static class DummyItem {
+    /*public static class DummyItem {
         public final String id;
         public String name;
         public String room;
@@ -71,5 +73,5 @@ public class DummyContent {
         public String toString() {
             return name;
         }
-    }
+    }*/
 }

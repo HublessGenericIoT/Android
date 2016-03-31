@@ -1,18 +1,14 @@
 package com.hublessgenericiot.smartdevicecontroller.hublesssdk;
 
-import android.app.Activity;
-import android.app.Fragment;
 import android.util.Log;
 import android.widget.Toast;
 
 import com.hublessgenericiot.smartdevicecontroller.RoomsActivity;
-import com.hublessgenericiot.smartdevicecontroller.dummy.DummyContent;
+import com.hublessgenericiot.smartdevicecontroller.dummy.SavedDeviceList;
 
 import org.eclipse.paho.client.mqttv3.IMqttDeliveryToken;
 import org.eclipse.paho.client.mqttv3.MqttCallback;
 import org.eclipse.paho.client.mqttv3.MqttMessage;
-
-import java.util.List;
 
 /**
  * Created by Joe Koncel on 3/4/2016.
@@ -38,7 +34,7 @@ public class SubscribeCallback implements MqttCallback
     {
         Log.d("Message Arrived", message.toString());
         Toast.makeText(activity.getApplicationContext(), "Message: " + message.toString(), Toast.LENGTH_LONG).show();
-        for(DummyContent.DummyItem d : DummyContent.ITEMS)
+        for(SavedDeviceList.DummyItem d : SavedDeviceList.ITEMS)
         {
             if(!(message.toString().equals(d.id)))
             {

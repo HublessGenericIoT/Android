@@ -1,20 +1,24 @@
 package com.hublessgenericiot.smartdevicecontroller;
 
-import android.app.Activity;
-import android.content.Context;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
+import android.util.Log;
 import android.util.SparseArray;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.hublessgenericiot.smartdevicecontroller.dummy.DummyContent;
+import com.hublessgenericiot.smartdevicecontroller.dummy.SavedDeviceList;
+import com.hublessgenericiot.smartdevicecontroller.hublesssdk.devicesapi.HublessCallback;
+import com.hublessgenericiot.smartdevicecontroller.hublesssdk.devicesapi.HublessSdkService;
+import com.hublessgenericiot.smartdevicecontroller.hublesssdk.devicesapi.IHublessSdkService;
+import com.hublessgenericiot.smartdevicecontroller.hublesssdk.devicesapi.apiresponses.DeviceListResponse;
 
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.LinkedList;
+
+import retrofit2.Call;
 
 /**
  * Created by bwencke on 2/24/16.
@@ -22,6 +26,7 @@ import java.util.LinkedList;
 public class RoomsPagerAdapter extends FragmentPagerAdapter {
 
     TabLayout tabLayout;
+    RoomsActivity roomsActivity;
 
     public RoomsPagerAdapter(FragmentManager fm, TabLayout tabLayout) {
         super(fm);
@@ -40,7 +45,8 @@ public class RoomsPagerAdapter extends FragmentPagerAdapter {
     @Override
     public int getCount() {
         LinkedList<String> tempRooms = new LinkedList<>();
-        for(DummyContent.DummyItem d : DummyContent.ITEMS) {
+
+        for(SavedDeviceList.DummyItem d : SavedDeviceList.ITEMS) {
             if(d.room != null && !tempRooms.contains(d.room)) {
                 tempRooms.add(d.room);
             }

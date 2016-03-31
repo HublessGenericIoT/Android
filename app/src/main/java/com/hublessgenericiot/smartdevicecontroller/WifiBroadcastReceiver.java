@@ -5,13 +5,11 @@ import android.content.Context;
 import android.content.Intent;
 import android.net.wifi.ScanResult;
 import android.net.wifi.WifiManager;
-import android.support.v4.app.Fragment;
 import android.util.Log;
 
-import com.hublessgenericiot.smartdevicecontroller.dummy.DummyContent;
+import com.hublessgenericiot.smartdevicecontroller.dummy.SavedDeviceList;
 
 import java.util.LinkedList;
-import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -47,7 +45,7 @@ public class WifiBroadcastReceiver extends BroadcastReceiver {
                 }
                 Log.d("WifiBroadcastReceiver", "Found new device: " + s.SSID);
                 foundMACS.add(s.BSSID);
-                DummyContent.ITEMS.add(0, new DummyContent.DummyItem("new", "ESP 8266", null, false, true));
+                SavedDeviceList.ITEMS.add(0, new SavedDeviceList.DummyItem("new", "ESP 8266", null, false, true));
                 activity.updateViewPager(false);
 
             }

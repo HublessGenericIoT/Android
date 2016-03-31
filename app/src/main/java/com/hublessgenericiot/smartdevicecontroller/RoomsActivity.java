@@ -27,17 +27,16 @@ import android.view.View;
 import com.google.android.gms.appindexing.AppIndex;
 import com.google.android.gms.common.api.GoogleApiClient;
 
-import com.hublessgenericiot.smartdevicecontroller.dummy.DummyContent;
+import com.hublessgenericiot.smartdevicecontroller.dummy.SavedDeviceList;
 import com.hublessgenericiot.smartdevicecontroller.hublesssdk.HublessMQTTService;
 
-import java.util.ArrayList;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Timer;
-import java.util.TimerTask;
-
+import com.hublessgenericiot.smartdevicecontroller.hublesssdk.devicesapi.HublessCallback;
 import com.hublessgenericiot.smartdevicecontroller.hublesssdk.devicesapi.HublessSdkService;
+import com.hublessgenericiot.smartdevicecontroller.hublesssdk.devicesapi.IHublessSdkService;
+import com.hublessgenericiot.smartdevicecontroller.hublesssdk.devicesapi.apiresponses.DeviceListResponse;
 import com.hublessgenericiot.smartdevicecontroller.hublesssdk.devicesapi.models.Device;
+
+import retrofit2.Call;
 
 
 public class RoomsActivity extends AppCompatActivity implements DeviceFragment.OnListFragmentInteractionListener {
@@ -109,6 +108,20 @@ public class RoomsActivity extends AppCompatActivity implements DeviceFragment.O
 
         mqttService = new HublessMQTTService();
         mqttService.connect(this);
+
+        IHublessSdkService instance = HublessSdkService.getInstance(this);
+        instance.getAllDevices().enqueue(new HublessCallback<DeviceListResponse>() {
+            @Override
+            public void doOnResponse(Call<DeviceListResponse> call, retrofit2.Response<DeviceListResponse> response) {
+                Log.d("RoomsActivity", "URL: " + call.request().url());
+                Log.d("RoomsActivity", response.body().toString());
+
+                for(Device d : response.body().getPayload())
+                {
+                    SavedDeviceList.ITEMS.add(d);
+                }
+            }
+        });
     }
 
 

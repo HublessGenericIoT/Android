@@ -1,39 +1,29 @@
 package com.hublessgenericiot.smartdevicecontroller;
 
 import android.app.Activity;
-import android.app.DialogFragment;
-import android.app.FragmentManager;
 import android.content.Context;
-import android.content.DialogInterface;
-import android.database.DataSetObserver;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
 import android.util.Log;
-import android.support.v7.app.AlertDialog;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.ListAdapter;
 import android.widget.Spinner;
-import android.widget.SpinnerAdapter;
 import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.hublessgenericiot.smartdevicecontroller.dummy.DummyContent;
+import com.hublessgenericiot.smartdevicecontroller.dummy.SavedDeviceList;
 import com.hublessgenericiot.smartdevicecontroller.hublesssdk.devicesapi.HublessSdkService;
 import com.hublessgenericiot.smartdevicecontroller.hublesssdk.devicesapi.IHublessSdkService;
 import com.hublessgenericiot.smartdevicecontroller.hublesssdk.devicesapi.apiresponses.DeviceResponse;
 import com.hublessgenericiot.smartdevicecontroller.hublesssdk.devicesapi.models.Device;
 
-import java.lang.reflect.Array;
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.LinkedList;
 
@@ -120,7 +110,7 @@ public class EditDeviceActivityFragment extends Fragment {
                     }
                 });
 
-                //device = DummyContent.ITEM_MAP.get(id);
+                //device = SavedDeviceList.ITEM_MAP.get(id);
                 //if(response.body() != null) {
                     //name.setText(response.body().getPayload().getDevice().getAttributes().get("name"));
                 //}
@@ -145,7 +135,7 @@ public class EditDeviceActivityFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_edit_device, container, false);
 
         LinkedList<String> rooms = new LinkedList<>();
-        for (DummyContent.DummyItem d : DummyContent.ITEMS) {
+        for (SavedDeviceList.DummyItem d : SavedDeviceList.ITEMS) {
             if (d.room != null && !rooms.contains(d.room)) {
                 rooms.add(d.room);
             }
@@ -161,7 +151,7 @@ public class EditDeviceActivityFragment extends Fragment {
                 a);
 
         ButterKnife.bind(this, view);
-        device = DummyContent.ITEM_MAP.get(id);
+        device = SavedDeviceList.ITEM_MAP.get(id);
         name.setText(device.name);
         room.setAdapter(roomsAdapter);
         if (device.room != null) {
@@ -250,7 +240,7 @@ public class EditDeviceActivityFragment extends Fragment {
             // TODO: This code is copied and pasted from above = BAD!
             Toast.makeText(getActivity(), name, Toast.LENGTH_SHORT).show();
             LinkedList<String> rooms = new LinkedList<>();
-            for (DummyContent.DummyItem d : DummyContent.ITEMS) {
+            for (SavedDeviceList.DummyItem d : SavedDeviceList.ITEMS) {
                 if (d.room != null && !rooms.contains(d.room)) {
                     rooms.add(d.room);
                 }

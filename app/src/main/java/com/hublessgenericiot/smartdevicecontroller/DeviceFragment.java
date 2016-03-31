@@ -2,37 +2,22 @@ package com.hublessgenericiot.smartdevicecontroller;
 
 import android.content.Context;
 import android.os.Bundle;
-import android.os.Looper;
-import android.support.annotation.NonNull;
-import android.support.annotation.UiThread;
 import android.support.v4.app.Fragment;
-import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
-import com.hublessgenericiot.smartdevicecontroller.dummy.DummyContent;
-import com.hublessgenericiot.smartdevicecontroller.dummy.DummyContent.DummyItem;
-import com.hublessgenericiot.smartdevicecontroller.hublesssdk.devicesapi.HublessCallback;
-import com.hublessgenericiot.smartdevicecontroller.hublesssdk.devicesapi.HublessSdkService;
-import com.hublessgenericiot.smartdevicecontroller.hublesssdk.devicesapi.IHublessSdkService;
-import com.hublessgenericiot.smartdevicecontroller.hublesssdk.devicesapi.apiresponses.DeviceListResponse;
+import com.hublessgenericiot.smartdevicecontroller.dummy.SavedDeviceList;
 import com.hublessgenericiot.smartdevicecontroller.hublesssdk.devicesapi.models.Device;
 
 import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.ListIterator;
 
 import retrofit2.Call;
-import retrofit2.Callback;
 
 /**
  * A fragment representing a list of Items.
@@ -50,7 +35,6 @@ public class DeviceFragment extends Fragment {
 
     private String mRoom;
 
-    LinkedList<DummyItem> items;
     List<Device> devices;
     MyDeviceRecyclerViewAdapter adapter;
 
@@ -91,45 +75,28 @@ public class DeviceFragment extends Fragment {
             recyclerView = (RecyclerView) view;
             recyclerView.setLayoutManager(new LinearLayoutManager(context));
 
-            IHublessSdkService instance = HublessSdkService.getInstance(getActivity());
-            instance.getAllDevices().enqueue(new HublessCallback<DeviceListResponse>() {
-                @Override
-                public void doOnResponse(Call<DeviceListResponse> call, retrofit2.Response<DeviceListResponse> response) {
-                    Log.d("DeviceFragment", "URL: " + call.request().url());
-                    Log.d("Response", response.body().toString());
-                    //Toast.makeText(getActivity().getApplicationContext(),
-                    //        response.body().getPayload().get(0).getDevice().getThingName(), Toast.LENGTH_LONG).show();
-
-                    devices = new ArrayList<Device>();
-                    for (Device d : response.body().getPayload()) {
-                        if (mRoom.equals("All Devices")) {
-                            devices.add(d);
-                        /*} else if (!(d.getDevice().getThingName().equals(mRoom))) {  //TODO add room to attributes
-                            devices.add(d);*/
-                        }
-                    }
-
-                    // TODO: Sort alphabetically
-                    adapter = new MyDeviceRecyclerViewAdapter(devices, mListener);
-                    recyclerView.setAdapter(adapter);
+            devices = new ArrayList<Device>();
+            for (Device d : SavedDeviceList.ITEMS) {
+                if (mRoom.equals("All Devices")) {
+                    devices.add(d);
+                } else if ((d.getRoom().equals(mRoom))) {
+                    devices.add(d);
                 }
+            }
 
-                /*@Override
-                public void onFailure(Call<DeviceListResponse> call, Throwable t) {
-                    Log.e("APITEST", "Error! " + t.getLocalizedMessage());
-                    //TODO give some kind of error message?
-                }*/
-            });
+            // TODO: Sort alphabetically
+            adapter = new MyDeviceRecyclerViewAdapter(devices, mListener);
+            recyclerView.setAdapter(adapter);
 
         }
         return view;
     }
 
     private void updateAdapter() {
-        items.clear();
-        for(DummyItem d : DummyContent.ITEMS) {
-            if(mRoom.equals("All Devices") || (d.room != null && d.room.equals(mRoom)) || d.newDevice) {
-                items.add(d);
+        devices.clear();
+        for(Device d : SavedDeviceList.ITEMS) {
+            if(mRoom.equals("All Devices") || (d.getRoom() != null && d.getRoom().equals(mRoom))) { //|| d.newDevice) {
+                devices.add(d);
             }
         }
         adapter.notifyDataSetChanged();

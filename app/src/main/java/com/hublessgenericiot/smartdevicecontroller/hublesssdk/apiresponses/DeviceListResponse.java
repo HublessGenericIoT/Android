@@ -1,5 +1,6 @@
 package com.hublessgenericiot.smartdevicecontroller.hublesssdk.apiresponses;
 
+import com.hublessgenericiot.smartdevicecontroller.hublesssdk.models.Device;
 import com.hublessgenericiot.smartdevicecontroller.hublesssdk.models.ShadowedDevice;
 
 import java.util.List;
@@ -7,5 +8,5 @@ import java.util.List;
 /**
  * Response for a list of devices from the API.
  */
-public class DeviceListResponse extends HublessApiResponse<List<ShadowedDevice>> {
+public class DeviceListResponse extends HublessApiResponse<List<Device>> {
 }

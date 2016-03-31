@@ -20,6 +20,7 @@ import com.hublessgenericiot.smartdevicecontroller.dummy.DummyContent.DummyItem;
 import com.hublessgenericiot.smartdevicecontroller.hublesssdk.HublessSdkService;
 import com.hublessgenericiot.smartdevicecontroller.hublesssdk.IHublessSdkService;
 import com.hublessgenericiot.smartdevicecontroller.hublesssdk.apiresponses.DeviceListResponse;
+import com.hublessgenericiot.smartdevicecontroller.hublesssdk.models.Device;
 import com.hublessgenericiot.smartdevicecontroller.hublesssdk.models.Shadow;
 import com.hublessgenericiot.smartdevicecontroller.hublesssdk.models.ShadowedDevice;
 
@@ -51,7 +52,7 @@ public class DeviceFragment extends Fragment {
     private String mRoom;
 
     LinkedList<DummyItem> items;
-    List<ShadowedDevice> devices;
+    List<Device> devices;
     MyDeviceRecyclerViewAdapter adapter;
 
     /**
@@ -96,12 +97,12 @@ public class DeviceFragment extends Fragment {
                 @Override
                 public void onResponse(Call<DeviceListResponse> call, retrofit2.Response<DeviceListResponse> response) {
                     Log.d("DeviceFragment", "URL: " + call.request().url());
-                    Log.d("XXXXX: ", response.body().toString());
+                    Log.d("Response", response.body().toString());
                     //Toast.makeText(getActivity().getApplicationContext(),
                     //        response.body().getPayload().get(0).getDevice().getThingName(), Toast.LENGTH_LONG).show();
 
-                    devices = new ArrayList<ShadowedDevice>();
-                    for (ShadowedDevice d : response.body().getPayload()) {
+                    devices = new ArrayList<Device>();
+                    for (Device d : response.body().getPayload()) {
                         if (mRoom.equals("All Devices")) {
                             devices.add(d);
                         /*} else if (!(d.getDevice().getThingName().equals(mRoom))) {  //TODO add room to attributes
@@ -165,8 +166,8 @@ public class DeviceFragment extends Fragment {
      */
     public interface OnListFragmentInteractionListener {
         // TODO: Update argument type and name
-        void onDeviceClick(ShadowedDevice item);
-        void onDeviceLongClick(ShadowedDevice item);
+        void onDeviceClick(Device item);
+        void onDeviceLongClick(Device item);
     }
 
     public void reRender() {

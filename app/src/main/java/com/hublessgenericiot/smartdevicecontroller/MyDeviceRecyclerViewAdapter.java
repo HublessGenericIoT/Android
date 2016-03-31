@@ -11,6 +11,7 @@ import android.widget.ToggleButton;
 
 import com.hublessgenericiot.smartdevicecontroller.DeviceFragment.OnListFragmentInteractionListener;
 import com.hublessgenericiot.smartdevicecontroller.dummy.DummyContent.DummyItem;
+import com.hublessgenericiot.smartdevicecontroller.hublesssdk.models.Device;
 import com.hublessgenericiot.smartdevicecontroller.hublesssdk.models.ShadowedDevice;
 
 import java.util.List;
@@ -22,10 +23,10 @@ import java.util.List;
 public class MyDeviceRecyclerViewAdapter extends RecyclerView.Adapter<MyDeviceRecyclerViewAdapter.ViewHolder> {
 
     //private final List<DummyItem> mValues;
-    private final List<ShadowedDevice> mValues;
+    private final List<Device> mValues;
     private final OnListFragmentInteractionListener mListener;
 
-    public MyDeviceRecyclerViewAdapter(List<ShadowedDevice> items, OnListFragmentInteractionListener listener) {
+    public MyDeviceRecyclerViewAdapter(List<Device> items, OnListFragmentInteractionListener listener) {
         mValues = items;
         mListener = listener;
     }
@@ -40,12 +41,12 @@ public class MyDeviceRecyclerViewAdapter extends RecyclerView.Adapter<MyDeviceRe
     @Override
     public void onBindViewHolder(final ViewHolder holder, int position) {
         holder.mItem = mValues.get(position);
-        if(mValues.get(position).getDevice() == null) { //TODO have a field for this or get rid of it
+        if(mValues.get(position) == null) { //TODO have a field for this or get rid of it
             holder.mNewDeviceView.setVisibility(View.VISIBLE);
         } else {
             holder.mNewDeviceView.setVisibility(View.GONE);
         }
-        holder.mNameView.setText(mValues.get(position).getDevice().getThingName());
+        holder.mNameView.setText(mValues.get(position).getAttributes().get("name"));
         holder.mStateView.setChecked(true); //mValues.get(position).getDevice().getDefaultClientId());
 
         holder.mView.setOnClickListener(new View.OnClickListener() {
@@ -83,7 +84,7 @@ public class MyDeviceRecyclerViewAdapter extends RecyclerView.Adapter<MyDeviceRe
         public final TextView mNewDeviceView;
         public final TextView mNameView;
         public final Switch mStateView;
-        public ShadowedDevice mItem;
+        public Device mItem;
 
         public ViewHolder(View view) {
             super(view);

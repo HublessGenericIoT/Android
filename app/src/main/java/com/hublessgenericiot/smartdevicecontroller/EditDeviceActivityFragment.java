@@ -23,6 +23,8 @@ import android.widget.Toast;
 import com.hublessgenericiot.smartdevicecontroller.hublesssdk.HublessSdkService;
 import com.hublessgenericiot.smartdevicecontroller.hublesssdk.IHublessSdkService;
 import com.hublessgenericiot.smartdevicecontroller.hublesssdk.apiresponses.DeviceListResponse;
+import com.hublessgenericiot.smartdevicecontroller.hublesssdk.apiresponses.DeviceResponse;
+import com.hublessgenericiot.smartdevicecontroller.hublesssdk.models.Device;
 import com.hublessgenericiot.smartdevicecontroller.hublesssdk.models.ShadowedDevice;
 
 import java.lang.reflect.Array;
@@ -46,7 +48,7 @@ public class EditDeviceActivityFragment extends Fragment {
     @Bind(R.id.notify) Switch notify;
 
     private String id;
-    private ShadowedDevice device;
+    private Device device;
 
     ArrayAdapter roomsAdapter;
 
@@ -59,6 +61,7 @@ public class EditDeviceActivityFragment extends Fragment {
 
         if(context instanceof ItemDataHolder) {
             id = ((ItemDataHolder) context).getDeviceId();
+            //Toast.makeText(getActivity().getApplicationContext(), id.toString(), Toast.LENGTH_LONG).show();
         }
     }
 
@@ -70,20 +73,23 @@ public class EditDeviceActivityFragment extends Fragment {
         final View view = inflater.inflate(R.layout.fragment_edit_device, container, false);
 
         IHublessSdkService instance = HublessSdkService.getInstance(getActivity());
-        instance.getAllDevices().enqueue(new Callback<DeviceListResponse>() {
+        instance.getDeviceWithName(id).enqueue(new Callback<DeviceResponse>() {
             @Override
-            public void onResponse(Call<DeviceListResponse> call, retrofit2.Response<DeviceListResponse> response) {
+            public void onResponse(Call<DeviceResponse> call, retrofit2.Response<DeviceResponse> response) {
                 Log.d("DeviceFragment", "URL: " + call.request().url());
                 LinkedList<String> rooms = new LinkedList<>();
-                for(ShadowedDevice d : response.body().getPayload()) {  //TODO save the device list in a global somewhere?
+                /*for (Device d : response.body().getPayload()) {  //TODO save the device list in a global somewhere?
                     /*if(d.room != null && !rooms.contains(d.room)) {   //TODO add room attribute
                         rooms.add(d.room);
                     }*/
-                    if(d.getDevice().getDefaultClientId().equals(id)){
+                    /*if (d.getThingName().equals(id)) {
                         device = d;
                         break;
                     }
-                }
+                }*/
+
+                device = response.body().getPayload().getDevice();
+
                 Collections.sort(rooms);
                 rooms.add(getString(R.string.room_none));
                 rooms.add(getString(R.string.room_new));
@@ -95,8 +101,25 @@ public class EditDeviceActivityFragment extends Fragment {
                         a);
 
                 ButterKnife.bind(this, view);
+
+                activity.runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        //Handle UI here
+                        name.setText("Hello");
+                        room.setAdapter(roomsAdapter);
+                        network.setAdapter(roomsAdapter);
+                        notify.setChecked(true);
+                    }
+                });
+
                 //device = DummyContent.ITEM_MAP.get(id);
-                name.setText(device.getDevice().getThingName());
+                //if(response.body() != null) {
+                    //name.setText(response.body().getPayload().getDevice().getAttributes().get("name"));
+                //}
+                //else {
+                    //name.setText("Hello");
+                //}
                 room.setAdapter(roomsAdapter);
                 /*if(device.room != null) {     //TODO add room attribute
                     room.setSelection(roomsAdapter.getPosition(device.room));
@@ -106,7 +129,7 @@ public class EditDeviceActivityFragment extends Fragment {
             }
 
             @Override
-            public void onFailure(Call<DeviceListResponse> call, Throwable t) {
+            public void onFailure(Call<DeviceResponse> call, Throwable t) {
                 Log.e("APITEST", "Error! " + t.getLocalizedMessage());
             }
         });

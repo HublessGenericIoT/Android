@@ -11,6 +11,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.Spinner;
@@ -58,86 +59,18 @@ public class EditDeviceActivityFragment extends Fragment {
 
         if(context instanceof ItemDataHolder) {
             id = ((ItemDataHolder) context).getDeviceId();
-            //Toast.makeText(getActivity().getApplicationContext(), id.toString(), Toast.LENGTH_LONG).show();
         }
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        final Activity activity = getActivity();
-
-        final View view = inflater.inflate(R.layout.fragment_edit_device, container, false);
-
-        IHublessSdkService instance = HublessSdkService.getInstance(getActivity());
-        instance.getDevice(id).enqueue(new Callback<DeviceResponse>() {
-            @Override
-            public void onResponse(Call<DeviceResponse> call, retrofit2.Response<DeviceResponse> response) {
-                Log.d("DeviceFragment", "URL: " + call.request().url());
-                LinkedList<String> rooms = new LinkedList<>();
-                /*for (Device d : response.body().getPayload()) {  //TODO save the device list in a global somewhere?
-                    /*if(d.room != null && !rooms.contains(d.room)) {   //TODO add room attribute
-                        rooms.add(d.room);
-                    }*/
-                    /*if (d.getThingName().equals(id)) {
-                        device = d;
-                        break;
-                    }
-                }*/
-
-                //device = response.body().getPayload().getDevice();
-
-                Collections.sort(rooms);
-                rooms.add(getString(R.string.room_none));
-                rooms.add(getString(R.string.room_new));
-
-                String[] a = rooms.toArray(new String[rooms.size()]);
-
-                roomsAdapter = new ArrayAdapter<>(activity,
-                        R.layout.simple_spinner_item,
-                        a);
-
-                ButterKnife.bind(this, view);
-
-                activity.runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        //Handle UI here
-                        name.setText("Hello");
-                        room.setAdapter(roomsAdapter);
-                        network.setAdapter(roomsAdapter);
-                        notify.setChecked(true);
-                    }
-                });
-
-                //device = SavedDeviceList.ITEM_MAP.get(id);
-                //if(response.body() != null) {
-                    //name.setText(response.body().getPayload().getDevice().getAttributes().get("name"));
-                //}
-                //else {
-                    //name.setText("Hello");
-                //}
-                room.setAdapter(roomsAdapter);
-                /*if(device.room != null) {     //TODO add room attribute
-                    room.setSelection(roomsAdapter.getPosition(device.room));
-                }*/
-                network.setAdapter(roomsAdapter);
-                notify.setChecked(true); //TODO add device.state);
-            }
-
-            @Override
-            public void onFailure(Call<DeviceResponse> call, Throwable t) {
-                Log.e("APITEST", "Error! " + t.getLocalizedMessage());
-            }
-        });
-
-        /*
         View view = inflater.inflate(R.layout.fragment_edit_device, container, false);
 
         LinkedList<String> rooms = new LinkedList<>();
-        for (SavedDeviceList.DummyItem d : SavedDeviceList.ITEMS) {
-            if (d.room != null && !rooms.contains(d.room)) {
-                rooms.add(d.room);
+        for (Device d : SavedDeviceList.ITEMS) {
+            if (d.getRoom() != null && !rooms.contains(d.getRoom())) {
+                rooms.add(d.getRoom());
             }
         }
         Collections.sort(rooms);
@@ -152,16 +85,16 @@ public class EditDeviceActivityFragment extends Fragment {
 
         ButterKnife.bind(this, view);
         device = SavedDeviceList.ITEM_MAP.get(id);
-        name.setText(device.name);
+        name.setText(device.getName());
         room.setAdapter(roomsAdapter);
-        if (device.room != null) {
-            room.setSelection(roomsAdapter.getPosition(device.room));
+        if (device.getRoom() != null) {
+            room.setSelection(roomsAdapter.getPosition(device.getRoom()));
         }
         room.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 if (roomsAdapter.getItem(position).toString().equals(getString(R.string.room_new))) {
-                    if(getActivity() instanceof EditDeviceActivity) {
+                    if (getActivity() instanceof EditDeviceActivity) {
                         ((EditDeviceActivity) getActivity()).showNewRoomDialog();
                     }
                 }
@@ -173,8 +106,7 @@ public class EditDeviceActivityFragment extends Fragment {
             }
         });
         network.setAdapter(roomsAdapter);
-        notify.setChecked(device.state);
->>>>>>> master
+        notify.setChecked(false); //device.state); TODO states
 
         automationButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -183,7 +115,7 @@ public class EditDeviceActivityFragment extends Fragment {
                     ((EditDeviceActivity) getActivity()).showAutomationDialog();
                 }
             }
-        });*/
+        });
 
         return view;
     }
@@ -240,9 +172,9 @@ public class EditDeviceActivityFragment extends Fragment {
             // TODO: This code is copied and pasted from above = BAD!
             Toast.makeText(getActivity(), name, Toast.LENGTH_SHORT).show();
             LinkedList<String> rooms = new LinkedList<>();
-            for (SavedDeviceList.DummyItem d : SavedDeviceList.ITEMS) {
-                if (d.room != null && !rooms.contains(d.room)) {
-                    rooms.add(d.room);
+            for (Device d : SavedDeviceList.ITEMS) {
+                if (d.getRoom() != null && !rooms.contains(d.getRoom())) {
+                    rooms.add(d.getRoom());
                 }
             }
             rooms.add(name);

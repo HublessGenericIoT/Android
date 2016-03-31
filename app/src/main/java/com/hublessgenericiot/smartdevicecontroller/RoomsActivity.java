@@ -116,10 +116,13 @@ public class RoomsActivity extends AppCompatActivity implements DeviceFragment.O
                 Log.d("RoomsActivity", "URL: " + call.request().url());
                 Log.d("RoomsActivity", response.body().toString());
 
-                for(Device d : response.body().getPayload())
-                {
+                for (Device d : response.body().getPayload()) {
                     SavedDeviceList.ITEMS.add(d);
+                    SavedDeviceList.ITEM_MAP.put(d.getId(), d);
                 }
+
+                mRoomsPagerAdapter.notifyDataSetChanged();
+                updateViewPager(false);
             }
         });
     }
@@ -156,8 +159,6 @@ public class RoomsActivity extends AppCompatActivity implements DeviceFragment.O
     @Override
     public void onDeviceLongClick(Device item) {
         Intent intent = new Intent(this, EditDeviceActivity.class);
-        //Log.d("ThingName", item.getThingName());
-        //Toast.makeText(getApplicationContext(), "ThingName" + item.getThingName(), Toast.LENGTH_LONG).show();
         intent.putExtra(EditDeviceActivity.DEVICE_ID, item.getId());
         startActivityForResult(intent, EditDeviceActivity.DEVICE_EDITED);
     }

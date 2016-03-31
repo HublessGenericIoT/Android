@@ -14,6 +14,7 @@ import com.hublessgenericiot.smartdevicecontroller.hublesssdk.devicesapi.Hubless
 import com.hublessgenericiot.smartdevicecontroller.hublesssdk.devicesapi.HublessSdkService;
 import com.hublessgenericiot.smartdevicecontroller.hublesssdk.devicesapi.IHublessSdkService;
 import com.hublessgenericiot.smartdevicecontroller.hublesssdk.devicesapi.apiresponses.DeviceListResponse;
+import com.hublessgenericiot.smartdevicecontroller.hublesssdk.devicesapi.models.Device;
 
 import java.util.Collections;
 import java.util.LinkedList;
@@ -46,9 +47,9 @@ public class RoomsPagerAdapter extends FragmentPagerAdapter {
     public int getCount() {
         LinkedList<String> tempRooms = new LinkedList<>();
 
-        for(SavedDeviceList.DummyItem d : SavedDeviceList.ITEMS) {
-            if(d.room != null && !tempRooms.contains(d.room)) {
-                tempRooms.add(d.room);
+        for(Device d : SavedDeviceList.ITEMS) {
+            if(d.getRoom() != null && !tempRooms.contains(d.getRoom())) {
+                tempRooms.add(d.getRoom());
             }
         }
         Collections.sort(tempRooms);

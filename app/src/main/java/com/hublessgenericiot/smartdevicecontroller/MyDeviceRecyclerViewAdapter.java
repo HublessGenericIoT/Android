@@ -9,13 +9,12 @@ import android.widget.Switch;
 import android.widget.TextView;
 
 import com.hublessgenericiot.smartdevicecontroller.DeviceFragment.OnListFragmentInteractionListener;
-import com.hublessgenericiot.smartdevicecontroller.dummy.SavedDeviceList.DummyItem;
 import com.hublessgenericiot.smartdevicecontroller.hublesssdk.devicesapi.models.Device;
 
 import java.util.List;
 
 /**
- * {@link RecyclerView.Adapter} that can display a {@link DummyItem} and makes a call to the
+ * {@link RecyclerView.Adapter} that can display a {@link Device} and makes a call to the
  * specified {@link OnListFragmentInteractionListener}.
  */
 public class MyDeviceRecyclerViewAdapter extends RecyclerView.Adapter<MyDeviceRecyclerViewAdapter.ViewHolder> {

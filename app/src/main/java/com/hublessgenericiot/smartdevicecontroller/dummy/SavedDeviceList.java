@@ -24,9 +24,9 @@ public class SavedDeviceList {
     /**
      * A map of sample (dummy) items, by ID.
      */
-    /*public static final Map<String, Device> ITEM_MAP = new HashMap<String, Device>();
+    public static final Map<String, Device> ITEM_MAP = new HashMap<String, Device>();
 
-    private static final int COUNT = 25;
+    /*private static final int COUNT = 25;
     private static Random rnd = new Random();
 
     static {

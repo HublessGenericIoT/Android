@@ -1,4 +1,4 @@
-package com.hublessgenericiot.smartdevicecontroller.hublesssdk.models;
+package com.hublessgenericiot.smartdevicecontroller.hublesssdk.devicesapi.models;
 
 import com.google.gson.annotations.SerializedName;
 
@@ -6,14 +6,8 @@ import com.google.gson.annotations.SerializedName;
  * A ShadowedDevice is a device and it's shadow together.
  * This way, all of the device's data is accessible.
  */
-public class ShadowedDevice {
-    @SerializedName("thing")
-    private Device device;
+public class ShadowedDevice extends Device {
     private Shadow shadow;
-
-    public Device getDevice() {
-        return device;
-    }
 
     public Shadow getShadow() {
         return shadow;

@@ -1,4 +1,4 @@
-package com.hublessgenericiot.smartdevicecontroller.hublesssdk.apiresponses;
+package com.hublessgenericiot.smartdevicecontroller.hublesssdk.devicesapi.apiresponses;
 
 /**
  * Root response for the API.
@@ -8,6 +8,7 @@ package com.hublessgenericiot.smartdevicecontroller.hublesssdk.apiresponses;
 public abstract class HublessApiResponse<T> {
     private String status;
     private T payload;
+    private String errorMessage;
 
     public String getStatus() {
         return status;
@@ -15,5 +16,9 @@ public abstract class HublessApiResponse<T> {
 
     public T getPayload() {
         return payload;
+    }
+
+    public String getErrorMessage() {
+        return errorMessage;
     }
 }

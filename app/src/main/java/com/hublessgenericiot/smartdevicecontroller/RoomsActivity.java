@@ -1,58 +1,44 @@
 package com.hublessgenericiot.smartdevicecontroller;
 
-import android.Manifest;
-import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.pm.PackageManager;
-import android.net.Uri;
-import android.net.wifi.ScanResult;
 import android.net.wifi.WifiManager;
 import android.os.Build;
-import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.design.widget.TabLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
-import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentStatePagerAdapter;
-import android.support.v4.content.ContextCompat;
 import android.support.v4.view.PagerAdapter;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.os.Bundle;
 import android.util.Log;
-import android.util.SparseArray;
-import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewGroup;
 
-import android.widget.TextView;
-import android.widget.Toast;
-
-import com.google.android.gms.appindexing.Action;
 import com.google.android.gms.appindexing.AppIndex;
 import com.google.android.gms.common.api.GoogleApiClient;
 
 import com.hublessgenericiot.smartdevicecontroller.dummy.DummyContent;
 import com.hublessgenericiot.smartdevicecontroller.hublesssdk.HublessMQTTService;
-import com.hublessgenericiot.smartdevicecontroller.hublesssdk.HublessSdkService;
-import com.hublessgenericiot.smartdevicecontroller.hublesssdk.models.Device;
-import com.hublessgenericiot.smartdevicecontroller.hublesssdk.models.ShadowedDevice;
 
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
+
+import com.hublessgenericiot.smartdevicecontroller.hublesssdk.devicesapi.HublessSdkService;
+import com.hublessgenericiot.smartdevicecontroller.hublesssdk.devicesapi.models.Device;
+
 
 public class RoomsActivity extends AppCompatActivity implements DeviceFragment.OnListFragmentInteractionListener {
 
@@ -117,8 +103,9 @@ public class RoomsActivity extends AppCompatActivity implements DeviceFragment.O
         client = new GoogleApiClient.Builder(this).addApi(AppIndex.API).build();
         //Toast.makeText(getApplicationContext(), x, Toast.LENGTH_SHORT).show();
 
-
+        //only for debugging, testing, and example purposes. No need to actually use this.
         //HublessSdkService.testApi(HublessSdkService.getInstance(this));
+
 
         mqttService = new HublessMQTTService();
         mqttService.connect(this);
@@ -150,7 +137,7 @@ public class RoomsActivity extends AppCompatActivity implements DeviceFragment.O
 
     @Override
     public void onDeviceClick(Device item) {
-        mqttService.publish("proxy/esp_8266/inTopic", item.getAttributes().get("name"), this);
+        mqttService.publish("proxy/esp_8266/inTopic", item.getName(), this);
     }
 
     @Override
@@ -158,7 +145,7 @@ public class RoomsActivity extends AppCompatActivity implements DeviceFragment.O
         Intent intent = new Intent(this, EditDeviceActivity.class);
         //Log.d("ThingName", item.getThingName());
         //Toast.makeText(getApplicationContext(), "ThingName" + item.getThingName(), Toast.LENGTH_LONG).show();
-        intent.putExtra(EditDeviceActivity.DEVICE_ID, item.getThingName());
+        intent.putExtra(EditDeviceActivity.DEVICE_ID, item.getId());
         startActivityForResult(intent, EditDeviceActivity.DEVICE_EDITED);
     }
 
@@ -167,8 +154,9 @@ public class RoomsActivity extends AppCompatActivity implements DeviceFragment.O
         if (requestCode == EditDeviceActivity.DEVICE_EDITED) {
             if (resultCode == RESULT_OK) {
                 boolean modified = data.getBooleanExtra("modified", false); // TODO: Don't use a string here
+                boolean newRoom = data.getBooleanExtra("newRoom", false); // TODO: Don't use a string here
                 if (modified) {
-                    updateViewPager();
+                    updateViewPager(newRoom);
                 }
             }
         }
@@ -223,7 +211,13 @@ public class RoomsActivity extends AppCompatActivity implements DeviceFragment.O
         registerReceiver(new WifiBroadcastReceiver(this, wifi), new IntentFilter(WifiManager.SCAN_RESULTS_AVAILABLE_ACTION));
     }
 
-    public void updateViewPager() {
+    public void updateViewPager(boolean newRoom) {
+        if(newRoom) {
+            finish();
+            startActivity(getIntent());
+        }
+        // TODO: Handle a room being removed!
+        // TODO: Maybe do the "newRoom" check more intelligently somehow
         for (int i = 0; i < mRoomsPagerAdapter.registeredFragments.size(); i++) {
             int key = mRoomsPagerAdapter.registeredFragments.keyAt(i);
             Fragment fragment = mRoomsPagerAdapter.registeredFragments.get(key);

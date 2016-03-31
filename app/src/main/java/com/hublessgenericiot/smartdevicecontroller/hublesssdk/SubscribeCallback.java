@@ -46,7 +46,7 @@ public class SubscribeCallback implements MqttCallback
             }
         }
 
-        activity.updateViewPager();
+        activity.updateViewPager(false);
     }
 
     @Override

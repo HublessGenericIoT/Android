@@ -17,12 +17,10 @@ import android.widget.Toast;
 
 import com.hublessgenericiot.smartdevicecontroller.dummy.DummyContent;
 import com.hublessgenericiot.smartdevicecontroller.dummy.DummyContent.DummyItem;
-import com.hublessgenericiot.smartdevicecontroller.hublesssdk.HublessSdkService;
-import com.hublessgenericiot.smartdevicecontroller.hublesssdk.IHublessSdkService;
-import com.hublessgenericiot.smartdevicecontroller.hublesssdk.apiresponses.DeviceListResponse;
-import com.hublessgenericiot.smartdevicecontroller.hublesssdk.models.Device;
-import com.hublessgenericiot.smartdevicecontroller.hublesssdk.models.Shadow;
-import com.hublessgenericiot.smartdevicecontroller.hublesssdk.models.ShadowedDevice;
+import com.hublessgenericiot.smartdevicecontroller.hublesssdk.devicesapi.HublessSdkService;
+import com.hublessgenericiot.smartdevicecontroller.hublesssdk.devicesapi.IHublessSdkService;
+import com.hublessgenericiot.smartdevicecontroller.hublesssdk.devicesapi.apiresponses.DeviceListResponse;
+import com.hublessgenericiot.smartdevicecontroller.hublesssdk.devicesapi.models.Device;
 
 import java.util.ArrayList;
 import java.util.Collection;

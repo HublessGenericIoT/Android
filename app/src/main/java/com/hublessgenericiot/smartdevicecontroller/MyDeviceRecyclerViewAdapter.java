@@ -11,8 +11,7 @@ import android.widget.ToggleButton;
 
 import com.hublessgenericiot.smartdevicecontroller.DeviceFragment.OnListFragmentInteractionListener;
 import com.hublessgenericiot.smartdevicecontroller.dummy.DummyContent.DummyItem;
-import com.hublessgenericiot.smartdevicecontroller.hublesssdk.models.Device;
-import com.hublessgenericiot.smartdevicecontroller.hublesssdk.models.ShadowedDevice;
+import com.hublessgenericiot.smartdevicecontroller.hublesssdk.devicesapi.models.Device;
 
 import java.util.List;
 
@@ -46,7 +45,7 @@ public class MyDeviceRecyclerViewAdapter extends RecyclerView.Adapter<MyDeviceRe
         } else {
             holder.mNewDeviceView.setVisibility(View.GONE);
         }
-        holder.mNameView.setText(mValues.get(position).getAttributes().get("name"));
+        holder.mNameView.setText(mValues.get(position).getName());
         holder.mStateView.setChecked(true); //mValues.get(position).getDevice().getDefaultClientId());
 
         holder.mView.setOnClickListener(new View.OnClickListener() {

@@ -39,7 +39,8 @@ public abstract class HublessCallback<T extends HublessApiResponse> implements C
 
         if(!response.body().getStatus().equals("Success")) {
             Log.e("API", "Returned a non-Success status! - Status: " + response.body().getStatus());
-            onFailure(call, new APIFailedException("The api returned a non-success status: " + response.body().getStatus()));
+            onFailure(call, new APIFailedException("The api returned a non-success status: " + response.body().getStatus(), response.body()));
+
         } else {
             doOnResponse(call, response);
         }
@@ -73,7 +74,11 @@ public abstract class HublessCallback<T extends HublessApiResponse> implements C
     @Override
     public void onFailure(Call<T> call, Throwable t) {
         Log.d("API", "onFailure(" + call.request().method() + ": " + call.request().url().encodedPath());
-
         Log.e("API", "ERROR: ", t);
+
+        if(t instanceof APIFailedException) {
+            APIFailedException apifail = (APIFailedException) t;
+            Log.e("API", "Error reported from server:" + apifail.getResponse().getErrorMessage());
+        }
     }
 }

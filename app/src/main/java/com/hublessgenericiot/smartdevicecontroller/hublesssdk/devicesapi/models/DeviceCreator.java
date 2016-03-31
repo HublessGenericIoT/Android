@@ -6,15 +6,21 @@ import java.util.regex.Pattern;
 /**
  * Object to send the data to create a new device on AWS.
  */
-public class DeviceCreator {
-    private String name;
-    private String room;
-    private DeviceType type;
+public class DeviceCreator extends Device {
 
     public DeviceCreator(String name, String room, DeviceType type) {
         this.setName(name);
         this.setRoom(room);
+        this.setUser("1"); //defaulted to "user" user. ie, not a test user.
         this.type = type;
+    }
+
+    public DeviceCreator(Device from) {
+        this.setName(from.getName());
+        this.setRoom(from.getRoom());
+        this.setUser(from.getUser()); //defaulted to "user" user. ie, not a test user.
+        this.type = from.getType();
+        this.id = from.getId();
     }
 
     public String getName() {
@@ -35,6 +41,9 @@ public class DeviceCreator {
     }
 
     private void confirmCompliance(String in) {
+        if(in == null || in.isEmpty()) {
+            return;
+        }
         Pattern p = Pattern.compile("[a-zA-Z0-9_.,@/:#-]+");
         Matcher m = p.matcher(in);
         boolean b = m.matches();
@@ -48,5 +57,9 @@ public class DeviceCreator {
 
     public void setType(DeviceType type) {
         this.type = type;
+    }
+
+    public void setUser(String user) {
+        this.user = user;
     }
 }

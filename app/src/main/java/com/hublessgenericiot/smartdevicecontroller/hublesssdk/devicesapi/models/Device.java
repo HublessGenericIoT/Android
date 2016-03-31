@@ -1,24 +1,37 @@
 package com.hublessgenericiot.smartdevicecontroller.hublesssdk.devicesapi.models;
 
+import org.json.JSONObject;
+
 /**
  * Class for the device returned from the API.
  * It does not contain its current status or the shadow,
  * but it contains its name.
  */
 public class Device {
-    private String thingName;
-    private String defaultClientId;
-    private IotAttributesMap attributes;
+    protected String id;
+    protected String name;
+    protected String room;
+    protected String user;
+    protected DeviceType type;
 
-    public String getThingName() {
-        return thingName;
+    public String getName() {
+        return name;
     }
 
-    public String getDefaultClientId() {
-        return defaultClientId;
+
+    public String getId() {
+        return id;
     }
 
-    public IotAttributesMap getAttributes() {
-        return attributes;
+    public String getRoom() {
+        return room;
+    }
+
+    public String getUser() {
+        return user;
+    }
+
+    public DeviceType getType() {
+        return type;
     }
 }

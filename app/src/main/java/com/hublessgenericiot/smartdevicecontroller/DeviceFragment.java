@@ -17,6 +17,7 @@ import android.widget.Toast;
 
 import com.hublessgenericiot.smartdevicecontroller.dummy.DummyContent;
 import com.hublessgenericiot.smartdevicecontroller.dummy.DummyContent.DummyItem;
+import com.hublessgenericiot.smartdevicecontroller.hublesssdk.devicesapi.HublessCallback;
 import com.hublessgenericiot.smartdevicecontroller.hublesssdk.devicesapi.HublessSdkService;
 import com.hublessgenericiot.smartdevicecontroller.hublesssdk.devicesapi.IHublessSdkService;
 import com.hublessgenericiot.smartdevicecontroller.hublesssdk.devicesapi.apiresponses.DeviceListResponse;
@@ -91,9 +92,9 @@ public class DeviceFragment extends Fragment {
             recyclerView.setLayoutManager(new LinearLayoutManager(context));
 
             IHublessSdkService instance = HublessSdkService.getInstance(getActivity());
-            instance.getAllDevices().enqueue(new Callback<DeviceListResponse>() {
+            instance.getAllDevices().enqueue(new HublessCallback<DeviceListResponse>() {
                 @Override
-                public void onResponse(Call<DeviceListResponse> call, retrofit2.Response<DeviceListResponse> response) {
+                public void doOnResponse(Call<DeviceListResponse> call, retrofit2.Response<DeviceListResponse> response) {
                     Log.d("DeviceFragment", "URL: " + call.request().url());
                     Log.d("Response", response.body().toString());
                     //Toast.makeText(getActivity().getApplicationContext(),
@@ -113,11 +114,11 @@ public class DeviceFragment extends Fragment {
                     recyclerView.setAdapter(adapter);
                 }
 
-                @Override
+                /*@Override
                 public void onFailure(Call<DeviceListResponse> call, Throwable t) {
                     Log.e("APITEST", "Error! " + t.getLocalizedMessage());
                     //TODO give some kind of error message?
-                }
+                }*/
             });
 
         }

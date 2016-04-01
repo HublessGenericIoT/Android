@@ -77,6 +77,9 @@ public class DeviceFragment extends Fragment {
 
             devices = new ArrayList<Device>();
             for (Device d : SavedDeviceList.ITEMS) {
+                if (d.getName() == null) {
+                    continue;
+                }
                 if (mRoom.equals("All Devices")) {
                     devices.add(d);
                 } else if ((d.getRoom().equals(mRoom))) {

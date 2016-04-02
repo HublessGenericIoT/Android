@@ -2,10 +2,7 @@ package com.hublessgenericiot.smartdevicecontroller;
 
 import android.content.Context;
 import android.os.Bundle;
-import android.os.Looper;
-import android.support.annotation.UiThread;
 import android.support.v4.app.Fragment;
-import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -13,12 +10,14 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.hublessgenericiot.smartdevicecontroller.dummy.DummyContent;
-import com.hublessgenericiot.smartdevicecontroller.dummy.DummyContent.DummyItem;
+import com.hublessgenericiot.smartdevicecontroller.dummy.SavedDeviceList;
+import com.hublessgenericiot.smartdevicecontroller.hublesssdk.devicesapi.models.Device;
 
-import java.util.Collections;
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
+
+import retrofit2.Call;
 
 /**
  * A fragment representing a list of Items.
@@ -36,7 +35,7 @@ public class DeviceFragment extends Fragment {
 
     private String mRoom;
 
-    LinkedList<DummyItem> items;
+    List<Device> devices;
     MyDeviceRecyclerViewAdapter adapter;
 
     /**
@@ -76,27 +75,31 @@ public class DeviceFragment extends Fragment {
             recyclerView = (RecyclerView) view;
             recyclerView.setLayoutManager(new LinearLayoutManager(context));
 
-            items = new LinkedList<>();
-            for(DummyItem d : DummyContent.ITEMS) {
-                if(mRoom.equals("All Devices") ||  d.newDevice) {
-                    items.add(d);
-                } else if(d.room != null && d.room.equals(mRoom)) {
-                    items.add(d);
+            devices = new ArrayList<Device>();
+            for (Device d : SavedDeviceList.ITEMS) {
+                if (d.getName() == null) {
+                    continue;
+                }
+                if (mRoom.equals("All Devices")) {
+                    devices.add(d);
+                } else if ((d.getRoom().equals(mRoom))) {
+                    devices.add(d);
                 }
             }
 
             // TODO: Sort alphabetically
-            adapter = new MyDeviceRecyclerViewAdapter(items, mListener);
+            adapter = new MyDeviceRecyclerViewAdapter(devices, mListener);
             recyclerView.setAdapter(adapter);
+
         }
         return view;
     }
 
     private void updateAdapter() {
-        items.clear();
-        for(DummyItem d : DummyContent.ITEMS) {
-            if(mRoom.equals("All Devices") || (d.room != null && d.room.equals(mRoom)) || d.newDevice) {
-                items.add(d);
+        devices.clear();
+        for(Device d : SavedDeviceList.ITEMS) {
+            if(mRoom.equals("All Devices") || (d.getRoom() != null && d.getRoom().equals(mRoom))) { //|| d.newDevice) {
+                devices.add(d);
             }
         }
         adapter.notifyDataSetChanged();
@@ -132,8 +135,8 @@ public class DeviceFragment extends Fragment {
      */
     public interface OnListFragmentInteractionListener {
         // TODO: Update argument type and name
-        void onDeviceClick(DummyItem item);
-        void onDeviceLongClick(DummyItem item);
+        void onDeviceClick(Device item);
+        void onDeviceLongClick(Device item);
     }
 
     public void reRender() {

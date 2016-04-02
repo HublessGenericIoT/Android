@@ -20,10 +20,13 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.hublessgenericiot.smartdevicecontroller.dummy.SavedDeviceList;
+import com.hublessgenericiot.smartdevicecontroller.hublesssdk.devicesapi.HublessCallback;
 import com.hublessgenericiot.smartdevicecontroller.hublesssdk.devicesapi.HublessSdkService;
 import com.hublessgenericiot.smartdevicecontroller.hublesssdk.devicesapi.IHublessSdkService;
-import com.hublessgenericiot.smartdevicecontroller.hublesssdk.devicesapi.apiresponses.DeviceResponse;
+import com.hublessgenericiot.smartdevicecontroller.hublesssdk.devicesapi.apiresponses.DeviceUpdatedResponse;
 import com.hublessgenericiot.smartdevicecontroller.hublesssdk.devicesapi.models.Device;
+import com.hublessgenericiot.smartdevicecontroller.hublesssdk.devicesapi.models.DeviceCreator;
+import com.hublessgenericiot.smartdevicecontroller.hublesssdk.devicesapi.models.DeviceType;
 
 import java.util.Collections;
 import java.util.LinkedList;
@@ -155,14 +158,27 @@ public class EditDeviceActivityFragment extends Fragment {
     }
 
     private void updateDevice() {
-        //TODO actually make this happen
-        /*device.name = name.getText().toString();
-        String tempRoom = roomsAdapter.getItem(room.getSelectedItemPosition()).toString();
-        if(tempRoom.equals(getString(R.string.room_none))) {
-            device.room = null;
-        } else {
-            device.room = roomsAdapter.getItem(room.getSelectedItemPosition()).toString();
+        final Activity activity = getActivity();
+
+        final String tempRoom = roomsAdapter.getItem(room.getSelectedItemPosition()).toString();
+        final String tempName = name.getText().toString();
+        /*if(tempRoom.equals(getString(R.string.room_none))) {
+            tempRoom = null;
         }*/
+
+        //TODO add Device type field
+        DeviceCreator dc = new DeviceCreator(device.getId(), tempName, tempRoom, DeviceType.LIGHT);
+
+        IHublessSdkService instance = HublessSdkService.getInstance(activity);
+        instance.updateDevice(device.getId(), dc).enqueue(new HublessCallback<DeviceUpdatedResponse>() {
+            @Override
+            public void doOnResponse(Call<DeviceUpdatedResponse> call, retrofit2.Response<DeviceUpdatedResponse> response) {
+                Toast.makeText(activity.getApplicationContext(), "Device Updated", Toast.LENGTH_LONG).show();
+                device.setName(tempName);
+                device.setRoom(tempRoom);
+                //TODO this is not an accepatble long-term solution, must refresh tab
+            }
+        });
     }
 
     public void returnNewRoom(String name) {

@@ -105,27 +105,27 @@ public class RoomsActivity extends AppCompatActivity implements DeviceFragment.O
         //only for debugging, testing, and example purposes. No need to actually use this.
         //HublessSdkService.testApi(HublessSdkService.getInstance(this));
 
+        if(!SavedDeviceList.newRoom) { //TODO this is so it only connects once
+            mqttService = new HublessMQTTService();
+            mqttService.connect(this);
+        }
+        else {
+            IHublessSdkService instance = HublessSdkService.getInstance(this);
+            instance.getAllDevices().enqueue(new HublessCallback<DeviceListResponse>() {
+                @Override
+                public void doOnResponse(Call<DeviceListResponse> call, retrofit2.Response<DeviceListResponse> response) {
+                    Log.d("RoomsActivity", "URL: " + call.request().url());
+                    Log.d("RoomsActivity", response.body().toString());
 
-        mqttService = new HublessMQTTService();
-        mqttService.connect(this);
-
-        IHublessSdkService instance = HublessSdkService.getInstance(this);
-        instance.getAllDevices().enqueue(new HublessCallback<DeviceListResponse>() {
-            @Override
-            public void doOnResponse(Call<DeviceListResponse> call, retrofit2.Response<DeviceListResponse> response) {
-                Log.d("RoomsActivity", "URL: " + call.request().url());
-                Log.d("RoomsActivity", response.body().toString());
-
-                for (Device d : response.body().getPayload()) {
-                    SavedDeviceList.ITEMS.add(d);
-                    SavedDeviceList.ITEM_MAP.put(d.getId(), d);
+                    for (Device d : response.body().getPayload()) {
+                        SavedDeviceList.ITEMS.add(d);
+                        SavedDeviceList.ITEM_MAP.put(d.getId(), d);
+                    }
+                    SavedDeviceList.newRoom = false;
+                    updateViewPager(true);
                 }
-
-                boolean newRoom = SavedDeviceList.newRoom;
-                SavedDeviceList.newRoom = false;
-                updateViewPager(newRoom);
-            }
-        });
+            });
+        }
     }
 
 

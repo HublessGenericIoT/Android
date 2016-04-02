@@ -121,7 +121,9 @@ public class RoomsActivity extends AppCompatActivity implements DeviceFragment.O
                     SavedDeviceList.ITEM_MAP.put(d.getId(), d);
                 }
 
-                updateViewPager(false);
+                boolean newRoom = SavedDeviceList.newRoom;
+                SavedDeviceList.newRoom = false;
+                updateViewPager(newRoom);
             }
         });
     }

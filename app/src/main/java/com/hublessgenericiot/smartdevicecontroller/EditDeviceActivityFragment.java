@@ -160,21 +160,22 @@ public class EditDeviceActivityFragment extends Fragment {
     private void updateDevice() {
         final Activity activity = getActivity();
 
-        String tempRoom = roomsAdapter.getItem(room.getSelectedItemPosition()).toString();
+        final String tempRoom = roomsAdapter.getItem(room.getSelectedItemPosition()).toString();
+        final String tempName = name.getText().toString();
         /*if(tempRoom.equals(getString(R.string.room_none))) {
             tempRoom = null;
         }*/
 
         //TODO add Device type field
-        final DeviceCreator dc = new DeviceCreator(device.getId(), name.getText().toString(), tempRoom, DeviceType.LIGHT);
+        DeviceCreator dc = new DeviceCreator(device.getId(), tempName, tempRoom, DeviceType.LIGHT);
 
         IHublessSdkService instance = HublessSdkService.getInstance(activity);
         instance.updateDevice(device.getId(), dc).enqueue(new HublessCallback<DeviceUpdatedResponse>() {
             @Override
             public void doOnResponse(Call<DeviceUpdatedResponse> call, retrofit2.Response<DeviceUpdatedResponse> response) {
                 Toast.makeText(activity.getApplicationContext(), "Device Updated", Toast.LENGTH_LONG).show();
-                SavedDeviceList.ITEMS.remove(device);
-                SavedDeviceList.ITEMS.add(dc);
+                device.setName(tempName);
+                device.setRoom(tempRoom);
                 //TODO this is not an accepatble long-term solution, must refresh tab
             }
         });

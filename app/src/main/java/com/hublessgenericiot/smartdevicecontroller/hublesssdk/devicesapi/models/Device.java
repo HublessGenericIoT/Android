@@ -34,4 +34,12 @@ public class Device {
     public DeviceType getType() {
         return type;
     }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setRoom(String room) {
+        this.room = room;
+    }
 }

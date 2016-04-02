@@ -8,6 +8,11 @@ import java.util.regex.Pattern;
  */
 public class DeviceCreator extends Device {
 
+    public DeviceCreator(String id, String name, String room, DeviceType type) {
+        this(name, room, type);
+        this.id = id;
+    }
+
     public DeviceCreator(String name, String room, DeviceType type) {
         this.setName(name);
         this.setRoom(room);

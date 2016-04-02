@@ -166,11 +166,13 @@ public class EditDeviceActivityFragment extends Fragment {
         }*/
 
         //TODO add Device type field
-        DeviceCreator dc = new DeviceCreator(device); //name.getText().toString(), tempRoom, DeviceType.LIGHT);
+        DeviceCreator dc = new DeviceCreator(device.getId(), name.getText().toString(), tempRoom, DeviceType.LIGHT);
+
+        /*DeviceCreator dc = new DeviceCreator(device); //name.getText().toString(), tempRoom, DeviceType.LIGHT);
         dc.setName(name.getText().toString());
         dc.setRoom(tempRoom);
         dc.setType(DeviceType.LIGHT);
-        dc.setUser("1");
+        dc.setUser("1");*/
 
         IHublessSdkService instance = HublessSdkService.getInstance(activity);
         instance.updateDevice(device.getId(), dc).enqueue(new HublessCallback<DeviceUpdatedResponse>() {

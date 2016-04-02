@@ -105,9 +105,10 @@ public class RoomsActivity extends AppCompatActivity implements DeviceFragment.O
         //only for debugging, testing, and example purposes. No need to actually use this.
         //HublessSdkService.testApi(HublessSdkService.getInstance(this));
 
-
-        mqttService = new HublessMQTTService();
-        mqttService.connect(this);
+        if(!SavedDeviceList.newRoom) { //TODO this is so it only connects once
+            mqttService = new HublessMQTTService();
+            mqttService.connect(this);
+        }
 
         IHublessSdkService instance = HublessSdkService.getInstance(this);
         instance.getAllDevices().enqueue(new HublessCallback<DeviceListResponse>() {

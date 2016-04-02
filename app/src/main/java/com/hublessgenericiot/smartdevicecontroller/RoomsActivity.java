@@ -109,24 +109,23 @@ public class RoomsActivity extends AppCompatActivity implements DeviceFragment.O
             mqttService = new HublessMQTTService();
             mqttService.connect(this);
         }
+        else {
+            IHublessSdkService instance = HublessSdkService.getInstance(this);
+            instance.getAllDevices().enqueue(new HublessCallback<DeviceListResponse>() {
+                @Override
+                public void doOnResponse(Call<DeviceListResponse> call, retrofit2.Response<DeviceListResponse> response) {
+                    Log.d("RoomsActivity", "URL: " + call.request().url());
+                    Log.d("RoomsActivity", response.body().toString());
 
-        IHublessSdkService instance = HublessSdkService.getInstance(this);
-        instance.getAllDevices().enqueue(new HublessCallback<DeviceListResponse>() {
-            @Override
-            public void doOnResponse(Call<DeviceListResponse> call, retrofit2.Response<DeviceListResponse> response) {
-                Log.d("RoomsActivity", "URL: " + call.request().url());
-                Log.d("RoomsActivity", response.body().toString());
-
-                for (Device d : response.body().getPayload()) {
-                    SavedDeviceList.ITEMS.add(d);
-                    SavedDeviceList.ITEM_MAP.put(d.getId(), d);
+                    for (Device d : response.body().getPayload()) {
+                        SavedDeviceList.ITEMS.add(d);
+                        SavedDeviceList.ITEM_MAP.put(d.getId(), d);
+                    }
+                    SavedDeviceList.newRoom = false;
+                    updateViewPager(true);
                 }
-
-                boolean newRoom = SavedDeviceList.newRoom;
-                SavedDeviceList.newRoom = false;
-                updateViewPager(newRoom);
-            }
-        });
+            });
+        }
     }
 
 

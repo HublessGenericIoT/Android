@@ -174,11 +174,12 @@ public class EditDeviceActivityFragment extends Fragment {
             @Override
             public void doOnResponse(Call<DeviceUpdatedResponse> call, retrofit2.Response<DeviceUpdatedResponse> response) {
                 Toast.makeText(activity.getApplicationContext(), "Device Updated", Toast.LENGTH_LONG).show();
-                device.setName(tempName);
-                device.setRoom(tempRoom);
                 //TODO this is not an accepatble long-term solution, must refresh tab
             }
         });
+
+        device.setName(tempName);
+        device.setRoom(tempRoom);
     }
 
     public void returnNewRoom(String name) {

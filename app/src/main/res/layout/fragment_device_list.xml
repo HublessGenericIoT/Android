@@ -1,14 +1,33 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.v7.widget.RecyclerView xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/list"
-    android:name="com.hublessgenericiot.smartdevicecontroller.DeviceFragment"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:paddingTop="8dp"
-    android:paddingBottom="8dp"
-    android:clipToPadding="false"
-    app:layoutManager="LinearLayoutManager"
-    tools:context="com.hublessgenericiot.smartdevicecontroller.DeviceFragment"
-    tools:listitem="@layout/fragment_device" />
+    android:gravity="center"
+    android:layout_height="match_parent">
+
+    <android.support.v7.widget.RecyclerView xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:id="@+id/list"
+        android:name="com.hublessgenericiot.smartdevicecontroller.DeviceFragment"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:paddingTop="8dp"
+        android:paddingBottom="8dp"
+        android:layout_weight="1"
+        android:clipToPadding="false"
+        app:layoutManager="LinearLayoutManager"
+        tools:context="com.hublessgenericiot.smartdevicecontroller.DeviceFragment"
+        tools:listitem="@layout/fragment_device" />
+
+    <TextView android:id="@+id/empty"
+        android:visibility="gone"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:gravity="center"
+        android:textColor="@color/primary_text"
+        android:textSize="16sp"
+        android:text="Uh oh! Looks like there aren't any devices here!"/>
+
+</LinearLayout>

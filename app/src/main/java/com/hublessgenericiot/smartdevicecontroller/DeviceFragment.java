@@ -32,6 +32,7 @@ public class DeviceFragment extends Fragment {
     // TODO: Customize parameters
     private OnListFragmentInteractionListener mListener;
     private RecyclerView recyclerView;
+    private View emptyView;
 
     private String mRoom;
 
@@ -68,14 +69,16 @@ public class DeviceFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_device_list, container, false);
+        recyclerView = (RecyclerView) view.findViewById(R.id.list);
+        emptyView = (View) view.findViewById(R.id.empty);
 
         // Set the adapter
-        if (view instanceof RecyclerView) {
-            Context context = view.getContext();
-            recyclerView = (RecyclerView) view;
-            recyclerView.setLayoutManager(new LinearLayoutManager(context));
+        Context context = view.getContext();
+        recyclerView.setLayoutManager(new LinearLayoutManager(context));
 
-            devices = new ArrayList<Device>();
+        devices = new ArrayList<Device>();
+        if(SavedDeviceList.ITEMS.size() > 0) {
+            // not empty
             for (Device d : SavedDeviceList.ITEMS) {
                 if (d.getName() == null) {
                     continue;
@@ -88,10 +91,17 @@ public class DeviceFragment extends Fragment {
             }
 
             // TODO: Sort alphabetically
-            adapter = new MyDeviceRecyclerViewAdapter(devices, mListener);
-            recyclerView.setAdapter(adapter);
 
+            recyclerView.setVisibility(View.VISIBLE);
+            emptyView.setVisibility(View.GONE);
+        } else {
+            // empty
+            recyclerView.setVisibility(View.GONE);
+            emptyView.setVisibility(View.VISIBLE);
         }
+        adapter = new MyDeviceRecyclerViewAdapter(devices, mListener);
+        recyclerView.setAdapter(adapter);
+
         return view;
     }
 

@@ -231,7 +231,6 @@ public class RoomsActivity extends AppCompatActivity implements DeviceFragment.O
 
     public void updateViewPager(boolean newRoom) {
         if(newRoom) {
-            unregisterReceiver(wifiReceiver);
             finish();
             startActivity(getIntent());
         }
@@ -247,4 +246,19 @@ public class RoomsActivity extends AppCompatActivity implements DeviceFragment.O
         mRoomsPagerAdapter.notifyDataSetChanged();
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if(wifiReceiver != null) {
+            registerReceiver(wifiReceiver, new IntentFilter(WifiManager.SCAN_RESULTS_AVAILABLE_ACTION));
+        }
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        if(wifiReceiver != null) {
+            unregisterReceiver(wifiReceiver);
+        }
+    }
 }

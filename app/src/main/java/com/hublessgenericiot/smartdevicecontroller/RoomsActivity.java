@@ -1,5 +1,6 @@
 package com.hublessgenericiot.smartdevicecontroller;
 
+import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
@@ -66,6 +67,7 @@ public class RoomsActivity extends AppCompatActivity implements DeviceFragment.O
      * See https://g.co/AppIndexing/AndroidStudio for more information.
      */
     private GoogleApiClient client;
+    private WifiBroadcastReceiver wifiReceiver;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -223,7 +225,8 @@ public class RoomsActivity extends AppCompatActivity implements DeviceFragment.O
             wifi.setWifiEnabled(true);
         }
 
-        registerReceiver(new WifiBroadcastReceiver(this, wifi), new IntentFilter(WifiManager.SCAN_RESULTS_AVAILABLE_ACTION));
+        wifiReceiver = new WifiBroadcastReceiver(this, wifi);
+        registerReceiver(wifiReceiver, new IntentFilter(WifiManager.SCAN_RESULTS_AVAILABLE_ACTION));
     }
 
     public void updateViewPager(boolean newRoom) {
@@ -243,4 +246,19 @@ public class RoomsActivity extends AppCompatActivity implements DeviceFragment.O
         mRoomsPagerAdapter.notifyDataSetChanged();
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if(wifiReceiver != null) {
+            registerReceiver(wifiReceiver, new IntentFilter(WifiManager.SCAN_RESULTS_AVAILABLE_ACTION));
+        }
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        if(wifiReceiver != null) {
+            unregisterReceiver(wifiReceiver);
+        }
+    }
 }

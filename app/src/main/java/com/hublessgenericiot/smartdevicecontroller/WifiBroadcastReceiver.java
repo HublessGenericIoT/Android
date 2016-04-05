@@ -47,7 +47,9 @@ public class WifiBroadcastReceiver extends BroadcastReceiver {
                 }
                 Log.d("WifiBroadcastReceiver", "Found new device: " + s.SSID);
                 foundMACS.add(s.BSSID);
-                SavedDeviceList.ITEMS.add(0, new DeviceCreator("ESP 8266", "attic", DeviceType.LIGHT));
+                DeviceCreator newDevice = new DeviceCreator("ESP 8266", null, DeviceType.LIGHT);
+                SavedDeviceList.ITEMS.add(0, newDevice);
+                SavedDeviceList.ITEM_MAP.put(newDevice.getId(), newDevice);
                 activity.updateViewPager(false);
 
             }

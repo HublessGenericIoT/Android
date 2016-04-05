@@ -90,9 +90,13 @@ public class EditDeviceActivityFragment extends Fragment {
         device = SavedDeviceList.ITEM_MAP.get(id);
         name.setText(device.getName());
         room.setAdapter(roomsAdapter);
-        if (device.getRoom() != null) {
+        Log.d("MAH", device.getRoom());
+        if (device.getRoom() == null) {
+            room.setSelection(roomsAdapter.getPosition(R.string.room_none));
+        } else {
             room.setSelection(roomsAdapter.getPosition(device.getRoom()));
         }
+
         room.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
@@ -160,14 +164,16 @@ public class EditDeviceActivityFragment extends Fragment {
     private void updateDevice() {
         final Activity activity = getActivity();
 
-        final String tempRoom = roomsAdapter.getItem(room.getSelectedItemPosition()).toString();
-        final String tempName = name.getText().toString();
-        /*if(tempRoom.equals(getString(R.string.room_none))) {
+        String tempRoom = roomsAdapter.getItem(room.getSelectedItemPosition()).toString();
+        String tempName = name.getText().toString();
+        if(tempRoom.equals(getString(R.string.room_none))) {
             tempRoom = null;
-        }*/
+        }
 
         //TODO add Device type field
-        DeviceCreator dc = new DeviceCreator(device.getId(), tempName, tempRoom, DeviceType.LIGHT);
+        device.setName(tempName);
+        device.setRoom(tempRoom);
+        DeviceCreator dc = new DeviceCreator(device);
 
         IHublessSdkService instance = HublessSdkService.getInstance(activity);
         instance.updateDevice(device.getId(), dc).enqueue(new HublessCallback<DeviceUpdatedResponse>() {
@@ -177,9 +183,6 @@ public class EditDeviceActivityFragment extends Fragment {
                 //TODO this is not an accepatble long-term solution, must refresh tab
             }
         });
-
-        device.setName(tempName);
-        device.setRoom(tempRoom);
     }
 
     public void returnNewRoom(String name) {

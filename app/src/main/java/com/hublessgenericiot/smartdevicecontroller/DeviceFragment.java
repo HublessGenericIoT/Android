@@ -85,7 +85,7 @@ public class DeviceFragment extends Fragment {
                 }
                 if (mRoom.equals("All Devices")) {
                     devices.add(d);
-                } else if ((d.getRoom().equals(mRoom))) {
+                } else if (mRoom.equals(d.getRoom())) {
                     devices.add(d);
                 }
             }

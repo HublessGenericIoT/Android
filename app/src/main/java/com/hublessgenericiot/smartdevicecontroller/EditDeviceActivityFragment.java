@@ -94,7 +94,7 @@ public class EditDeviceActivityFragment extends Fragment {
         name.setText(device.getName());
         room.setAdapter(roomsAdapter);
         if (device.getRoom() == null) {
-            room.setSelection(roomsAdapter.getPosition(R.string.room_none));
+            room.setSelection(roomsAdapter.getPosition(getString(R.string.room_none)));
         } else {
             room.setSelection(roomsAdapter.getPosition(device.getRoom()));
         }

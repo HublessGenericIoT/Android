@@ -1,5 +1,6 @@
 package com.hublessgenericiot.smartdevicecontroller;
 
+import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
@@ -27,9 +28,17 @@ import android.view.View;
 import com.google.android.gms.appindexing.AppIndex;
 import com.google.android.gms.common.api.GoogleApiClient;
 
-import com.hublessgenericiot.smartdevicecontroller.dummy.DummyContent;
+import com.hublessgenericiot.smartdevicecontroller.dummy.SavedDeviceList;
 import com.hublessgenericiot.smartdevicecontroller.hublesssdk.HublessMQTTService;
+
+import com.hublessgenericiot.smartdevicecontroller.hublesssdk.devicesapi.HublessCallback;
 import com.hublessgenericiot.smartdevicecontroller.hublesssdk.devicesapi.HublessSdkService;
+import com.hublessgenericiot.smartdevicecontroller.hublesssdk.devicesapi.IHublessSdkService;
+import com.hublessgenericiot.smartdevicecontroller.hublesssdk.devicesapi.apiresponses.DeviceListResponse;
+import com.hublessgenericiot.smartdevicecontroller.hublesssdk.devicesapi.models.Device;
+
+import retrofit2.Call;
+
 
 public class RoomsActivity extends AppCompatActivity implements DeviceFragment.OnListFragmentInteractionListener {
 
@@ -58,6 +67,7 @@ public class RoomsActivity extends AppCompatActivity implements DeviceFragment.O
      * See https://g.co/AppIndexing/AndroidStudio for more information.
      */
     private GoogleApiClient client;
+    private WifiBroadcastReceiver wifiReceiver;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -95,10 +105,29 @@ public class RoomsActivity extends AppCompatActivity implements DeviceFragment.O
         //Toast.makeText(getApplicationContext(), x, Toast.LENGTH_SHORT).show();
 
         //only for debugging, testing, and example purposes. No need to actually use this.
-//        HublessSdkService.testApi(HublessSdkService.getInstance(this));
+        //HublessSdkService.testApi(HublessSdkService.getInstance(this));
 
-        mqttService = new HublessMQTTService();
-        mqttService.connect(this);
+        if(!SavedDeviceList.newRoom) { //TODO this is so it only connects once
+            mqttService = new HublessMQTTService();
+            mqttService.connect(this);
+        }
+        else {
+            IHublessSdkService instance = HublessSdkService.getInstance(this);
+            instance.getAllDevices().enqueue(new HublessCallback<DeviceListResponse>() {
+                @Override
+                public void doOnResponse(Call<DeviceListResponse> call, retrofit2.Response<DeviceListResponse> response) {
+                    Log.d("RoomsActivity", "URL: " + call.request().url());
+                    Log.d("RoomsActivity", response.body().toString());
+
+                    for (Device d : response.body().getPayload()) {
+                        SavedDeviceList.ITEMS.add(d);
+                        SavedDeviceList.ITEM_MAP.put(d.getId(), d);
+                    }
+                    SavedDeviceList.newRoom = false;
+                    updateViewPager(true);
+                }
+            });
+        }
     }
 
 
@@ -126,14 +155,14 @@ public class RoomsActivity extends AppCompatActivity implements DeviceFragment.O
     }
 
     @Override
-    public void onDeviceClick(DummyContent.DummyItem item) {
-        mqttService.publish("proxy/topic/device", item.id, this);
+    public void onDeviceClick(Device item) {
+        mqttService.publish("proxy/esp_8266/inTopic", item.getName(), this);
     }
 
     @Override
-    public void onDeviceLongClick(DummyContent.DummyItem item) {
+    public void onDeviceLongClick(Device item) {
         Intent intent = new Intent(this, EditDeviceActivity.class);
-        intent.putExtra(EditDeviceActivity.DEVICE_ID, item.id);
+        intent.putExtra(EditDeviceActivity.DEVICE_ID, item.getId());
         startActivityForResult(intent, EditDeviceActivity.DEVICE_EDITED);
     }
 
@@ -196,7 +225,8 @@ public class RoomsActivity extends AppCompatActivity implements DeviceFragment.O
             wifi.setWifiEnabled(true);
         }
 
-        registerReceiver(new WifiBroadcastReceiver(this, wifi), new IntentFilter(WifiManager.SCAN_RESULTS_AVAILABLE_ACTION));
+        wifiReceiver = new WifiBroadcastReceiver(this, wifi);
+        registerReceiver(wifiReceiver, new IntentFilter(WifiManager.SCAN_RESULTS_AVAILABLE_ACTION));
     }
 
     public void updateViewPager(boolean newRoom) {
@@ -216,4 +246,19 @@ public class RoomsActivity extends AppCompatActivity implements DeviceFragment.O
         mRoomsPagerAdapter.notifyDataSetChanged();
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if(wifiReceiver != null) {
+            registerReceiver(wifiReceiver, new IntentFilter(WifiManager.SCAN_RESULTS_AVAILABLE_ACTION));
+        }
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        if(wifiReceiver != null) {
+            unregisterReceiver(wifiReceiver);
+        }
+    }
 }

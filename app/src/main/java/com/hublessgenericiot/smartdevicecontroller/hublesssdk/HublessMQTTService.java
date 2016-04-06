@@ -13,6 +13,7 @@ import android.util.Log;
 import android.widget.Toast;
 
 import com.hublessgenericiot.smartdevicecontroller.R;
+import com.hublessgenericiot.smartdevicecontroller.RoomsActivity;
 
 import java.io.UnsupportedEncodingException;
 
@@ -20,7 +21,7 @@ public class HublessMQTTService {
 
     MqttAndroidClient mqttClient;
 
-    public void connect(final Activity activity)
+    public void connect(final RoomsActivity activity)
     {
         String clientId = MqttClient.generateClientId();
         mqttClient = new MqttAndroidClient(activity.getApplicationContext(),

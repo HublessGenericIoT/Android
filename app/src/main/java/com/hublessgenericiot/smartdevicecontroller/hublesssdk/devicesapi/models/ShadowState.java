@@ -10,7 +10,24 @@ import java.util.Map;
  * TODO: Allow Array values in Maps.
  */
 public class ShadowState {
+
     Map<String, String> reported;
     Map<String, String> desired;
     Map<String, String> delta;
+
+    public Map<String, String> getReported() {
+        return reported;
+    }
+
+    public void setReported(Map<String, String> reported) {
+        this.reported = reported;
+    }
+
+    public Map<String, String> getDesired() {
+        return desired;
+    }
+
+    public void setDesired(Map<String, String> desired) {
+        this.desired = desired;
+    }
 }

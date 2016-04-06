@@ -7,24 +7,31 @@ import android.view.ViewGroup;
 import android.widget.CompoundButton;
 import android.widget.Switch;
 import android.widget.TextView;
-import android.widget.ToggleButton;
 
 import com.hublessgenericiot.smartdevicecontroller.DeviceFragment.OnListFragmentInteractionListener;
-import com.hublessgenericiot.smartdevicecontroller.dummy.DummyContent.DummyItem;
+import com.hublessgenericiot.smartdevicecontroller.hublesssdk.devicesapi.HublessSdkService;
+import com.hublessgenericiot.smartdevicecontroller.hublesssdk.devicesapi.IHublessSdkService;
+import com.hublessgenericiot.smartdevicecontroller.hublesssdk.devicesapi.models.Device;
+import com.hublessgenericiot.smartdevicecontroller.hublesssdk.devicesapi.models.DeviceCreator;
+import com.hublessgenericiot.smartdevicecontroller.hublesssdk.devicesapi.models.ShadowState;
+import com.hublessgenericiot.smartdevicecontroller.hublesssdk.devicesapi.models.ShadowedDevice;
 
 import java.util.List;
+import java.util.Map;
+
+import retrofit2.Call;
 
 /**
- * {@link RecyclerView.Adapter} that can display a {@link DummyItem} and makes a call to the
+ * {@link RecyclerView.Adapter} that can display a {@link Device} and makes a call to the
  * specified {@link OnListFragmentInteractionListener}.
- * TODO: Replace the implementation with code for your data type.
  */
 public class MyDeviceRecyclerViewAdapter extends RecyclerView.Adapter<MyDeviceRecyclerViewAdapter.ViewHolder> {
 
-    private final List<DummyItem> mValues;
+    //private final List<DummyItem> mValues;
+    private final List<Device> mValues;
     private final OnListFragmentInteractionListener mListener;
 
-    public MyDeviceRecyclerViewAdapter(List<DummyItem> items, OnListFragmentInteractionListener listener) {
+    public MyDeviceRecyclerViewAdapter(List<Device> items, OnListFragmentInteractionListener listener) {
         mValues = items;
         mListener = listener;
     }
@@ -39,13 +46,25 @@ public class MyDeviceRecyclerViewAdapter extends RecyclerView.Adapter<MyDeviceRe
     @Override
     public void onBindViewHolder(final ViewHolder holder, int position) {
         holder.mItem = mValues.get(position);
-        if(mValues.get(position).newDevice) {
+        if(holder.mItem instanceof DeviceCreator) { //TODO have a field for this or get rid of it
             holder.mNewDeviceView.setVisibility(View.VISIBLE);
         } else {
             holder.mNewDeviceView.setVisibility(View.GONE);
         }
-        holder.mNameView.setText(mValues.get(position).name);
-        holder.mStateView.setChecked(mValues.get(position).state);
+        holder.mNameView.setText(mValues.get(position).getName());
+        if(holder.mItem instanceof ShadowedDevice && ((ShadowedDevice) holder.mItem).getShadow() != null && ((ShadowedDevice) holder.mItem).getShadow().getState() != null) {
+            ShadowState state = ((ShadowedDevice) holder.mItem).getShadow().getState();
+            if(state.getDesired().containsKey("state")) { // TODO: Saved this String elsewhere
+                holder.mStateView.setChecked(state.getDesired().get("state").equals("on"));
+            } else if(state.getReported().containsKey("state")) {
+                holder.mStateView.setChecked(state.getDesired().get("state").equals("on"));
+            } else {
+                holder.mStateView.setChecked(false);
+            }
+        } else {
+            holder.mStateView.setChecked(false);
+            holder.mStateView.setVisibility(View.GONE);
+        }
 
         holder.mView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -82,7 +101,7 @@ public class MyDeviceRecyclerViewAdapter extends RecyclerView.Adapter<MyDeviceRe
         public final TextView mNewDeviceView;
         public final TextView mNameView;
         public final Switch mStateView;
-        public DummyItem mItem;
+        public Device mItem;
 
         public ViewHolder(View view) {
             super(view);
@@ -94,7 +113,11 @@ public class MyDeviceRecyclerViewAdapter extends RecyclerView.Adapter<MyDeviceRe
             mStateView.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
                 @Override
                 public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                    mItem.state = isChecked;
+                    if(mItem instanceof ShadowedDevice && ((ShadowedDevice) mItem).getShadow() != null && ((ShadowedDevice) mItem).getShadow().getState() != null) {
+                        Map<String, String> desired = ((ShadowedDevice) mItem).getShadow().getState().getDesired();
+                        desired.put("state", isChecked ? "on" : "off"); // TODO: Save this String elsewhere
+                        ((ShadowedDevice) mItem).getShadow().getState().setDesired(desired);
+                    }
                 }
             });
         }

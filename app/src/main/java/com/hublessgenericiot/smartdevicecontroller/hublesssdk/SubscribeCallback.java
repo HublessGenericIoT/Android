@@ -1,17 +1,15 @@
 package com.hublessgenericiot.smartdevicecontroller.hublesssdk;
 
-import android.app.Activity;
-import android.app.Fragment;
 import android.util.Log;
 import android.widget.Toast;
 
-import com.hublessgenericiot.smartdevicecontroller.dummy.DummyContent;
+import com.hublessgenericiot.smartdevicecontroller.RoomsActivity;
+import com.hublessgenericiot.smartdevicecontroller.dummy.SavedDeviceList;
+import com.hublessgenericiot.smartdevicecontroller.hublesssdk.devicesapi.models.Device;
 
 import org.eclipse.paho.client.mqttv3.IMqttDeliveryToken;
 import org.eclipse.paho.client.mqttv3.MqttCallback;
 import org.eclipse.paho.client.mqttv3.MqttMessage;
-
-import java.util.List;
 
 /**
  * Created by Joe Koncel on 3/4/2016.
@@ -19,9 +17,9 @@ import java.util.List;
 public class SubscribeCallback implements MqttCallback
 {
 
-    Activity activity;
+    RoomsActivity activity;
 
-    public SubscribeCallback(Activity a)
+    public SubscribeCallback(RoomsActivity a)
     {
         activity = a;
     }
@@ -37,13 +35,15 @@ public class SubscribeCallback implements MqttCallback
     {
         Log.d("Message Arrived", message.toString());
         Toast.makeText(activity.getApplicationContext(), "Message: " + message.toString(), Toast.LENGTH_LONG).show();
-        /*for(DummyContent.DummyItem d : DummyContent.ITEMS)
+        /*for(Device d : SavedDeviceList.ITEMS)
         {
-            if(!(message.toString().equals(d.id)))
+            if(!(message.toString().equals(d.getId())))
             {
                 d.state = !(d.state);
             }
         }*/
+
+        activity.updateViewPager(false);
     }
 
     @Override

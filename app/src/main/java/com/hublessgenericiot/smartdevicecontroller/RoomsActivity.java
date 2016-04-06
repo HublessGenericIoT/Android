@@ -119,7 +119,7 @@ public class RoomsActivity extends AppCompatActivity implements DeviceFragment.O
                     Log.d("RoomsActivity", "URL: " + call.request().url());
                     Log.d("RoomsActivity", response.body().toString());
 
-                    for (Device d : response.body().getPayload()) {
+                    for (Device d : response.body().getPayload().getDevices()) {
                         SavedDeviceList.ITEMS.add(d);
                         SavedDeviceList.ITEM_MAP.put(d.getId(), d);
                     }

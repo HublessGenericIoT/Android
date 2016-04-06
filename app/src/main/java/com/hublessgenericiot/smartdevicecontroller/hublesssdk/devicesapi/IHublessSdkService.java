@@ -13,10 +13,12 @@ import retrofit2.http.GET;
 import retrofit2.http.POST;
 import retrofit2.http.PUT;
 import retrofit2.http.Path;
+import retrofit2.http.Query;
 
 
 /**
- * Created by david on 3/4/16.
+ * Retrofit interface for the API. Check the hublessapi repo in Github for a more
+ * detailed explanation of the API functions.
  */
 public interface IHublessSdkService {
     /**
@@ -25,12 +27,13 @@ public interface IHublessSdkService {
      * Future plans:
      *  - It will have a query parameter to search by room.
      *  - It will use the user's auth token to only list that user's devices.
-     *  - It will allow devices to be paged.
      *
      * @return A list of devices in the form of a HublessApiResponse.
      */
     @GET("devices")
     Call<DeviceListResponse> getAllDevices();
+    @GET("devices")
+    Call<DeviceListResponse> getAllDevices(@Query("nextToken") String nextToken);
 
     /**
      * Used to get a specific device and its shadow by its name.
@@ -42,7 +45,8 @@ public interface IHublessSdkService {
     Call<DeviceResponse> getDevice(@Path("id") String id);
 
     /**
-     * A way to update a device's attributes. Note: DEVICE NAMES CANNOT CHANGE
+     * A way to update a device's data.
+     *
      * @param id The id of the device in the API.
      * @param device The new device object with attributes to be written.
      * @return The status of the update.

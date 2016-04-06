@@ -14,7 +14,6 @@ public class DeviceCreator extends Device {
         this.setRoom(room);
         this.setUser("1"); //defaulted to "user" user. ie, not a test user.
         this.type = type;
-        this.id = UUID.randomUUID().toString();
     }
 
     public DeviceCreator(Device from) {
@@ -46,10 +45,10 @@ public class DeviceCreator extends Device {
         if(in == null || in.isEmpty()) {
             return;
         }
-        Pattern p = Pattern.compile("[ a-zA-Z0-9_.,@/:#-]+");
+        Pattern p = Pattern.compile("[a-zA-Z0-9_.,@/:#-]+");
         Matcher m = p.matcher(in);
         boolean b = m.matches();
-        if(!b) throw new IllegalArgumentException("The given string ("+in+") is not valid. Must match \"[ a-zA-Z0-9_.,@/:#-]+\"");
+        if(!b) throw new IllegalArgumentException("The given string ("+in+") is not valid. Must match \"[a-zA-Z0-9_.,@/:#-]+\"");
     }
 
     public void setRoom(String room) {

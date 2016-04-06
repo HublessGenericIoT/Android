@@ -10,6 +10,7 @@ import android.util.Log;
 import com.hublessgenericiot.smartdevicecontroller.dummy.SavedDeviceList;
 import com.hublessgenericiot.smartdevicecontroller.hublesssdk.devicesapi.models.DeviceCreator;
 import com.hublessgenericiot.smartdevicecontroller.hublesssdk.devicesapi.models.DeviceType;
+import com.hublessgenericiot.smartdevicecontroller.hublesssdk.devicesapi.models.NewDevice;
 
 import java.util.LinkedList;
 import java.util.Timer;
@@ -34,6 +35,17 @@ public class WifiBroadcastReceiver extends BroadcastReceiver {
     @Override
     public void onReceive(Context context, Intent intent) {
 
+        switch(intent.getAction()) {
+            case WifiManager.NETWORK_STATE_CHANGED_ACTION:
+                WifiController.notifyWifiStateChanged();
+                break;
+            case WifiManager.SCAN_RESULTS_AVAILABLE_ACTION:
+                processScanResults();
+                break;
+        }
+    }
+
+    public void processScanResults() {
         for(ScanResult s : wifi.getScanResults()) {
             if(s.SSID.startsWith("ESP_")) {
                 boolean addDevice = true;
@@ -47,7 +59,7 @@ public class WifiBroadcastReceiver extends BroadcastReceiver {
                 }
                 Log.d("WifiBroadcastReceiver", "Found new device: " + s.SSID);
                 foundMACS.add(s.BSSID);
-                DeviceCreator newDevice = new DeviceCreator("ESP 8266", null, DeviceType.LIGHT);
+                DeviceCreator newDevice = new NewDevice("ESP 8266", null, s.SSID, DeviceType.LIGHT);
                 SavedDeviceList.ITEMS.add(0, newDevice);
                 SavedDeviceList.ITEM_MAP.put(newDevice.getId(), newDevice);
                 activity.updateViewPager(false);

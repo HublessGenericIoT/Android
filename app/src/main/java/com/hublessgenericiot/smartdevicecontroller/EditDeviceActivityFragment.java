@@ -23,10 +23,13 @@ import com.hublessgenericiot.smartdevicecontroller.dummy.SavedDeviceList;
 import com.hublessgenericiot.smartdevicecontroller.hublesssdk.devicesapi.HublessCallback;
 import com.hublessgenericiot.smartdevicecontroller.hublesssdk.devicesapi.HublessSdkService;
 import com.hublessgenericiot.smartdevicecontroller.hublesssdk.devicesapi.IHublessSdkService;
+import com.hublessgenericiot.smartdevicecontroller.hublesssdk.devicesapi.apiresponses.DeviceCreatedResponse;
 import com.hublessgenericiot.smartdevicecontroller.hublesssdk.devicesapi.apiresponses.DeviceUpdatedResponse;
+import com.hublessgenericiot.smartdevicecontroller.hublesssdk.devicesapi.models.CreatedDeviceData;
 import com.hublessgenericiot.smartdevicecontroller.hublesssdk.devicesapi.models.Device;
 import com.hublessgenericiot.smartdevicecontroller.hublesssdk.devicesapi.models.DeviceCreator;
 import com.hublessgenericiot.smartdevicecontroller.hublesssdk.devicesapi.models.DeviceType;
+import com.hublessgenericiot.smartdevicecontroller.hublesssdk.devicesapi.models.NewDevice;
 
 import java.util.Collections;
 import java.util.LinkedList;
@@ -90,7 +93,6 @@ public class EditDeviceActivityFragment extends Fragment {
         device = SavedDeviceList.ITEM_MAP.get(id);
         name.setText(device.getName());
         room.setAdapter(roomsAdapter);
-        Log.d("MAH", device.getRoom());
         if (device.getRoom() == null) {
             room.setSelection(roomsAdapter.getPosition(R.string.room_none));
         } else {
@@ -176,13 +178,27 @@ public class EditDeviceActivityFragment extends Fragment {
         DeviceCreator dc = new DeviceCreator(device);
 
         IHublessSdkService instance = HublessSdkService.getInstance(activity);
-        instance.updateDevice(device.getId(), dc).enqueue(new HublessCallback<DeviceUpdatedResponse>() {
-            @Override
-            public void doOnResponse(Call<DeviceUpdatedResponse> call, retrofit2.Response<DeviceUpdatedResponse> response) {
-                Toast.makeText(activity.getApplicationContext(), "Device Updated", Toast.LENGTH_LONG).show();
-                //TODO this is not an accepatble long-term solution, must refresh tab
-            }
-        });
+        if(device instanceof NewDevice) {
+            // new device
+            dc.setId(null);
+            instance.createDevice(dc).enqueue(new HublessCallback<DeviceCreatedResponse>() {
+                @Override
+                public void doOnResponse(Call<DeviceCreatedResponse> call, retrofit2.Response<DeviceCreatedResponse> response) {
+                    Toast.makeText(activity.getApplicationContext(), "Device Created", Toast.LENGTH_LONG).show();
+                    CreatedDeviceData createdDeviceData = response.body().getPayload();
+                    WifiController.configureDevice((NewDevice)device, createdDeviceData);
+                    //TODO this is not an acceptable long-term solution, must refresh tab
+                }
+            });
+        } else {
+            instance.updateDevice(device.getId(), dc).enqueue(new HublessCallback<DeviceUpdatedResponse>() {
+                @Override
+                public void doOnResponse(Call<DeviceUpdatedResponse> call, retrofit2.Response<DeviceUpdatedResponse> response) {
+                    Toast.makeText(activity.getApplicationContext(), "Device Updated", Toast.LENGTH_LONG).show();
+                    //TODO this is not an acceptable long-term solution, must refresh tab
+                }
+            });
+        }
     }
 
     public void returnNewRoom(String name) {

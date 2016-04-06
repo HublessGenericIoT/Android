@@ -219,14 +219,15 @@ public class RoomsActivity extends AppCompatActivity implements DeviceFragment.O
 
     private void scanWifi() {
 
-        wifi = (WifiManager) getSystemService(Context.WIFI_SERVICE);
-
-        if (!wifi.isWifiEnabled()) {
-            wifi.setWifiEnabled(true);
-        }
-
-        wifiReceiver = new WifiBroadcastReceiver(this, wifi);
-        registerReceiver(wifiReceiver, new IntentFilter(WifiManager.SCAN_RESULTS_AVAILABLE_ACTION));
+//        wifi = (WifiManager) getSystemService(Context.WIFI_SERVICE);
+//
+//        if (!wifi.isWifiEnabled()) {
+//            wifi.setWifiEnabled(true);
+//        }
+//
+//        wifiReceiver = new WifiBroadcastReceiver(this, wifi);
+        WifiController.init(this);
+        WifiController.registerWifiReceiver(this);
     }
 
     public void updateViewPager(boolean newRoom) {
@@ -249,16 +250,12 @@ public class RoomsActivity extends AppCompatActivity implements DeviceFragment.O
     @Override
     protected void onResume() {
         super.onResume();
-        if(wifiReceiver != null) {
-            registerReceiver(wifiReceiver, new IntentFilter(WifiManager.SCAN_RESULTS_AVAILABLE_ACTION));
-        }
+        WifiController.registerWifiReceiver(this);
     }
 
     @Override
     protected void onPause() {
         super.onPause();
-        if(wifiReceiver != null) {
-            unregisterReceiver(wifiReceiver);
-        }
+        WifiController.unregisterWifiReceiver();
     }
 }

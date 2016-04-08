@@ -1,4 +1,4 @@
-package com.hublessgenericiot.smartdevicecontroller;
+package com.hublessgenericiot.smartdevicecontroller.activities;
 
 import android.app.DialogFragment;
 import android.content.Intent;
@@ -11,6 +11,12 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
+
+import com.hublessgenericiot.smartdevicecontroller.fragments.AutomationDialogFragment;
+import com.hublessgenericiot.smartdevicecontroller.fragments.EditDeviceActivityFragment;
+import com.hublessgenericiot.smartdevicecontroller.ItemDataHolder;
+import com.hublessgenericiot.smartdevicecontroller.fragments.NewRoomDialogFragment;
+import com.hublessgenericiot.smartdevicecontroller.R;
 
 
 public class EditDeviceActivity extends AppCompatActivity implements ItemDataHolder, NewRoomDialogFragment.NewRoomDialogListener, AutomationDialogFragment.AutomationDialogListener {

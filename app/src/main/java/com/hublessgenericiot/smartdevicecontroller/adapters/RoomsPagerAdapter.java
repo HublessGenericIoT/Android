@@ -1,25 +1,20 @@
-package com.hublessgenericiot.smartdevicecontroller;
+package com.hublessgenericiot.smartdevicecontroller.adapters;
 
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
-import android.util.Log;
 import android.util.SparseArray;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.hublessgenericiot.smartdevicecontroller.dummy.SavedDeviceList;
-import com.hublessgenericiot.smartdevicecontroller.hublesssdk.devicesapi.HublessCallback;
-import com.hublessgenericiot.smartdevicecontroller.hublesssdk.devicesapi.HublessSdkService;
-import com.hublessgenericiot.smartdevicecontroller.hublesssdk.devicesapi.IHublessSdkService;
-import com.hublessgenericiot.smartdevicecontroller.hublesssdk.devicesapi.apiresponses.DeviceListResponse;
+import com.hublessgenericiot.smartdevicecontroller.fragments.DeviceFragment;
+import com.hublessgenericiot.smartdevicecontroller.activities.RoomsActivity;
+import com.hublessgenericiot.smartdevicecontroller.data.SavedDeviceList;
 import com.hublessgenericiot.smartdevicecontroller.hublesssdk.devicesapi.models.Device;
 
 import java.util.Collections;
 import java.util.LinkedList;
-
-import retrofit2.Call;
 
 /**
  * Created by bwencke on 2/24/16.
@@ -34,7 +29,7 @@ public class RoomsPagerAdapter extends FragmentPagerAdapter {
         this.tabLayout = tabLayout;
     }
 
-    SparseArray<Fragment> registeredFragments = new SparseArray<>();
+    public SparseArray<Fragment> registeredFragments = new SparseArray<>();
 
     private LinkedList<String> rooms = new LinkedList<>();
 

@@ -1,14 +1,13 @@
 package com.hublessgenericiot.smartdevicecontroller;
 
-import android.bluetooth.BluetoothAdapter;
 import android.content.Context;
 import android.content.IntentFilter;
 import android.net.wifi.WifiConfiguration;
 import android.net.wifi.WifiInfo;
 import android.net.wifi.WifiManager;
 import android.util.Log;
-import android.widget.Toast;
 
+import com.hublessgenericiot.smartdevicecontroller.activities.RoomsActivity;
 import com.hublessgenericiot.smartdevicecontroller.hublesssdk.devicesapi.models.CreatedDeviceData;
 import com.hublessgenericiot.smartdevicecontroller.hublesssdk.devicesapi.models.NewDevice;
 
@@ -22,6 +21,8 @@ public class WifiController {
     private static RoomsActivity activity;
     private static IntentFilter filter;
     private static boolean registered;
+
+    private static DeviceConfig currentConfig;
 
     public static void init(RoomsActivity activity) {
         registered = false;
@@ -51,32 +52,41 @@ public class WifiController {
         }
     }
 
-    public static void configureDevice(NewDevice device, CreatedDeviceData createdDeviceData) {
+    public static void configureDevice(DeviceConfig deviceConfig) {
         if(!registered) {
             return;
         }
 
-        Log.d("CONFIG", createdDeviceData.getId());
-        Log.d("CONFIG", createdDeviceData.getMqttData().toString());
+        currentConfig = deviceConfig;
+
+        Log.d("CONFIG", currentConfig.createdDeviceData.getId());
+        Log.d("CONFIG", currentConfig.createdDeviceData.getMqttData().toString());
 
         /* Connect to the device's wifi */
         WifiConfiguration wifiConfig = new WifiConfiguration();
-        wifiConfig.SSID = String.format("\"%s\"", device.getSsid());
+        wifiConfig.SSID = currentConfig.device.getSsid();
         wifiConfig.allowedKeyManagement.set(WifiConfiguration.KeyMgmt.NONE);
+        wifiConfig.priority = 99999;
 
-        //remember id
         int netId = wifiManager.addNetwork(wifiConfig);
         wifiManager.disconnect();
         wifiManager.enableNetwork(netId, true);
-        wifiManager.reconnect();
     }
 
     public static void notifyWifiStateChanged() {
-        Log.d("Network", "Network state changed.");
+        if(currentConfig == null || !currentConfig.isValid()) {
+            return;
+        }
+
         WifiInfo connectionInfo = wifiManager.getConnectionInfo();
-        //if(connectionInfo.getSSID().startsWith("ESP_")) {
-            Log.d("Network", "Connected to " + connectionInfo.getSSID());
-       // }
+        if(connectionInfo != null && connectionInfo.getSSID() != null) {
+            String ssid = connectionInfo.getSSID().replaceAll("^\"|\"$", ""); // remove quotes
+            Log.d("Network", "Connected to " + ssid);
+            Log.d("Network", "Looking for " + currentConfig.device.getSsid());
+            if(ssid.equals(currentConfig.device.getSsid())) {
+                currentConfig.sendConfiguration(activity);
+            }
+        }
     }
 
 }

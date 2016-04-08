@@ -1,4 +1,4 @@
-package com.hublessgenericiot.smartdevicecontroller;
+package com.hublessgenericiot.smartdevicecontroller.fragments;
 
 import android.app.Activity;
 import android.app.Dialog;
@@ -8,6 +8,8 @@ import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.widget.EditText;
 import android.widget.Toast;
+
+import com.hublessgenericiot.smartdevicecontroller.R;
 
 /**
  * Created by bwencke on 3/23/16.

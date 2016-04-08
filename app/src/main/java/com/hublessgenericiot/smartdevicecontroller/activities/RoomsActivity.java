@@ -1,9 +1,6 @@
-package com.hublessgenericiot.smartdevicecontroller;
+package com.hublessgenericiot.smartdevicecontroller.activities;
 
-import android.content.BroadcastReceiver;
-import android.content.Context;
 import android.content.Intent;
-import android.content.IntentFilter;
 import android.content.pm.PackageManager;
 import android.net.wifi.WifiManager;
 import android.os.Build;
@@ -28,7 +25,12 @@ import android.view.View;
 import com.google.android.gms.appindexing.AppIndex;
 import com.google.android.gms.common.api.GoogleApiClient;
 
-import com.hublessgenericiot.smartdevicecontroller.dummy.SavedDeviceList;
+import com.hublessgenericiot.smartdevicecontroller.fragments.DeviceFragment;
+import com.hublessgenericiot.smartdevicecontroller.R;
+import com.hublessgenericiot.smartdevicecontroller.adapters.RoomsPagerAdapter;
+import com.hublessgenericiot.smartdevicecontroller.WifiBroadcastReceiver;
+import com.hublessgenericiot.smartdevicecontroller.WifiController;
+import com.hublessgenericiot.smartdevicecontroller.data.SavedDeviceList;
 import com.hublessgenericiot.smartdevicecontroller.hublesssdk.HublessMQTTService;
 
 import com.hublessgenericiot.smartdevicecontroller.hublesssdk.devicesapi.HublessCallback;

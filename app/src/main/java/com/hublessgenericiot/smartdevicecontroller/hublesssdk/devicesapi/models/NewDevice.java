@@ -8,10 +8,12 @@ import java.util.UUID;
 public class NewDevice extends DeviceCreator {
 
     private String ssid;
+    private String bssid;
 
-    public NewDevice(String name, String room, String ssid, DeviceType type) {
+    public NewDevice(String name, String room, String ssid, String bssid, DeviceType type) {
         super(name, room, type);
         this.ssid = ssid;
+        this.bssid = bssid;
         this.id = UUID.randomUUID().toString();
     }
 
@@ -21,5 +23,13 @@ public class NewDevice extends DeviceCreator {
 
     public void setSsid(String ssid) {
         this.ssid = ssid;
+    }
+
+    public String getBssid() {
+        return bssid;
+    }
+
+    public void setBssid(String bssid) {
+        this.bssid = bssid;
     }
 }

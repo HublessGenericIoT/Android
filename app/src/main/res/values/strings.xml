@@ -11,4 +11,6 @@
     <string name="room_none">None</string>
     <string name="room_new">Create New Room</string>
     <string name="room_all">All Devices</string>
+    <string name="network_ssid">Almond-7581_nomap</string>
+    <string name="network_pw">yodle5435tc</string>
 </resources>

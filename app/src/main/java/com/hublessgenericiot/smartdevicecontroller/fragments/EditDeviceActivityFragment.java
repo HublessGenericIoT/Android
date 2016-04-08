@@ -1,10 +1,9 @@
-package com.hublessgenericiot.smartdevicecontroller;
+package com.hublessgenericiot.smartdevicecontroller.fragments;
 
 import android.app.Activity;
 import android.content.Context;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -19,7 +18,12 @@ import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.hublessgenericiot.smartdevicecontroller.dummy.SavedDeviceList;
+import com.hublessgenericiot.smartdevicecontroller.DeviceConfig;
+import com.hublessgenericiot.smartdevicecontroller.ItemDataHolder;
+import com.hublessgenericiot.smartdevicecontroller.R;
+import com.hublessgenericiot.smartdevicecontroller.WifiController;
+import com.hublessgenericiot.smartdevicecontroller.activities.EditDeviceActivity;
+import com.hublessgenericiot.smartdevicecontroller.data.SavedDeviceList;
 import com.hublessgenericiot.smartdevicecontroller.hublesssdk.devicesapi.HublessCallback;
 import com.hublessgenericiot.smartdevicecontroller.hublesssdk.devicesapi.HublessSdkService;
 import com.hublessgenericiot.smartdevicecontroller.hublesssdk.devicesapi.IHublessSdkService;
@@ -28,7 +32,6 @@ import com.hublessgenericiot.smartdevicecontroller.hublesssdk.devicesapi.apiresp
 import com.hublessgenericiot.smartdevicecontroller.hublesssdk.devicesapi.models.CreatedDeviceData;
 import com.hublessgenericiot.smartdevicecontroller.hublesssdk.devicesapi.models.Device;
 import com.hublessgenericiot.smartdevicecontroller.hublesssdk.devicesapi.models.DeviceCreator;
-import com.hublessgenericiot.smartdevicecontroller.hublesssdk.devicesapi.models.DeviceType;
 import com.hublessgenericiot.smartdevicecontroller.hublesssdk.devicesapi.models.NewDevice;
 
 import java.util.Collections;
@@ -37,7 +40,6 @@ import java.util.LinkedList;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import retrofit2.Call;
-import retrofit2.Callback;
 
 /**
  * Edit a device
@@ -186,7 +188,7 @@ public class EditDeviceActivityFragment extends Fragment {
                 public void doOnResponse(Call<DeviceCreatedResponse> call, retrofit2.Response<DeviceCreatedResponse> response) {
                     Toast.makeText(activity.getApplicationContext(), "Device Created", Toast.LENGTH_LONG).show();
                     CreatedDeviceData createdDeviceData = response.body().getPayload();
-                    WifiController.configureDevice((NewDevice)device, createdDeviceData);
+                    WifiController.configureDevice(new DeviceConfig((NewDevice) device, createdDeviceData));
                     //TODO this is not an acceptable long-term solution, must refresh tab
                 }
             });

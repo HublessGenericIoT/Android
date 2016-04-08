@@ -1,4 +1,4 @@
-package com.hublessgenericiot.smartdevicecontroller;
+package com.hublessgenericiot.smartdevicecontroller.adapters;
 
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -8,19 +8,15 @@ import android.widget.CompoundButton;
 import android.widget.Switch;
 import android.widget.TextView;
 
-import com.hublessgenericiot.smartdevicecontroller.DeviceFragment.OnListFragmentInteractionListener;
-import com.hublessgenericiot.smartdevicecontroller.hublesssdk.devicesapi.HublessSdkService;
-import com.hublessgenericiot.smartdevicecontroller.hublesssdk.devicesapi.IHublessSdkService;
+import com.hublessgenericiot.smartdevicecontroller.fragments.DeviceFragment.OnListFragmentInteractionListener;
+import com.hublessgenericiot.smartdevicecontroller.R;
 import com.hublessgenericiot.smartdevicecontroller.hublesssdk.devicesapi.models.Device;
-import com.hublessgenericiot.smartdevicecontroller.hublesssdk.devicesapi.models.DeviceCreator;
 import com.hublessgenericiot.smartdevicecontroller.hublesssdk.devicesapi.models.NewDevice;
 import com.hublessgenericiot.smartdevicecontroller.hublesssdk.devicesapi.models.ShadowState;
 import com.hublessgenericiot.smartdevicecontroller.hublesssdk.devicesapi.models.ShadowedDevice;
 
 import java.util.List;
 import java.util.Map;
-
-import retrofit2.Call;
 
 /**
  * {@link RecyclerView.Adapter} that can display a {@link Device} and makes a call to the

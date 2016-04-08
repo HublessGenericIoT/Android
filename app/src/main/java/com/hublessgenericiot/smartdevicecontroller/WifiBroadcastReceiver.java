@@ -7,7 +7,8 @@ import android.net.wifi.ScanResult;
 import android.net.wifi.WifiManager;
 import android.util.Log;
 
-import com.hublessgenericiot.smartdevicecontroller.dummy.SavedDeviceList;
+import com.hublessgenericiot.smartdevicecontroller.activities.RoomsActivity;
+import com.hublessgenericiot.smartdevicecontroller.data.SavedDeviceList;
 import com.hublessgenericiot.smartdevicecontroller.hublesssdk.devicesapi.models.DeviceCreator;
 import com.hublessgenericiot.smartdevicecontroller.hublesssdk.devicesapi.models.DeviceType;
 import com.hublessgenericiot.smartdevicecontroller.hublesssdk.devicesapi.models.NewDevice;
@@ -24,7 +25,7 @@ public class WifiBroadcastReceiver extends BroadcastReceiver {
     RoomsActivity activity;
     WifiManager wifi;
 
-    LinkedList<String> foundMACS = new LinkedList<>();
+    LinkedList<NewDevice> newDevices = new LinkedList<>();
 
     public WifiBroadcastReceiver(RoomsActivity activity, WifiManager wifi) {
         this.activity = activity;
@@ -49,21 +50,36 @@ public class WifiBroadcastReceiver extends BroadcastReceiver {
         for(ScanResult s : wifi.getScanResults()) {
             if(s.SSID.startsWith("ESP_")) {
                 boolean addDevice = true;
-                for(String str : foundMACS){
-                    if(str.equals(s.BSSID)){
+                for (NewDevice newDevice : newDevices) {
+                    if (newDevice.getBssid().equals(s.BSSID)) {
                         addDevice = false;
                     }
                 }
-                if(!addDevice) {
+                if (!addDevice) {
                     continue;
                 }
                 Log.d("WifiBroadcastReceiver", "Found new device: " + s.SSID);
-                foundMACS.add(s.BSSID);
-                DeviceCreator newDevice = new NewDevice("ESP_8266", null, s.SSID, DeviceType.LIGHT);
+                NewDevice newDevice = new NewDevice("ESP_8266", null, s.SSID, s.BSSID, DeviceType.LIGHT);
+                newDevices.add(newDevice);
                 SavedDeviceList.ITEMS.add(0, newDevice);
                 SavedDeviceList.ITEM_MAP.put(newDevice.getId(), newDevice);
                 activity.updateViewPager(false);
 
+            }
+        }
+
+        for(NewDevice newDevice : newDevices) {
+            boolean remove = true;
+            for(ScanResult s : wifi.getScanResults()) {
+                if(newDevice.getBssid().equals(s.BSSID)) {
+                    remove = false;
+                }
+            }
+            if(remove) {
+                newDevices.remove(newDevice);
+                SavedDeviceList.ITEMS.remove(newDevice);
+                SavedDeviceList.ITEM_MAP.remove(newDevice.getId());
+                activity.updateViewPager(false);
             }
         }
 

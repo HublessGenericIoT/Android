@@ -28,8 +28,8 @@ import retrofit2.converter.gson.GsonConverterFactory;
 /**
  * A singleton and factory for the Retrofit instance for the API.
  */
-public class ESPAPIService {
-    private static IESPAPIService INSTANCE;
+public class ESPApiService {
+    private static IESPApiService INSTANCE;
 
     /**
      * Returns the instance of the ESPAPI that was created by Retrofit.
@@ -41,7 +41,7 @@ public class ESPAPIService {
      * @param c The context so that the client can grab the API Url from resources.
      * @return An instance of the ESPAPIService.
      */
-    public static IESPAPIService getInstance(@Nullable final Context c) {
+    public static IESPApiService getInstance(@Nullable final Context c) {
         if(INSTANCE == null) {
             if(c == null) throw new NullPointerException("The context must not be null the first time this is called");
 
@@ -59,7 +59,7 @@ public class ESPAPIService {
                     .client(client)
                     .build();
 
-            INSTANCE = retrofit.create(IESPAPIService.class);
+            INSTANCE = retrofit.create(IESPApiService.class);
         }
         return INSTANCE;
     }

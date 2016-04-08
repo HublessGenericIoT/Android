@@ -5,7 +5,7 @@ package com.hublessgenericiot.smartdevicecontroller.espapi.responses;
  *
  * All API endpoints will have a status with either an error or success string and a payload.
  */
-public abstract class ESPAPIResponse {
+public abstract class ESPApiResponse {
     private String status;
     private String errorMessage;
 

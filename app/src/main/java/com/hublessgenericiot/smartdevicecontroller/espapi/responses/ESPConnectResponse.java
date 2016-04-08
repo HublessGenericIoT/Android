@@ -3,5 +3,5 @@ package com.hublessgenericiot.smartdevicecontroller.espapi.responses;
 /**
  * Created by bwencke on 4/6/16.
  */
-public class ESPConnectResponse extends ESPAPIResponse {
+public class ESPConnectResponse extends ESPApiResponse {
 }

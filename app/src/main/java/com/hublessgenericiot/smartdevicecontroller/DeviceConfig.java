@@ -5,8 +5,8 @@ import android.util.Log;
 
 import com.hublessgenericiot.smartdevicecontroller.activities.RoomsActivity;
 import com.hublessgenericiot.smartdevicecontroller.data.SavedDeviceList;
-import com.hublessgenericiot.smartdevicecontroller.espapi.ESPAPIService;
-import com.hublessgenericiot.smartdevicecontroller.espapi.IESPAPIService;
+import com.hublessgenericiot.smartdevicecontroller.espapi.ESPApiService;
+import com.hublessgenericiot.smartdevicecontroller.espapi.IESPApiService;
 import com.hublessgenericiot.smartdevicecontroller.espapi.models.ESPConfig;
 import com.hublessgenericiot.smartdevicecontroller.espapi.models.ESPDeviceInfo;
 import com.hublessgenericiot.smartdevicecontroller.espapi.models.ESPMQTTConfig;
@@ -59,7 +59,7 @@ public class DeviceConfig {
 
         ESPConfig espConfig = new ESPConfig(espDeviceInfo);
 
-        IESPAPIService instance = ESPAPIService.getInstance(activity);
+        IESPApiService instance = ESPApiService.getInstance(activity);
         instance.setup(espConfig).enqueue(new Callback<ESPSetupResponse>() {
             @Override
             public void onResponse(Call<ESPSetupResponse> call, Response<ESPSetupResponse> response) {

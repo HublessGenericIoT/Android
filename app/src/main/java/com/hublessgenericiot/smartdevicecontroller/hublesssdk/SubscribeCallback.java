@@ -3,9 +3,12 @@ package com.hublessgenericiot.smartdevicecontroller.hublesssdk;
 import android.util.Log;
 import android.widget.Toast;
 
+import com.google.gson.Gson;
 import com.hublessgenericiot.smartdevicecontroller.RoomsActivity;
 import com.hublessgenericiot.smartdevicecontroller.dummy.SavedDeviceList;
 import com.hublessgenericiot.smartdevicecontroller.hublesssdk.devicesapi.models.Device;
+import com.hublessgenericiot.smartdevicecontroller.hublesssdk.devicesapi.models.Shadow;
+import com.hublessgenericiot.smartdevicecontroller.hublesssdk.devicesapi.models.ShadowedDevice;
 
 import org.eclipse.paho.client.mqttv3.IMqttDeliveryToken;
 import org.eclipse.paho.client.mqttv3.MqttCallback;
@@ -33,15 +36,23 @@ public class SubscribeCallback implements MqttCallback
     @Override
     public void messageArrived(String topic, MqttMessage message)
     {
+        Log.d("Topic", topic);
         Log.d("Message Arrived", message.toString());
         Toast.makeText(activity.getApplicationContext(), "Message: " + message.toString(), Toast.LENGTH_LONG).show();
-        /*for(Device d : SavedDeviceList.ITEMS)
+        String[] tokens = topic.split("/");
+        for(Device d : SavedDeviceList.ITEMS)
         {
-            if(!(message.toString().equals(d.getId())))
+            if(tokens[3].equals(d.getId()))
             {
-                d.state = !(d.state);
+                if (d instanceof ShadowedDevice)
+                {
+                    Gson gson = new Gson();
+                    Shadow shadow = gson.fromJson(message.toString(), Shadow.class);
+                    Toast.makeText(activity.getApplicationContext(), shadow.getState().getDesired().toString(), Toast.LENGTH_LONG).show();
+                    ((ShadowedDevice) d).getShadow().getState().setDesired(shadow.getState().getDesired());
+                }
             }
-        }*/
+        }
 
         activity.updateViewPager(false);
     }

@@ -45,10 +45,6 @@ public class DeviceCreator extends Device {
         if(in == null || in.isEmpty()) {
             return;
         }
-        Pattern p = Pattern.compile("[a-zA-Z0-9_.,@/:#-]+");
-        Matcher m = p.matcher(in);
-        boolean b = m.matches();
-        if(!b) throw new IllegalArgumentException("The given string ("+in+") is not valid. Must match \"[a-zA-Z0-9_.,@/:#-]+\"");
     }
 
     public void setRoom(String room) {

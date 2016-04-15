@@ -10,6 +10,7 @@ import android.widget.Switch;
 import android.widget.TextView;
 
 import com.hublessgenericiot.smartdevicecontroller.DeviceFragment.OnListFragmentInteractionListener;
+import com.hublessgenericiot.smartdevicecontroller.dummy.SavedDeviceList;
 import com.hublessgenericiot.smartdevicecontroller.hublesssdk.devicesapi.HublessSdkService;
 import com.hublessgenericiot.smartdevicecontroller.hublesssdk.devicesapi.IHublessSdkService;
 import com.hublessgenericiot.smartdevicecontroller.hublesssdk.devicesapi.models.Device;
@@ -28,7 +29,6 @@ import retrofit2.Call;
  */
 public class MyDeviceRecyclerViewAdapter extends RecyclerView.Adapter<MyDeviceRecyclerViewAdapter.ViewHolder> {
 
-    //private final List<DummyItem> mValues;
     private final List<Device> mValues;
     private final OnListFragmentInteractionListener mListener;
 
@@ -52,14 +52,16 @@ public class MyDeviceRecyclerViewAdapter extends RecyclerView.Adapter<MyDeviceRe
         } else {
             holder.mNewDeviceView.setVisibility(View.GONE);
         }
+        holder.mNameView.setText(mValues.get(position).getName());
+        Log.d("Outside", mValues.get(position).getName());
         Log.d("Outside", new Boolean(holder.mItem instanceof ShadowedDevice).toString());
         Log.d("Outside2", new Boolean(((ShadowedDevice) holder.mItem).getShadow() != null).toString());
         Log.d("Outside3", new Boolean(((ShadowedDevice) holder.mItem).getShadow().getState() != null).toString());
-        holder.mNameView.setText(mValues.get(position).getName());
         if(holder.mItem instanceof ShadowedDevice && ((ShadowedDevice) holder.mItem).getShadow() != null && ((ShadowedDevice) holder.mItem).getShadow().getState() != null) {
             ShadowState state = ((ShadowedDevice) holder.mItem).getShadow().getState();
             if(state.getDesired().containsKey("state")) { // TODO: Saved this String elsewhere
                 holder.mStateView.setChecked(state.getDesired().get("state").equals("on"));
+                Log.d("Set", Boolean.valueOf(state.getDesired().get("state").equals("on")).toString());
             } else if(state.getReported().containsKey("state")) {
                 holder.mStateView.setChecked(state.getDesired().get("state").equals("on"));
             } else {

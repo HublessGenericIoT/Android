@@ -51,6 +51,7 @@ public class SubscribeCallback implements MqttCallback
                     Toast.makeText(activity.getApplicationContext(), shadow.getState().getDesired().toString(), Toast.LENGTH_LONG).show();
                     ((ShadowedDevice) d).getShadow().getState().setDesired(shadow.getState().getDesired());
                 }
+                break;
             }
         }
 

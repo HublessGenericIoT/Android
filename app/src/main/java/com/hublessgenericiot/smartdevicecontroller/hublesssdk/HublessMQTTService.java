@@ -42,7 +42,7 @@ public class HublessMQTTService {
                     // We are connected
                     Toast.makeText(activity.getApplicationContext(), "CONNECTED", Toast.LENGTH_LONG).show();
                     Log.d("Connect", "onSuccess");
-                    subscribe("proxy/#", activity);
+                    subscribe("proxy/+/+/+/+/+/accepted", activity);
                 }
 
                 @Override
@@ -93,6 +93,10 @@ public class HublessMQTTService {
         } catch (UnsupportedEncodingException | MqttException e) {
             e.printStackTrace();
         }
+    }
+
+    public boolean isConnected(){
+        return mqttClient.isConnected();
     }
 
 }

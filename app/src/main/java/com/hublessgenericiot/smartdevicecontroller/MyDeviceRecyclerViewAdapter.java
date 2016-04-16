@@ -1,5 +1,8 @@
 package com.hublessgenericiot.smartdevicecontroller;
 
+import android.app.Activity;
+import android.content.Context;
+import android.content.ContextWrapper;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -8,13 +11,18 @@ import android.view.ViewGroup;
 import android.widget.CompoundButton;
 import android.widget.Switch;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.google.gson.Gson;
 import com.hublessgenericiot.smartdevicecontroller.DeviceFragment.OnListFragmentInteractionListener;
 import com.hublessgenericiot.smartdevicecontroller.dummy.SavedDeviceList;
+import com.hublessgenericiot.smartdevicecontroller.hublesssdk.devicesapi.HublessCallback;
 import com.hublessgenericiot.smartdevicecontroller.hublesssdk.devicesapi.HublessSdkService;
 import com.hublessgenericiot.smartdevicecontroller.hublesssdk.devicesapi.IHublessSdkService;
+import com.hublessgenericiot.smartdevicecontroller.hublesssdk.devicesapi.apiresponses.DeviceUpdatedResponse;
 import com.hublessgenericiot.smartdevicecontroller.hublesssdk.devicesapi.models.Device;
 import com.hublessgenericiot.smartdevicecontroller.hublesssdk.devicesapi.models.DeviceCreator;
+import com.hublessgenericiot.smartdevicecontroller.hublesssdk.devicesapi.models.DeviceType;
 import com.hublessgenericiot.smartdevicecontroller.hublesssdk.devicesapi.models.ShadowState;
 import com.hublessgenericiot.smartdevicecontroller.hublesssdk.devicesapi.models.ShadowedDevice;
 
@@ -123,6 +131,23 @@ public class MyDeviceRecyclerViewAdapter extends RecyclerView.Adapter<MyDeviceRe
                         Map<String, String> desired = ((ShadowedDevice) mItem).getShadow().getState().getDesired();
                         desired.put("state", isChecked ? "on" : "off"); // TODO: Save this String elsewhere
                         ((ShadowedDevice) mItem).getShadow().getState().setDesired(desired);
+
+                        /*DeviceCreator dc = new DeviceCreator(mItem);
+                        IHublessSdkService instance = HublessSdkService.getInstance(getActivity());
+                        instance.updateDevice(mItem.getId(), dc).enqueue(new HublessCallback<DeviceUpdatedResponse>() {
+                            @Override
+                            public void doOnResponse(Call<DeviceUpdatedResponse> call, retrofit2.Response<DeviceUpdatedResponse> response) {
+                                Toast.makeText(getActivity().getApplicationContext(), "Device Updated", Toast.LENGTH_LONG).show();
+                                //TODO this is not an accepatble long-term solution, must refresh tab
+                            }
+                        });*/
+
+                        if (SavedDeviceList.mqttService != null && SavedDeviceList.mqttService.isConnected()) {
+                            Gson gson = new Gson();
+                            String json = gson.toJson(((ShadowedDevice) mItem).getShadow());
+                            SavedDeviceList.mqttService.publish("proxy/$aws/things/" + mItem.getId() + "/shadow/update/desired",
+                                    json, getActivity());
+                        }
                     }
                 }
             });
@@ -131,6 +156,17 @@ public class MyDeviceRecyclerViewAdapter extends RecyclerView.Adapter<MyDeviceRe
         @Override
         public String toString() {
             return super.toString() + " '" + mStateView.getText() + "'";
+        }
+
+        private Activity getActivity() {
+            Context context = mView.getContext();
+            while (context instanceof ContextWrapper) {
+                if (context instanceof Activity) {
+                    return (Activity)context;
+                }
+                context = ((ContextWrapper)context).getBaseContext();
+            }
+            return null;
         }
     }
 }

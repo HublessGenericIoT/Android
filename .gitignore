@@ -1,5 +1,4 @@
 /app/src/main/res/values/secret.xml
-build.gradle
 gradle/wrapper/gradle-wrapper.properties
 # Created by https://www.gitignore.io/api/java,gradle,android,intellij
 

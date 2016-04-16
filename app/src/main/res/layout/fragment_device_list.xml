@@ -17,7 +17,7 @@
         android:layout_weight="1"
         android:clipToPadding="false"
         app:layoutManager="LinearLayoutManager"
-        tools:context="com.hublessgenericiot.smartdevicecontroller.DeviceFragment"
+        tools:context=".fragments.DeviceFragment"
         tools:listitem="@layout/fragment_device" />
 
     <TextView android:id="@+id/empty"

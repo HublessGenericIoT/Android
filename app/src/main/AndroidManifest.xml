@@ -17,7 +17,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".RoomsActivity"
+            android:name=".activities.RoomsActivity"
             android:label="@string/title_activity_rooms"
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
@@ -27,13 +27,13 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".EditDeviceActivity"
+            android:name=".activities.EditDeviceActivity"
             android:label="@string/title_activity_edit_device"
-            android:parentActivityName=".RoomsActivity"
+            android:parentActivityName=".activities.RoomsActivity"
             android:theme="@style/AppTheme.NoActionBar">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.hublessgenericiot.smartdevicecontroller.RoomsActivity" />
+                android:value=".activities.RoomsActivity" />
         </activity>
         <service
             android:name="org.eclipse.paho.android.service.MqttService" >

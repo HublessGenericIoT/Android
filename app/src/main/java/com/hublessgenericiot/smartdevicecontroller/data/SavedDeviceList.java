@@ -1,4 +1,4 @@
-package com.hublessgenericiot.smartdevicecontroller.dummy;
+package com.hublessgenericiot.smartdevicecontroller.data;
 
 import com.hublessgenericiot.smartdevicecontroller.hublesssdk.devicesapi.models.Device;
 
@@ -6,7 +6,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Random;
 
 /**
  * Global device list saved here

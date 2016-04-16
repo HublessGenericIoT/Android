@@ -1,5 +1,6 @@
 package com.hublessgenericiot.smartdevicecontroller.hublesssdk.devicesapi.models;
 
+import java.util.UUID;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -7,11 +8,6 @@ import java.util.regex.Pattern;
  * Object to send the data to create a new device on AWS.
  */
 public class DeviceCreator extends Device {
-
-    public DeviceCreator(String id, String name, String room, DeviceType type) {
-        this(name, room, type);
-        this.id = id;
-    }
 
     public DeviceCreator(String name, String room, DeviceType type) {
         this.setName(name);

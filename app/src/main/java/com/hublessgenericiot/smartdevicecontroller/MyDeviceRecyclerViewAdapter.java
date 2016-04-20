@@ -129,24 +129,17 @@ public class MyDeviceRecyclerViewAdapter extends RecyclerView.Adapter<MyDeviceRe
                 public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                     if(mItem instanceof ShadowedDevice && ((ShadowedDevice) mItem).getShadow() != null && ((ShadowedDevice) mItem).getShadow().getState() != null) {
                         Map<String, String> desired = ((ShadowedDevice) mItem).getShadow().getState().getDesired();
+                        String saved = desired.get("state");
                         desired.put("state", isChecked ? "on" : "off"); // TODO: Save this String elsewhere
                         ((ShadowedDevice) mItem).getShadow().getState().setDesired(desired);
 
-                        /*DeviceCreator dc = new DeviceCreator(mItem);
-                        IHublessSdkService instance = HublessSdkService.getInstance(getActivity());
-                        instance.updateDevice(mItem.getId(), dc).enqueue(new HublessCallback<DeviceUpdatedResponse>() {
-                            @Override
-                            public void doOnResponse(Call<DeviceUpdatedResponse> call, retrofit2.Response<DeviceUpdatedResponse> response) {
-                                Toast.makeText(getActivity().getApplicationContext(), "Device Updated", Toast.LENGTH_LONG).show();
-                                //TODO this is not an accepatble long-term solution, must refresh tab
-                            }
-                        });*/
-
-                        if (SavedDeviceList.mqttService != null && SavedDeviceList.mqttService.isConnected()) {
+                        if (SavedDeviceList.mqttService != null && SavedDeviceList.mqttService.isConnected()
+                                && !(saved.equals(desired.get("state")))) {
                             Gson gson = new Gson();
                             String json = gson.toJson(((ShadowedDevice) mItem).getShadow());
-                            SavedDeviceList.mqttService.publish("proxy/$aws/things/" + mItem.getId() + "/shadow/update/desired",
+                            SavedDeviceList.mqttService.publish("$aws/things/" + mItem.getId() + "/shadow/update",
                                     json, getActivity());
+                            Log.d("JSON SHADOW", mItem.getId());
                         }
                     }
                 }

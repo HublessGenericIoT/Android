@@ -1,4 +1,4 @@
-package com.hublessgenericiot.smartdevicecontroller;
+package com.hublessgenericiot.smartdevicecontroller.adapters;
 
 import android.app.Activity;
 import android.content.Context;
@@ -11,25 +11,18 @@ import android.view.ViewGroup;
 import android.widget.CompoundButton;
 import android.widget.Switch;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.google.gson.Gson;
-import com.hublessgenericiot.smartdevicecontroller.DeviceFragment.OnListFragmentInteractionListener;
-import com.hublessgenericiot.smartdevicecontroller.dummy.SavedDeviceList;
-import com.hublessgenericiot.smartdevicecontroller.hublesssdk.devicesapi.HublessCallback;
-import com.hublessgenericiot.smartdevicecontroller.hublesssdk.devicesapi.HublessSdkService;
-import com.hublessgenericiot.smartdevicecontroller.hublesssdk.devicesapi.IHublessSdkService;
-import com.hublessgenericiot.smartdevicecontroller.hublesssdk.devicesapi.apiresponses.DeviceUpdatedResponse;
+import com.hublessgenericiot.smartdevicecontroller.data.SavedDeviceList;
 import com.hublessgenericiot.smartdevicecontroller.hublesssdk.devicesapi.models.Device;
-import com.hublessgenericiot.smartdevicecontroller.hublesssdk.devicesapi.models.DeviceCreator;
-import com.hublessgenericiot.smartdevicecontroller.hublesssdk.devicesapi.models.DeviceType;
+import com.hublessgenericiot.smartdevicecontroller.fragments.DeviceFragment.OnListFragmentInteractionListener;
+import com.hublessgenericiot.smartdevicecontroller.R;
+import com.hublessgenericiot.smartdevicecontroller.hublesssdk.devicesapi.models.NewDevice;
 import com.hublessgenericiot.smartdevicecontroller.hublesssdk.devicesapi.models.ShadowState;
 import com.hublessgenericiot.smartdevicecontroller.hublesssdk.devicesapi.models.ShadowedDevice;
 
 import java.util.List;
 import java.util.Map;
-
-import retrofit2.Call;
 
 /**
  * {@link RecyclerView.Adapter} that can display a {@link Device} and makes a call to the
@@ -55,7 +48,7 @@ public class MyDeviceRecyclerViewAdapter extends RecyclerView.Adapter<MyDeviceRe
     @Override
     public void onBindViewHolder(final ViewHolder holder, int position) {
         holder.mItem = mValues.get(position);
-        if(holder.mItem instanceof DeviceCreator) { //TODO have a field for this or get rid of it
+        if(holder.mItem instanceof NewDevice) { //TODO have a field for this or get rid of it
             holder.mNewDeviceView.setVisibility(View.VISIBLE);
         } else {
             holder.mNewDeviceView.setVisibility(View.GONE);

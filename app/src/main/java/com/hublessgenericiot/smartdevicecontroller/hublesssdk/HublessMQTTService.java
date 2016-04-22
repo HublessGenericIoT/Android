@@ -13,7 +13,7 @@ import android.util.Log;
 import android.widget.Toast;
 
 import com.hublessgenericiot.smartdevicecontroller.R;
-import com.hublessgenericiot.smartdevicecontroller.RoomsActivity;
+import com.hublessgenericiot.smartdevicecontroller.activities.RoomsActivity;
 
 import java.io.UnsupportedEncodingException;
 

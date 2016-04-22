@@ -1,15 +1,9 @@
-package com.hublessgenericiot.smartdevicecontroller;
+package com.hublessgenericiot.smartdevicecontroller.fragments;
 
-import android.app.ActionBar;
 import android.app.Activity;
 import android.app.Dialog;
-import android.content.Context;
-import android.graphics.Color;
-import android.graphics.drawable.ColorDrawable;
-import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
-import android.support.v7.view.ContextThemeWrapper;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -18,7 +12,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.widget.Toast;
-import android.widget.Toolbar;
+
+import com.hublessgenericiot.smartdevicecontroller.R;
+import com.hublessgenericiot.smartdevicecontroller.activities.EditDeviceActivity;
 
 /**
  * Created by bwencke on 3/23/16.

@@ -25,24 +25,24 @@ public class HublessMQTTService {
     {
         String clientId = MqttClient.generateClientId();
         mqttClient = new MqttAndroidClient(activity.getApplicationContext(),
-                        activity.getApplicationContext().getString(R.string.proxyserver),
+                        activity.getApplicationContext().getString(R.string.newserver),
                         clientId);
 
         mqttClient.setCallback(new SubscribeCallback(activity));
 
-        MqttConnectOptions options = new MqttConnectOptions();
-        options.setUserName(activity.getApplicationContext().getString(R.string.proxyuser));
-        options.setPassword(activity.getApplicationContext().getString(R.string.proxypass).toCharArray());
+        //MqttConnectOptions options = new MqttConnectOptions();
+        //options.setUserName(activity.getApplicationContext().getString(R.string.proxyuser));
+        //options.setPassword(activity.getApplicationContext().getString(R.string.proxypass).toCharArray());
 
         try {
-            IMqttToken token = mqttClient.connect(options);
+            IMqttToken token = mqttClient.connect(); //options);
             token.setActionCallback(new IMqttActionListener() {
                 @Override
                 public void onSuccess(IMqttToken asyncActionToken) {
                     // We are connected
                     Toast.makeText(activity.getApplicationContext(), "CONNECTED", Toast.LENGTH_LONG).show();
                     Log.d("Connect", "onSuccess");
-                    subscribe("proxy/+/+/+/+/+/accepted", activity);
+                    subscribe("$aws/things/+/shadow/update/accepted", activity);
                 }
 
                 @Override

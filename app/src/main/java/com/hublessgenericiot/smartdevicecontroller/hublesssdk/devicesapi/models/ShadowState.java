@@ -13,7 +13,7 @@ public class ShadowState {
 
     Map<String, String> reported;
     Map<String, String> desired;
-    Map<String, String> delta;
+    transient Map<String, String> delta;
 
     public Map<String, String> getReported() {
         return reported;

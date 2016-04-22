@@ -1,6 +1,7 @@
 package com.hublessgenericiot.smartdevicecontroller.hublesssdk.devicesapi;
 
 import com.hublessgenericiot.smartdevicecontroller.hublesssdk.devicesapi.apiresponses.DeviceCreatedResponse;
+import com.hublessgenericiot.smartdevicecontroller.hublesssdk.devicesapi.apiresponses.DeviceDeletedResponse;
 import com.hublessgenericiot.smartdevicecontroller.hublesssdk.devicesapi.apiresponses.DeviceListResponse;
 import com.hublessgenericiot.smartdevicecontroller.hublesssdk.devicesapi.apiresponses.DeviceResponse;
 import com.hublessgenericiot.smartdevicecontroller.hublesssdk.devicesapi.apiresponses.DeviceUpdatedResponse;
@@ -9,6 +10,7 @@ import com.hublessgenericiot.smartdevicecontroller.hublesssdk.devicesapi.models.
 
 import retrofit2.Call;
 import retrofit2.http.Body;
+import retrofit2.http.DELETE;
 import retrofit2.http.GET;
 import retrofit2.http.POST;
 import retrofit2.http.PUT;
@@ -53,6 +55,16 @@ public interface IHublessSdkService {
      */
     @PUT("devices/{id}")
     Call<DeviceUpdatedResponse> updateDevice(@Path("id") String id, @Body DeviceCreator device);
+
+
+    /**
+     * Delete a device on AWS.
+     *
+     * @param id the ID of the device to be deleted.
+     * @return An acknowledgement of the device being deleted.
+     */
+    @DELETE("devices/{id}")
+    Call<DeviceDeletedResponse> deleteDevice(@Path("id") String id);
 
     /**
      * An endpoint to create the device on AWS. Give a populated DeviceCreator

@@ -67,8 +67,6 @@ public class MyDeviceRecyclerViewAdapter extends RecyclerView.Adapter<MyDeviceRe
             if(state.getDesired().containsKey("state")) { // TODO: Saved this String elsewhere
                 holder.mStateView.setChecked(state.getDesired().get("state").equals("on"));
                 Log.d("Set", Boolean.valueOf(state.getDesired().get("state").equals("on")).toString());
-            //} else if(state.getReported().containsKey("state")) {
-            //    holder.mStateView.setChecked(state.getDesired().get("state").equals("on"));
             } else {
                 holder.mStateView.setChecked(false);
             }

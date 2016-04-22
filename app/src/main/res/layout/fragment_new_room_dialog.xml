@@ -6,7 +6,7 @@
     android:paddingTop="20dp"
     android:paddingLeft="24dp"
     android:paddingRight="24dp"
-    tools:context="com.hublessgenericiot.smartdevicecontroller.NewRoomDialogFragment">
+    tools:context=".fragments.NewRoomDialogFragment">
 
     <EditText
         android:layout_width="match_parent"

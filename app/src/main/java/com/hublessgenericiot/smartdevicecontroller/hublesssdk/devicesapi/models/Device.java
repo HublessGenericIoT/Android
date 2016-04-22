@@ -23,6 +23,10 @@ public class Device {
         return id;
     }
 
+    public void setId(String id) {
+        this.id = id;
+    }
+
     public String getRoom() {
         return room;
     }

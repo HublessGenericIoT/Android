@@ -1,23 +1,21 @@
-package com.hublessgenericiot.smartdevicecontroller;
+package com.hublessgenericiot.smartdevicecontroller.fragments;
 
 import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.hublessgenericiot.smartdevicecontroller.dummy.SavedDeviceList;
+import com.hublessgenericiot.smartdevicecontroller.R;
+import com.hublessgenericiot.smartdevicecontroller.adapters.MyDeviceRecyclerViewAdapter;
+import com.hublessgenericiot.smartdevicecontroller.data.SavedDeviceList;
 import com.hublessgenericiot.smartdevicecontroller.hublesssdk.devicesapi.models.Device;
 
 import java.util.ArrayList;
-import java.util.LinkedList;
 import java.util.List;
-
-import retrofit2.Call;
 
 /**
  * A fragment representing a list of Items.
@@ -85,7 +83,7 @@ public class DeviceFragment extends Fragment {
                 }
                 if (mRoom.equals("All Devices")) {
                     devices.add(d);
-                } else if ((mRoom.equals(d.getRoom()))) {
+                } else if (mRoom.equals(d.getRoom())) {
                     devices.add(d);
                 }
             }

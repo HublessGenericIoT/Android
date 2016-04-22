@@ -3,9 +3,7 @@ package com.hublessgenericiot.smartdevicecontroller.hublesssdk;
 import android.util.Log;
 import android.widget.Toast;
 
-import com.hublessgenericiot.smartdevicecontroller.RoomsActivity;
-import com.hublessgenericiot.smartdevicecontroller.dummy.SavedDeviceList;
-import com.hublessgenericiot.smartdevicecontroller.hublesssdk.devicesapi.models.Device;
+import com.hublessgenericiot.smartdevicecontroller.activities.RoomsActivity;
 
 import org.eclipse.paho.client.mqttv3.IMqttDeliveryToken;
 import org.eclipse.paho.client.mqttv3.MqttCallback;

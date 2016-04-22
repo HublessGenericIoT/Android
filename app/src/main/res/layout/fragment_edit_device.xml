@@ -2,7 +2,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.hublessgenericiot.smartdevicecontroller.EditDeviceActivityFragment"
+    tools:context=".fragments.EditDeviceActivityFragment"
     tools:showIn="@layout/activity_edit_device">
 
     <!--<include layout="@layout/subview_device_controls"-->

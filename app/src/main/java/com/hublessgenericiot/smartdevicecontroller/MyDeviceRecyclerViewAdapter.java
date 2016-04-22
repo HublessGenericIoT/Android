@@ -61,17 +61,14 @@ public class MyDeviceRecyclerViewAdapter extends RecyclerView.Adapter<MyDeviceRe
             holder.mNewDeviceView.setVisibility(View.GONE);
         }
         holder.mNameView.setText(mValues.get(position).getName());
-        Log.d("Outside", mValues.get(position).getName());
-        Log.d("Outside", new Boolean(holder.mItem instanceof ShadowedDevice).toString());
-        Log.d("Outside2", new Boolean(((ShadowedDevice) holder.mItem).getShadow() != null).toString());
-        Log.d("Outside3", new Boolean(((ShadowedDevice) holder.mItem).getShadow().getState() != null).toString());
+
         if(holder.mItem instanceof ShadowedDevice && ((ShadowedDevice) holder.mItem).getShadow() != null && ((ShadowedDevice) holder.mItem).getShadow().getState() != null) {
             ShadowState state = ((ShadowedDevice) holder.mItem).getShadow().getState();
             if(state.getDesired().containsKey("state")) { // TODO: Saved this String elsewhere
                 holder.mStateView.setChecked(state.getDesired().get("state").equals("on"));
                 Log.d("Set", Boolean.valueOf(state.getDesired().get("state").equals("on")).toString());
-            } else if(state.getReported().containsKey("state")) {
-                holder.mStateView.setChecked(state.getDesired().get("state").equals("on"));
+            //} else if(state.getReported().containsKey("state")) {
+            //    holder.mStateView.setChecked(state.getDesired().get("state").equals("on"));
             } else {
                 holder.mStateView.setChecked(false);
             }

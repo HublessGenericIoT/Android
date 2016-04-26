@@ -3,5 +3,5 @@ package com.hublessgenericiot.smartdevicecontroller.hublesssdk.devicesapi.apires
 /**
  * Response for the PUT request.
  */
-public class DeviceUpdatedResponse extends HublessApiResponse<Object> {
+public class DeviceUpdatedResponse extends HublessApiResponse<String> {
 }

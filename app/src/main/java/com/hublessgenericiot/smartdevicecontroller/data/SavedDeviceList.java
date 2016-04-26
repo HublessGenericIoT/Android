@@ -1,5 +1,6 @@
 package com.hublessgenericiot.smartdevicecontroller.data;
 
+import com.hublessgenericiot.smartdevicecontroller.hublesssdk.HublessMQTTService;
 import com.hublessgenericiot.smartdevicecontroller.hublesssdk.devicesapi.models.Device;
 
 import java.util.ArrayList;
@@ -24,4 +25,6 @@ public class SavedDeviceList {
 
     /* This is so RoomsActivity reloads only once */
     public static boolean newRoom = true;
+
+    public static HublessMQTTService mqttService;
 }

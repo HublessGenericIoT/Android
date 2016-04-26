@@ -60,7 +60,7 @@ public class RoomsActivity extends AppCompatActivity implements DeviceFragment.O
     private ViewPager mViewPager;
 
     WifiManager wifi;
-    HublessMQTTService mqttService;
+    //HublessMQTTService mqttService;
 
     String[] perms = {"android.permission.ACCESS_WIFI_STATE", "android.permission.CHANGE_WIFI_STATE", "android.permission.ACCESS_COARSE_LOCATION"};
     private static final int MY_PERMISSIONS_REQUEST_WIFI = 200;
@@ -110,8 +110,8 @@ public class RoomsActivity extends AppCompatActivity implements DeviceFragment.O
         //HublessSdkService.testApi(HublessSdkService.getInstance(this));
 
         if(!SavedDeviceList.newRoom) { //TODO this is so it only connects once
-            mqttService = new HublessMQTTService();
-            mqttService.connect(this);
+            SavedDeviceList.mqttService = new HublessMQTTService();
+            SavedDeviceList.mqttService.connect(this);
         }
         else {
             IHublessSdkService instance = HublessSdkService.getInstance(this);
@@ -158,7 +158,7 @@ public class RoomsActivity extends AppCompatActivity implements DeviceFragment.O
 
     @Override
     public void onDeviceClick(Device item) {
-        mqttService.publish("proxy/esp_8266/inTopic", item.getName(), this);
+        SavedDeviceList.mqttService.publish("proxy/esp_8266/inTopic", item.getName(), this);
     }
 
     @Override

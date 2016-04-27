@@ -13,6 +13,7 @@ import com.hublessgenericiot.smartdevicecontroller.R;
 import com.hublessgenericiot.smartdevicecontroller.adapters.MyDeviceRecyclerViewAdapter;
 import com.hublessgenericiot.smartdevicecontroller.data.SavedDeviceList;
 import com.hublessgenericiot.smartdevicecontroller.hublesssdk.devicesapi.models.Device;
+import com.hublessgenericiot.smartdevicecontroller.hublesssdk.devicesapi.models.ShadowedDevice;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -143,7 +144,7 @@ public class DeviceFragment extends Fragment {
      */
     public interface OnListFragmentInteractionListener {
         // TODO: Update argument type and name
-        void onDeviceClick(Device item);
+        void onDeviceClick(ShadowedDevice item);
         void onDeviceLongClick(Device item);
     }
 

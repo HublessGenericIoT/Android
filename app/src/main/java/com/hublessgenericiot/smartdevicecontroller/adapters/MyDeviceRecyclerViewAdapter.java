@@ -18,6 +18,7 @@ import com.hublessgenericiot.smartdevicecontroller.hublesssdk.devicesapi.models.
 import com.hublessgenericiot.smartdevicecontroller.fragments.DeviceFragment.OnListFragmentInteractionListener;
 import com.hublessgenericiot.smartdevicecontroller.R;
 import com.hublessgenericiot.smartdevicecontroller.hublesssdk.devicesapi.models.NewDevice;
+import com.hublessgenericiot.smartdevicecontroller.hublesssdk.devicesapi.models.Shadow;
 import com.hublessgenericiot.smartdevicecontroller.hublesssdk.devicesapi.models.ShadowState;
 import com.hublessgenericiot.smartdevicecontroller.hublesssdk.devicesapi.models.ShadowedDevice;
 
@@ -80,7 +81,7 @@ public class MyDeviceRecyclerViewAdapter extends RecyclerView.Adapter<MyDeviceRe
                 if (null != mListener) {
                     // Notify the active callbacks interface (the activity, if the
                     // fragment is attached to one) that an item has been selected.
-                    mListener.onDeviceClick(holder.mItem);
+                    //mListener.onDeviceClick(holder.mItem);
                 }
             }
         });
@@ -129,7 +130,11 @@ public class MyDeviceRecyclerViewAdapter extends RecyclerView.Adapter<MyDeviceRe
                         if (SavedDeviceList.mqttService != null && SavedDeviceList.mqttService.isConnected()
                                 && !(saved.equals(desired.get("state")))) {
                             Gson gson = new Gson();
-                            String json = gson.toJson(((ShadowedDevice) mItem).getShadow());
+                            //String json = gson.toJson(((ShadowedDevice) mItem).getShadow().getState());
+
+                            //TODO: Currently there is no clean way to send a shadow with no version, this needs to be changed.
+                            String json = "{\"state\": {\"desired\": {\"state\": \""+ desired.get("state") +"\" }}}";
+
                             SavedDeviceList.mqttService.publish("$aws/things/" + mItem.getId() + "/shadow/update",
                                     json, getActivity());
                             Log.d("JSON SHADOW", mItem.getId());

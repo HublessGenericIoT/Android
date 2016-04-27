@@ -85,6 +85,7 @@ public class HublessMQTTService {
 
     public void publish(String topic, String payload, final Activity activity)
     {
+        Log.i("MQTT", "topic: " + topic + " payload: " + payload);
         byte[] encodedPayload = new byte[0];
         try {
             encodedPayload = payload.getBytes("UTF-8");

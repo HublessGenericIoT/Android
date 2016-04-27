@@ -38,6 +38,7 @@ import com.hublessgenericiot.smartdevicecontroller.hublesssdk.devicesapi.Hubless
 import com.hublessgenericiot.smartdevicecontroller.hublesssdk.devicesapi.IHublessSdkService;
 import com.hublessgenericiot.smartdevicecontroller.hublesssdk.devicesapi.apiresponses.DeviceListResponse;
 import com.hublessgenericiot.smartdevicecontroller.hublesssdk.devicesapi.models.Device;
+import com.hublessgenericiot.smartdevicecontroller.hublesssdk.devicesapi.models.ShadowedDevice;
 
 import retrofit2.Call;
 
@@ -157,8 +158,8 @@ public class RoomsActivity extends AppCompatActivity implements DeviceFragment.O
     }
 
     @Override
-    public void onDeviceClick(Device item) {
-        SavedDeviceList.mqttService.publish("proxy/esp_8266/inTopic", item.getName(), this);
+    public void onDeviceClick(ShadowedDevice item) {
+        //Do nothing.
     }
 
     @Override

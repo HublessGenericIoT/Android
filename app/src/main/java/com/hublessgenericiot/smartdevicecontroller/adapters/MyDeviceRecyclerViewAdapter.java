@@ -60,7 +60,6 @@ public class MyDeviceRecyclerViewAdapter extends RecyclerView.Adapter<MyDeviceRe
         Log.d("Outside2", new Boolean(((ShadowedDevice) holder.mItem).getShadow() != null).toString());
         Log.d("Outside3", new Boolean(((ShadowedDevice) holder.mItem).getShadow().getState() != null).toString());
         if(holder.mItem instanceof ShadowedDevice && ((ShadowedDevice) holder.mItem).getShadow() != null && ((ShadowedDevice) holder.mItem).getShadow().getState() != null) {
-            Log.d("SHADOW TIME","MOTHAFUCKAS");
             ShadowState state = ((ShadowedDevice) holder.mItem).getShadow().getState();
             if(state.getDesired().containsKey("state")) { // TODO: Saved this String elsewhere
                 holder.mStateView.setChecked(state.getDesired().get("state").equals("on"));

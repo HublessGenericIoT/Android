@@ -50,10 +50,7 @@ public class SubscribeCallback implements MqttCallback
                     Gson gson = new Gson();
                     Shadow shadow = gson.fromJson(message.toString(), Shadow.class);
                     Toast.makeText(activity.getApplicationContext(), shadow.getState().getDesired().toString(), Toast.LENGTH_LONG).show();
-                    Log.d("What", new Boolean(((ShadowedDevice) d).getShadow().getState() != null).toString());
                     ((ShadowedDevice) d).getShadow().setState(shadow.getState());
-                    Log.d("fuck", "");
-                    //Toast.makeText(activity.getApplicationContext(), "Hey " + ((ShadowedDevice) d).getShadow().getState().getDesired().toString(), Toast.LENGTH_LONG).show();
                 }
                 break;
             }

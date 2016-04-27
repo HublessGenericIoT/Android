@@ -103,7 +103,7 @@ public class EditDeviceActivity extends AppCompatActivity implements ItemDataHol
 
     @Override
     public void onAutomationDialogResult() {
-        Toast.makeText(this, "Automation dialog result", Toast.LENGTH_SHORT).show();
+    //    Toast.makeText(this, "Automation dialog result", Toast.LENGTH_SHORT).show();
     }
 
     @Override

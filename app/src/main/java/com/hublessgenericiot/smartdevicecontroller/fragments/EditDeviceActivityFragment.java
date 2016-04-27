@@ -186,7 +186,7 @@ public class EditDeviceActivityFragment extends Fragment {
             instance.createDevice(dc).enqueue(new HublessCallback<DeviceCreatedResponse>() {
                 @Override
                 public void doOnResponse(Call<DeviceCreatedResponse> call, retrofit2.Response<DeviceCreatedResponse> response) {
-                    Toast.makeText(activity.getApplicationContext(), "Device Created", Toast.LENGTH_LONG).show();
+             //       Toast.makeText(activity.getApplicationContext(), "Device Created", Toast.LENGTH_LONG).show();
                     CreatedDeviceData createdDeviceData = response.body().getPayload();
                     WifiController.configureDevice(new DeviceConfig((NewDevice) device, createdDeviceData));
                     //TODO this is not an acceptable long-term solution, must refresh tab
@@ -196,7 +196,7 @@ public class EditDeviceActivityFragment extends Fragment {
             instance.updateDevice(device.getId(), dc).enqueue(new HublessCallback<DeviceUpdatedResponse>() {
                 @Override
                 public void doOnResponse(Call<DeviceUpdatedResponse> call, retrofit2.Response<DeviceUpdatedResponse> response) {
-                    Toast.makeText(activity.getApplicationContext(), "Device Updated", Toast.LENGTH_LONG).show();
+            //        Toast.makeText(activity.getApplicationContext(), "Device Updated", Toast.LENGTH_LONG).show();
                     //TODO this is not an acceptable long-term solution, must refresh tab
                 }
             });
@@ -208,7 +208,7 @@ public class EditDeviceActivityFragment extends Fragment {
 
         } else {
             // TODO: This code is copied and pasted from above = BAD!
-            Toast.makeText(getActivity(), name, Toast.LENGTH_SHORT).show();
+        //    Toast.makeText(getActivity(), name, Toast.LENGTH_SHORT).show();
             LinkedList<String> rooms = new LinkedList<>();
             for (Device d : SavedDeviceList.ITEMS) {
                 if (d.getRoom() != null && !rooms.contains(d.getRoom())) {

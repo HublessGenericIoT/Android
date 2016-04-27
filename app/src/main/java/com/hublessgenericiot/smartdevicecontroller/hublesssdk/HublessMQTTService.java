@@ -40,7 +40,7 @@ public class HublessMQTTService {
                 @Override
                 public void onSuccess(IMqttToken asyncActionToken) {
                     // We are connected
-                    Toast.makeText(activity.getApplicationContext(), "CONNECTED", Toast.LENGTH_LONG).show();
+                   // Toast.makeText(activity.getApplicationContext(), "CONNECTED", Toast.LENGTH_LONG).show();
                     Log.d("Connect", "onSuccess");
                     subscribe("$aws/things/+/shadow/update/accepted", activity);
                 }
@@ -48,7 +48,7 @@ public class HublessMQTTService {
                 @Override
                 public void onFailure(IMqttToken asyncActionToken, Throwable exception) {
                     // Something went wrong e.g. connection timeout or firewall problems
-                    Toast.makeText(activity.getApplicationContext(), exception.toString(), Toast.LENGTH_LONG).show();
+                //    Toast.makeText(activity.getApplicationContext(), exception.toString(), Toast.LENGTH_LONG).show();
                     Log.d("Connect", "onFailure");
 
                 }
@@ -67,7 +67,7 @@ public class HublessMQTTService {
                 @Override
                 public void onSuccess(IMqttToken asyncActionToken) {
                     // The message was published
-                    Toast.makeText(activity.getApplicationContext(), "SUBSCRIBED", Toast.LENGTH_LONG).show();
+                   // Toast.makeText(activity.getApplicationContext(), "SUBSCRIBED", Toast.LENGTH_LONG).show();
                 }
 
                 @Override
@@ -75,7 +75,7 @@ public class HublessMQTTService {
                                       Throwable exception) {
                     // The subscription could not be performed, maybe the user was not
                     // authorized to subscribe on the specified topic e.g. using wildcards
-                    Toast.makeText(activity.getApplicationContext(), exception.toString(), Toast.LENGTH_LONG).show();
+                //    Toast.makeText(activity.getApplicationContext(), exception.toString(), Toast.LENGTH_LONG).show();
                 }
             });
         } catch (MqttException e) {

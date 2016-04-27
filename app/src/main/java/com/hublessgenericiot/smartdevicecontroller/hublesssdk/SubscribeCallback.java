@@ -30,7 +30,7 @@ public class SubscribeCallback implements MqttCallback
     @Override
     public void connectionLost(Throwable cause) {
         Log.d("Connection Lost", cause.toString());
-        Toast.makeText(activity.getApplicationContext(), "Connection Lost", Toast.LENGTH_LONG).show();
+    //    Toast.makeText(activity.getApplicationContext(), "Connection Lost", Toast.LENGTH_LONG).show();
     }
 
     @Override
@@ -38,7 +38,7 @@ public class SubscribeCallback implements MqttCallback
     {
         Log.d("Topic", topic);
         Log.d("Message Arrived", message.toString());
-        Toast.makeText(activity.getApplicationContext(), "Message: " + message.toString(), Toast.LENGTH_LONG).show();
+     //   Toast.makeText(activity.getApplicationContext(), "Message: " + message.toString(), Toast.LENGTH_LONG).show();
         String[] tokens = topic.split("/");
         for(Device d : SavedDeviceList.ITEMS)
         {
@@ -49,7 +49,7 @@ public class SubscribeCallback implements MqttCallback
                 {
                     Gson gson = new Gson();
                     Shadow shadow = gson.fromJson(message.toString(), Shadow.class);
-                    Toast.makeText(activity.getApplicationContext(), shadow.getState().getDesired().toString(), Toast.LENGTH_LONG).show();
+                 //   Toast.makeText(activity.getApplicationContext(), shadow.getState().getDesired().toString(), Toast.LENGTH_LONG).show();
                     ((ShadowedDevice) d).getShadow().setState(shadow.getState());
                 }
                 break;
@@ -62,7 +62,7 @@ public class SubscribeCallback implements MqttCallback
     @Override
     public void deliveryComplete(IMqttDeliveryToken token) {
         Log.d("Delivery Complete", token.toString());
-        Toast.makeText(activity.getApplicationContext(), "Delivery Complete", Toast.LENGTH_LONG).show();
+    //    Toast.makeText(activity.getApplicationContext(), "Delivery Complete", Toast.LENGTH_LONG).show();
     }
 
 }

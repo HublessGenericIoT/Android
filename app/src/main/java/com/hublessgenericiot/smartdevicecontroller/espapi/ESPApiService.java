@@ -62,7 +62,6 @@ public class ESPApiService {
                     Log.d("SHIT", WifiController.getConnectionInfo().getSSID());
 
                     return chain.proceed(chain.request());
-
                 }
             });
 

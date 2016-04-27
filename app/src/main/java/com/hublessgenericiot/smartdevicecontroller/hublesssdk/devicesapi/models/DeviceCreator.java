@@ -1,9 +1,5 @@
 package com.hublessgenericiot.smartdevicecontroller.hublesssdk.devicesapi.models;
 
-import java.util.UUID;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-
 /**
  * Object to send the data to create a new device on AWS.
  */

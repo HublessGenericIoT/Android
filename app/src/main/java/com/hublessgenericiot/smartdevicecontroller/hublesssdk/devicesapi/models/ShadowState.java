@@ -1,7 +1,5 @@
 package com.hublessgenericiot.smartdevicecontroller.hublesssdk.devicesapi.models;
 
-import android.util.Log;
-
 import java.util.Map;
 
 /**

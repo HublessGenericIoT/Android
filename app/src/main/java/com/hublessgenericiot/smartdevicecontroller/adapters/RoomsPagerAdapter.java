@@ -8,9 +8,9 @@ import android.util.SparseArray;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.hublessgenericiot.smartdevicecontroller.fragments.DeviceFragment;
 import com.hublessgenericiot.smartdevicecontroller.activities.RoomsActivity;
 import com.hublessgenericiot.smartdevicecontroller.data.SavedDeviceList;
+import com.hublessgenericiot.smartdevicecontroller.fragments.DeviceFragment;
 import com.hublessgenericiot.smartdevicecontroller.hublesssdk.devicesapi.models.Device;
 
 import java.util.Collections;

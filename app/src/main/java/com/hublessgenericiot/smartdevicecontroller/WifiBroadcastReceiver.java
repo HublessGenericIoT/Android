@@ -9,7 +9,6 @@ import android.util.Log;
 
 import com.hublessgenericiot.smartdevicecontroller.activities.RoomsActivity;
 import com.hublessgenericiot.smartdevicecontroller.data.SavedDeviceList;
-import com.hublessgenericiot.smartdevicecontroller.hublesssdk.devicesapi.models.DeviceCreator;
 import com.hublessgenericiot.smartdevicecontroller.hublesssdk.devicesapi.models.DeviceType;
 import com.hublessgenericiot.smartdevicecontroller.hublesssdk.devicesapi.models.NewDevice;
 

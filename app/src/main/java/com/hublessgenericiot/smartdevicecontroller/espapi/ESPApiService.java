@@ -6,24 +6,13 @@ import android.util.Log;
 
 import com.hublessgenericiot.smartdevicecontroller.R;
 import com.hublessgenericiot.smartdevicecontroller.WifiController;
-import com.hublessgenericiot.smartdevicecontroller.hublesssdk.devicesapi.HublessCallback;
-import com.hublessgenericiot.smartdevicecontroller.hublesssdk.devicesapi.IHublessSdkService;
-import com.hublessgenericiot.smartdevicecontroller.hublesssdk.devicesapi.apiresponses.DeviceCreatedResponse;
-import com.hublessgenericiot.smartdevicecontroller.hublesssdk.devicesapi.apiresponses.DeviceListResponse;
-import com.hublessgenericiot.smartdevicecontroller.hublesssdk.devicesapi.apiresponses.DeviceResponse;
-import com.hublessgenericiot.smartdevicecontroller.hublesssdk.devicesapi.apiresponses.DeviceUpdatedResponse;
-import com.hublessgenericiot.smartdevicecontroller.hublesssdk.devicesapi.models.DeviceCreator;
-import com.hublessgenericiot.smartdevicecontroller.hublesssdk.devicesapi.models.DeviceType;
 
 import java.io.IOException;
 
-import okhttp3.Address;
 import okhttp3.Interceptor;
 import okhttp3.OkHttpClient;
-import okhttp3.Request;
 import okhttp3.Response;
 import okhttp3.logging.HttpLoggingInterceptor;
-import retrofit2.Call;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 

@@ -7,7 +7,6 @@ import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.widget.EditText;
-import android.widget.Toast;
 
 import com.hublessgenericiot.smartdevicecontroller.R;
 

@@ -1,7 +1,5 @@
 package com.hublessgenericiot.smartdevicecontroller.hublesssdk.devicesapi.models;
 
-import org.json.JSONObject;
-
 /**
  * Class for the device returned from the API.
  * It does not contain its current status or the shadow,

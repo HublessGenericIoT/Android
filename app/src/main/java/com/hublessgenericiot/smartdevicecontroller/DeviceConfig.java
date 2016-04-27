@@ -8,6 +8,7 @@ import com.hublessgenericiot.smartdevicecontroller.espapi.IESPApiService;
 import com.hublessgenericiot.smartdevicecontroller.espapi.models.ESPConfig;
 import com.hublessgenericiot.smartdevicecontroller.espapi.models.ESPMQTTConfig;
 import com.hublessgenericiot.smartdevicecontroller.espapi.models.ESPWifiConfig;
+import com.hublessgenericiot.smartdevicecontroller.espapi.responses.ESPConnectResponse;
 import com.hublessgenericiot.smartdevicecontroller.espapi.responses.ESPSetupResponse;
 import com.hublessgenericiot.smartdevicecontroller.hublesssdk.devicesapi.models.CreatedDeviceData;
 import com.hublessgenericiot.smartdevicecontroller.hublesssdk.devicesapi.models.NewDevice;
@@ -36,7 +37,7 @@ public class DeviceConfig {
     public void sendConfiguration(RoomsActivity activity) {
 
         ESPConfig espConfig = new ESPConfig(
-                device.getName(),
+                createdDeviceData.getId(),
                 new ESPWifiConfig(
                     activity.getString(R.string.network_ssid),
                     activity.getString(R.string.network_pw)
@@ -49,19 +50,20 @@ public class DeviceConfig {
             );
 
         IESPApiService instance = ESPApiService.getInstance(activity);
-        instance.setup(espConfig).enqueue(new Callback<ESPSetupResponse>() {
+        instance.connect().enqueue(new Callback<ESPConnectResponse>() {
             @Override
-            public void onResponse(Call<ESPSetupResponse> call, Response<ESPSetupResponse> response) {
+            public void onResponse(Call<ESPConnectResponse> call, Response<ESPConnectResponse> response) {
                 if(response.isSuccess()) {
                     Log.i("ESP Config", response.body().toString());
                 } else {
+                    Log.i("ESP Config", response.body().toString());
                     Log.e("ESP Config", response.errorBody().toString());
                 }
             }
 
             @Override
-            public void onFailure(Call<ESPSetupResponse> call, Throwable t) {
-                Log.e("ESP Config", t.toString());
+            public void onFailure(Call<ESPConnectResponse> call, Throwable t) {
+                Log.e("ESP Config ON FAILURE", t.toString());
             }
         });
     }

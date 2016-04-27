@@ -81,10 +81,12 @@ public class WifiController {
         WifiInfo connectionInfo = wifiManager.getConnectionInfo();
         if(connectionInfo != null && connectionInfo.getSSID() != null) {
             String ssid = connectionInfo.getSSID().replaceAll("^\"|\"$", ""); // remove quotes
-            Log.d("Network", "Connected to " + ssid);
-            Log.d("Network", "Looking for " + currentConfig.device.getSsid());
+//            Log.d("Network", "Connected to " + ssid);
+//            Log.d("Network", "Looking for " + currentConfig.device.getSsid());
             if(ssid.equals(currentConfig.device.getSsid())) {
+                Log.d("Sending Config Over", connectionInfo.getSSID());
                 currentConfig.sendConfiguration(activity);
+               // currentConfig = null;
             }
         }
     }

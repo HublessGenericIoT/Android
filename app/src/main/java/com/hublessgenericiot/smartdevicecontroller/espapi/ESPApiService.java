@@ -56,12 +56,12 @@ public class ESPApiService {
             httpClient.addInterceptor(new Interceptor() {
                 @Override
                 public Response intercept(Chain chain) throws IOException {
-                    Address address = chain.connection().route().address();
-                    Log.d("APICONN", address.toString());
+//                    Address address = chain.connection().route().address();
+//                    Log.d("APICONN", address.toString());
 
                     Log.d("SHIT", WifiController.getConnectionInfo().getSSID());
 
-                    return null;
+                    return chain.proceed(chain.request());
 
                 }
             });

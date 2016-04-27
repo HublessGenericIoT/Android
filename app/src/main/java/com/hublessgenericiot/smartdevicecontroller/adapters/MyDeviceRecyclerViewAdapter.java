@@ -55,10 +55,10 @@ public class MyDeviceRecyclerViewAdapter extends RecyclerView.Adapter<MyDeviceRe
         }
         holder.mNameView.setText(mValues.get(position).getName());
 
-        Log.d("Outside", mValues.get(position).getName());
-        Log.d("Outside", new Boolean(holder.mItem instanceof ShadowedDevice).toString());
-        Log.d("Outside2", new Boolean(((ShadowedDevice) holder.mItem).getShadow() != null).toString());
-        Log.d("Outside3", new Boolean(((ShadowedDevice) holder.mItem).getShadow().getState() != null).toString());
+//        Log.d("Outside", mValues.get(position).getName());
+//        Log.d("Outside", new Boolean(holder.mItem instanceof ShadowedDevice).toString());
+//        Log.d("Outside2", new Boolean(((ShadowedDevice) holder.mItem).getShadow() != null).toString());
+//        Log.d("Outside3", new Boolean(((ShadowedDevice) holder.mItem).getShadow().getState() != null).toString());
         if(holder.mItem instanceof ShadowedDevice && ((ShadowedDevice) holder.mItem).getShadow() != null && ((ShadowedDevice) holder.mItem).getShadow().getState() != null) {
             ShadowState state = ((ShadowedDevice) holder.mItem).getShadow().getState();
             if(state.getDesired().containsKey("state")) { // TODO: Saved this String elsewhere

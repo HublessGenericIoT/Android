@@ -1,5 +1,7 @@
 package com.hublessgenericiot.smartdevicecontroller;
 
+import android.app.DownloadManager;
+import android.os.AsyncTask;
 import android.util.Log;
 
 import com.hublessgenericiot.smartdevicecontroller.activities.RoomsActivity;
@@ -13,6 +15,11 @@ import com.hublessgenericiot.smartdevicecontroller.espapi.responses.ESPSetupResp
 import com.hublessgenericiot.smartdevicecontroller.hublesssdk.devicesapi.models.CreatedDeviceData;
 import com.hublessgenericiot.smartdevicecontroller.hublesssdk.devicesapi.models.NewDevice;
 
+import java.io.IOException;
+
+import okhttp3.Headers;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -49,23 +56,33 @@ public class DeviceConfig {
                 )
             );
 
-        IESPApiService instance = ESPApiService.getInstance(activity);
-        instance.connect().enqueue(new Callback<ESPConnectResponse>() {
-            @Override
-            public void onResponse(Call<ESPConnectResponse> call, Response<ESPConnectResponse> response) {
-                if(response.isSuccess()) {
-                    Log.i("ESP Config", response.body().toString());
-                } else {
-                    Log.i("ESP Config", response.body().toString());
-                    Log.e("ESP Config", response.errorBody().toString());
-                }
-            }
+        Log.d("HELLO", "sending config");
+        TestCall example = new TestCall();
+        try {
+            Log.d("HELLO", "moo");
+            String response = example.run("http://192.168.4.1/");
+            Log.d("HELLO", response);
+        } catch(Exception e) {
 
-            @Override
-            public void onFailure(Call<ESPConnectResponse> call, Throwable t) {
-                Log.e("ESP Config ON FAILURE", t.toString());
-            }
-        });
+        }
+
+//        IESPApiService instance = ESPApiService.getInstance(activity);
+//        instance.connect().enqueue(new Callback<ESPConnectResponse>() {
+//            @Override
+//            public void onResponse(Call<ESPConnectResponse> call, Response<ESPConnectResponse> response) {
+//                if(response.isSuccess()) {
+//                    Log.i("ESP Config", response.body().toString());
+//                } else {
+//                    Log.i("ESP Config", response.body().toString());
+//                    Log.e("ESP Config", response.errorBody().toString());
+//                }
+//            }
+//
+//            @Override
+//            public void onFailure(Call<ESPConnectResponse> call, Throwable t) {
+//                Log.e("ESP Config ON FAILURE", t.toString());
+//            }
+//        });
     }
 
 }

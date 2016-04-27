@@ -42,7 +42,8 @@ public class SubscribeCallback implements MqttCallback
         String[] tokens = topic.split("/");
         for(Device d : SavedDeviceList.ITEMS)
         {
-            if(tokens[3].equals(d.getId()))
+            //Log.d("ID ISSUES", tokens[2] + " vs " + d.getId());
+            if(tokens[2].equals(d.getId()))
             {
                 if (d instanceof ShadowedDevice)
                 {

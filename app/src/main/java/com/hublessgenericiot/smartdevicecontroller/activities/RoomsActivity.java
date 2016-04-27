@@ -4,19 +4,18 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.net.wifi.WifiManager;
 import android.os.Build;
+import android.os.Bundle;
 import android.support.annotation.NonNull;
-import android.support.design.widget.TabLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
-import android.support.v4.app.FragmentStatePagerAdapter;
-import android.support.v4.view.PagerAdapter;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
-
+import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v4.app.FragmentStatePagerAdapter;
+import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
-import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -24,15 +23,13 @@ import android.view.View;
 
 import com.google.android.gms.appindexing.AppIndex;
 import com.google.android.gms.common.api.GoogleApiClient;
-
-import com.hublessgenericiot.smartdevicecontroller.fragments.DeviceFragment;
 import com.hublessgenericiot.smartdevicecontroller.R;
-import com.hublessgenericiot.smartdevicecontroller.adapters.RoomsPagerAdapter;
 import com.hublessgenericiot.smartdevicecontroller.WifiBroadcastReceiver;
 import com.hublessgenericiot.smartdevicecontroller.WifiController;
+import com.hublessgenericiot.smartdevicecontroller.adapters.RoomsPagerAdapter;
 import com.hublessgenericiot.smartdevicecontroller.data.SavedDeviceList;
+import com.hublessgenericiot.smartdevicecontroller.fragments.DeviceFragment;
 import com.hublessgenericiot.smartdevicecontroller.hublesssdk.HublessMQTTService;
-
 import com.hublessgenericiot.smartdevicecontroller.hublesssdk.devicesapi.HublessCallback;
 import com.hublessgenericiot.smartdevicecontroller.hublesssdk.devicesapi.HublessSdkService;
 import com.hublessgenericiot.smartdevicecontroller.hublesssdk.devicesapi.IHublessSdkService;

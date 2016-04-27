@@ -5,7 +5,6 @@ import com.hublessgenericiot.smartdevicecontroller.hublesssdk.devicesapi.apiresp
 import com.hublessgenericiot.smartdevicecontroller.hublesssdk.devicesapi.apiresponses.DeviceListResponse;
 import com.hublessgenericiot.smartdevicecontroller.hublesssdk.devicesapi.apiresponses.DeviceResponse;
 import com.hublessgenericiot.smartdevicecontroller.hublesssdk.devicesapi.apiresponses.DeviceUpdatedResponse;
-import com.hublessgenericiot.smartdevicecontroller.hublesssdk.devicesapi.models.Device;
 import com.hublessgenericiot.smartdevicecontroller.hublesssdk.devicesapi.models.DeviceCreator;
 
 import retrofit2.Call;

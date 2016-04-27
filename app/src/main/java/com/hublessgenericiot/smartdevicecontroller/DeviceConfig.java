@@ -1,28 +1,13 @@
 package com.hublessgenericiot.smartdevicecontroller;
 
-import android.app.DownloadManager;
-import android.os.AsyncTask;
 import android.util.Log;
 
 import com.hublessgenericiot.smartdevicecontroller.activities.RoomsActivity;
-import com.hublessgenericiot.smartdevicecontroller.espapi.ESPApiService;
-import com.hublessgenericiot.smartdevicecontroller.espapi.IESPApiService;
 import com.hublessgenericiot.smartdevicecontroller.espapi.models.ESPConfig;
 import com.hublessgenericiot.smartdevicecontroller.espapi.models.ESPMQTTConfig;
 import com.hublessgenericiot.smartdevicecontroller.espapi.models.ESPWifiConfig;
-import com.hublessgenericiot.smartdevicecontroller.espapi.responses.ESPConnectResponse;
-import com.hublessgenericiot.smartdevicecontroller.espapi.responses.ESPSetupResponse;
 import com.hublessgenericiot.smartdevicecontroller.hublesssdk.devicesapi.models.CreatedDeviceData;
 import com.hublessgenericiot.smartdevicecontroller.hublesssdk.devicesapi.models.NewDevice;
-
-import java.io.IOException;
-
-import okhttp3.Headers;
-import okhttp3.OkHttpClient;
-import okhttp3.Request;
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 
 /**
  * Created by bwencke on 4/5/16.

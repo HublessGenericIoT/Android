@@ -13,12 +13,11 @@ import android.widget.Switch;
 import android.widget.TextView;
 
 import com.google.gson.Gson;
-import com.hublessgenericiot.smartdevicecontroller.data.SavedDeviceList;
-import com.hublessgenericiot.smartdevicecontroller.hublesssdk.devicesapi.models.Device;
-import com.hublessgenericiot.smartdevicecontroller.fragments.DeviceFragment.OnListFragmentInteractionListener;
 import com.hublessgenericiot.smartdevicecontroller.R;
+import com.hublessgenericiot.smartdevicecontroller.data.SavedDeviceList;
+import com.hublessgenericiot.smartdevicecontroller.fragments.DeviceFragment.OnListFragmentInteractionListener;
+import com.hublessgenericiot.smartdevicecontroller.hublesssdk.devicesapi.models.Device;
 import com.hublessgenericiot.smartdevicecontroller.hublesssdk.devicesapi.models.NewDevice;
-import com.hublessgenericiot.smartdevicecontroller.hublesssdk.devicesapi.models.Shadow;
 import com.hublessgenericiot.smartdevicecontroller.hublesssdk.devicesapi.models.ShadowState;
 import com.hublessgenericiot.smartdevicecontroller.hublesssdk.devicesapi.models.ShadowedDevice;
 

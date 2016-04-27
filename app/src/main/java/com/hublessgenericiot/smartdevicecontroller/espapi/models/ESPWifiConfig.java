@@ -6,12 +6,13 @@ package com.hublessgenericiot.smartdevicecontroller.espapi.models;
 public class ESPWifiConfig {
 
     private String ssid;
-    private String pw; // password
-    //private String Authmode; TODO: add authmode
+    private String password;
+    private String automode;
 
-    public ESPWifiConfig(String ssid, String pw) {
+    public ESPWifiConfig(String ssid, String password) {
         this.ssid = ssid;
-        this.pw = pw;
+        this.password = password;
+        this.automode = "0";
     }
 
     public String getSsid() {
@@ -23,10 +24,18 @@ public class ESPWifiConfig {
     }
 
     public String getPw() {
-        return pw;
+        return password;
     }
 
-    public void setPw(String pw) {
-        this.pw = pw;
+    public void setPw(String password) {
+        this.password = password;
+    }
+
+    public String getAutomode() {
+        return automode;
+    }
+
+    public void setAutomode(String automode) {
+        this.automode = automode;
     }
 }

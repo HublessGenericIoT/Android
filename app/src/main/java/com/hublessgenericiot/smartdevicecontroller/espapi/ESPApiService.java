@@ -5,6 +5,7 @@ import android.support.annotation.Nullable;
 import android.util.Log;
 
 import com.hublessgenericiot.smartdevicecontroller.R;
+import com.hublessgenericiot.smartdevicecontroller.WifiController;
 import com.hublessgenericiot.smartdevicecontroller.hublesssdk.devicesapi.HublessCallback;
 import com.hublessgenericiot.smartdevicecontroller.hublesssdk.devicesapi.IHublessSdkService;
 import com.hublessgenericiot.smartdevicecontroller.hublesssdk.devicesapi.apiresponses.DeviceCreatedResponse;
@@ -16,6 +17,7 @@ import com.hublessgenericiot.smartdevicecontroller.hublesssdk.devicesapi.models.
 
 import java.io.IOException;
 
+import okhttp3.Address;
 import okhttp3.Interceptor;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
@@ -50,6 +52,19 @@ public class ESPApiService {
             HttpLoggingInterceptor logging = new HttpLoggingInterceptor();
             logging.setLevel(HttpLoggingInterceptor.Level.BODY);
             httpClient.addInterceptor(logging);
+
+            httpClient.addInterceptor(new Interceptor() {
+                @Override
+                public Response intercept(Chain chain) throws IOException {
+                    Address address = chain.connection().route().address();
+                    Log.d("APICONN", address.toString());
+
+                    Log.d("SHIT", WifiController.getConnectionInfo().getSSID());
+
+                    return null;
+
+                }
+            });
 
             OkHttpClient client = httpClient.build();
 

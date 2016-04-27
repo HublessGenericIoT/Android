@@ -1,24 +1,15 @@
 package com.hublessgenericiot.smartdevicecontroller;
 
-import android.content.Context;
 import android.util.Log;
 
 import com.hublessgenericiot.smartdevicecontroller.activities.RoomsActivity;
-import com.hublessgenericiot.smartdevicecontroller.data.SavedDeviceList;
 import com.hublessgenericiot.smartdevicecontroller.espapi.ESPApiService;
 import com.hublessgenericiot.smartdevicecontroller.espapi.IESPApiService;
 import com.hublessgenericiot.smartdevicecontroller.espapi.models.ESPConfig;
-import com.hublessgenericiot.smartdevicecontroller.espapi.models.ESPDeviceInfo;
 import com.hublessgenericiot.smartdevicecontroller.espapi.models.ESPMQTTConfig;
 import com.hublessgenericiot.smartdevicecontroller.espapi.models.ESPWifiConfig;
-import com.hublessgenericiot.smartdevicecontroller.espapi.responses.ESPConnectResponse;
 import com.hublessgenericiot.smartdevicecontroller.espapi.responses.ESPSetupResponse;
-import com.hublessgenericiot.smartdevicecontroller.hublesssdk.devicesapi.HublessCallback;
-import com.hublessgenericiot.smartdevicecontroller.hublesssdk.devicesapi.HublessSdkService;
-import com.hublessgenericiot.smartdevicecontroller.hublesssdk.devicesapi.IHublessSdkService;
-import com.hublessgenericiot.smartdevicecontroller.hublesssdk.devicesapi.apiresponses.DeviceListResponse;
 import com.hublessgenericiot.smartdevicecontroller.hublesssdk.devicesapi.models.CreatedDeviceData;
-import com.hublessgenericiot.smartdevicecontroller.hublesssdk.devicesapi.models.Device;
 import com.hublessgenericiot.smartdevicecontroller.hublesssdk.devicesapi.models.NewDevice;
 
 import retrofit2.Call;
@@ -44,7 +35,7 @@ public class DeviceConfig {
 
     public void sendConfiguration(RoomsActivity activity) {
 
-        ESPDeviceInfo espDeviceInfo = new ESPDeviceInfo(
+        ESPConfig espConfig = new ESPConfig(
                 device.getName(),
                 new ESPWifiConfig(
                     activity.getString(R.string.network_ssid),
@@ -57,14 +48,12 @@ public class DeviceConfig {
                 )
             );
 
-        ESPConfig espConfig = new ESPConfig(espDeviceInfo);
-
         IESPApiService instance = ESPApiService.getInstance(activity);
         instance.setup(espConfig).enqueue(new Callback<ESPSetupResponse>() {
             @Override
             public void onResponse(Call<ESPSetupResponse> call, Response<ESPSetupResponse> response) {
                 if(response.isSuccess()) {
-                    Log.d("ESP Config", response.body().toString());
+                    Log.i("ESP Config", response.body().toString());
                 } else {
                     Log.e("ESP Config", response.errorBody().toString());
                 }

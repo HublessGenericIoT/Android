@@ -6,12 +6,12 @@ package com.hublessgenericiot.smartdevicecontroller.espapi.models;
 public class ESPMQTTConfig {
 
     private String user;
-    private String pw; // password
+    private String password; // password
     private String endpoint;
 
-    public ESPMQTTConfig(String user, String pw, String endpoint) {
+    public ESPMQTTConfig(String user, String password, String endpoint) {
         this.user = user;
-        this.pw = pw;
+        this.password = password;
         this.endpoint = endpoint;
     }
 
@@ -23,12 +23,12 @@ public class ESPMQTTConfig {
         this.user = user;
     }
 
-    public String getPw() {
-        return pw;
+    public String getPassword() {
+        return password;
     }
 
-    public void setPw(String pw) {
-        this.pw = pw;
+    public void setPassword(String password) {
+        this.password = password;
     }
 
     public String getEndpoint() {

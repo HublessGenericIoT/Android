@@ -35,7 +35,6 @@ public class WifiBroadcastReceiver extends BroadcastReceiver {
 
     @Override
     public void onReceive(Context context, Intent intent) {
-
         switch(intent.getAction()) {
             case WifiManager.NETWORK_STATE_CHANGED_ACTION:
                 WifiController.notifyWifiStateChanged();
@@ -48,18 +47,21 @@ public class WifiBroadcastReceiver extends BroadcastReceiver {
 
     public void processScanResults() {
         for(ScanResult s : wifi.getScanResults()) {
-            if(s.SSID.startsWith("ESP_")) {
+            if(s.SSID.startsWith("Hubless_ESP")) {
                 boolean addDevice = true;
                 for (NewDevice newDevice : newDevices) {
                     if (newDevice.getBssid().equals(s.BSSID)) {
+                        Log.d("WifiBroadcastReceiver", "new device already listed");
                         addDevice = false;
                     }
                 }
+                Log.d("WifiBroadcastReceiver", "deciding whether or not to add device");
                 if (!addDevice) {
+                    Log.d("WifiBroadcastReceiver", "not adding it");
                     continue;
                 }
                 Log.d("WifiBroadcastReceiver", "Found new device: " + s.SSID);
-                NewDevice newDevice = new NewDevice("ESP_8266", null, s.SSID, s.BSSID, DeviceType.LIGHT);
+                NewDevice newDevice = new NewDevice(s.SSID, null, s.SSID, s.BSSID, DeviceType.LIGHT);
                 newDevices.add(newDevice);
                 SavedDeviceList.ITEMS.add(0, newDevice);
                 SavedDeviceList.ITEM_MAP.put(newDevice.getId(), newDevice);

@@ -89,4 +89,8 @@ public class WifiController {
         }
     }
 
+    public static WifiInfo getConnectionInfo() {
+        return wifiManager.getConnectionInfo();
+    }
+
 }

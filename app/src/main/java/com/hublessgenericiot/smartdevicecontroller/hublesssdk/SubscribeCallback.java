@@ -42,7 +42,7 @@ public class SubscribeCallback implements MqttCallback
         String[] tokens = topic.split("/");
         for(Device d : SavedDeviceList.ITEMS)
         {
-            //Log.d("ID ISSUES", tokens[2] + " vs " + d.getId());
+            Log.d("ID ISSUES", tokens[2] + " vs " + d.getId());
             if(tokens[2].equals(d.getId()))
             {
                 if (d instanceof ShadowedDevice)
@@ -50,7 +50,10 @@ public class SubscribeCallback implements MqttCallback
                     Gson gson = new Gson();
                     Shadow shadow = gson.fromJson(message.toString(), Shadow.class);
                     Toast.makeText(activity.getApplicationContext(), shadow.getState().getDesired().toString(), Toast.LENGTH_LONG).show();
-                    ((ShadowedDevice) d).getShadow().getState().setDesired(shadow.getState().getDesired());
+                    Log.d("What", new Boolean(((ShadowedDevice) d).getShadow().getState() != null).toString());
+                    ((ShadowedDevice) d).getShadow().setState(shadow.getState());
+                    Log.d("fuck", "");
+                    //Toast.makeText(activity.getApplicationContext(), "Hey " + ((ShadowedDevice) d).getShadow().getState().getDesired().toString(), Toast.LENGTH_LONG).show();
                 }
                 break;
             }

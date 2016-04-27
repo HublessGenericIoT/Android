@@ -1,5 +1,7 @@
 package com.hublessgenericiot.smartdevicecontroller.hublesssdk.devicesapi.models;
 
+import android.util.Log;
+
 import java.util.Map;
 
 /**
@@ -28,6 +30,7 @@ public class ShadowState {
     }
 
     public void setDesired(Map<String, String> desired) {
+        Log.d("ShadowState:", "setting desired");
         this.desired = desired;
     }
 }

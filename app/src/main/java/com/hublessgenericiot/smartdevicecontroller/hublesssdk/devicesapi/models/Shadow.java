@@ -14,6 +14,8 @@ public class Shadow {
         return state;
     }
 
+    public void setState(ShadowState newState) { this.state = newState; }
+
     public ShadowMetadata getMetadata() {
         return metadata;
     }
